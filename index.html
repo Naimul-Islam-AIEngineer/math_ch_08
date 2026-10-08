@@ -1,0 +1,4006 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>গণিত · অধ্যায় ৮ · ত্রিকোণমিতি — Concept Book</title>
+
+<!-- KaTeX for math typesetting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+
+<!-- Local fonts: Lipighors Alinur (Bangla), Lora (English/Latin) -->
+<style>
+@font-face {
+  font-family: 'Alinur';
+  src: url('fonts/Alinur-Ekush.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lora';
+  src: url('fonts/Lora-400-700.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lora';
+  src: url('fonts/Lora-400-700-italic.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ===================== CSS VARIABLES / THEME ===================== */
+:root {
+  /* Palette - Modern Tech/Educational */
+  --bg-deep:        #0a0e27;   /* page background (cover / hero) */
+  --bg-soft:        #131736;   /* secondary bg */
+  --bg-card:        #1a1f4a;   /* card background */
+  --bg-card-2:      #232873;   /* card bg hover */
+  --bg-page:        #f5f6fa;   /* light reading bg */
+  --bg-white:       #ffffff;
+
+  --primary:        #6c5ce7;   /* indigo - primary brand */
+  --primary-2:      #8b7bff;
+  --accent-cyan:    #00d4ff;   /* electric cyan - accent */
+  --accent-pink:    #ff6ec7;   /* magenta highlight */
+  --accent-amber:   #ffb649;   /* warning / tip */
+  --accent-green:   #2ed573;   /* correct / success */
+  --accent-red:     #ff5e62;   /* danger / mistake */
+
+  --text-light:     #e8ebff;
+  --text-muted:     #a8aedb;
+  --text-dim:       #7d83b3;
+  --text-dark:      #1a1f4a;
+  --text-body:      #2c314d;
+
+  --border-glow:    rgba(108, 92, 231, 0.5);
+  --border-soft:    rgba(232, 235, 255, 0.12);
+  --border-strong:  rgba(232, 235, 255, 0.25);
+
+  --grad-hero:      linear-gradient(135deg, #6c5ce7 0%, #00d4ff 100%);
+  --grad-card:      linear-gradient(145deg, rgba(108,92,231,0.18), rgba(0,212,255,0.10));
+  --grad-mistake:   linear-gradient(135deg, #ff5e62 0%, #ffb649 100%);
+  --grad-tip:       linear-gradient(135deg, #2ed573 0%, #00d4ff 100%);
+
+  --shadow-card:    0 8px 30px rgba(10, 14, 39, 0.25);
+  --shadow-glow:    0 0 60px rgba(108, 92, 231, 0.4);
+
+  --radius-sm:      8px;
+  --radius-md:      14px;
+  --radius-lg:      22px;
+  --radius-xl:      32px;
+
+  --maxw:            1180px;
+}
+
+/* ===================== RESET ===================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: var(--bg-page);
+  font-family: 'Alinur', 'Lora', system-ui, -apple-system, sans-serif;
+  color: var(--text-body);
+  line-height: 1.85;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+.bangla { font-family: 'Alinur', 'Lora', sans-serif; }
+.english, .en { font-family: 'Lora', 'Alinur', serif; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* English within Bangla flow rendered in Lora */
+.en-inline { font-family: 'Lora', serif; font-style: italic; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Alinur', 'Lora', sans-serif;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.3;
+  margin: 0 0 0.4em 0;
+  letter-spacing: -0.01em;
+}
+p { margin: 0 0 1em 0; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===================== LAYOUT ===================== */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar TOC ---------- */
+.toc {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: var(--bg-deep);
+  color: var(--text-light);
+  padding: 28px 22px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border-soft);
+}
+.toc::-webkit-scrollbar { width: 6px; }
+.toc::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+.toc .brand {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 24px;
+}
+.toc .brand .logo {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--grad-hero);
+  display: grid; place-items: center;
+  font-family: 'Lora', serif; font-style: italic;
+  font-weight: 700; color: white;
+  font-size: 18px;
+}
+.toc .brand .text { font-family: 'Lora', serif; font-weight: 700; font-size: 16px; }
+.toc .brand .text small { display: block; font-family: 'Alinur', sans-serif; font-weight: 400; color: var(--text-muted); font-size: 11px; margin-top: 2px; }
+
+.toc h4 {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 18px 0 8px 0;
+}
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc li a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: all 0.25s ease;
+  border-left: 3px solid transparent;
+}
+.toc li a:hover {
+  background: rgba(108, 92, 231, 0.15);
+  color: var(--text-light);
+  text-decoration: none;
+  border-left-color: var(--accent-cyan);
+}
+.toc li a.active {
+  background: var(--grad-hero);
+  color: white;
+  border-left-color: var(--accent-cyan);
+  font-weight: 600;
+}
+.toc li a .num {
+  display: inline-block;
+  width: 22px; text-align: right;
+  color: var(--accent-cyan);
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 12px;
+  margin-right: 6px;
+}
+.toc li a.active .num { color: white; }
+
+/* ---------- Main content ---------- */
+.main {
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ---------- Cover page ---------- */
+.cover {
+  min-height: 100vh;
+  background: var(--bg-deep);
+  color: var(--text-light);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px;
+}
+.cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.35), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(0, 212, 255, 0.25), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 110, 199, 0.15), transparent 60%);
+  z-index: 0;
+}
+.cover .grid-overlay {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(108, 92, 231, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 92, 231, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+}
+.cover .content {
+  position: relative; z-index: 2;
+  max-width: 920px;
+}
+.cover .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid var(--accent-cyan);
+  border-radius: 100px;
+  color: var(--accent-cyan);
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.cover .eyebrow::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.cover h1 {
+  font-size: clamp(40px, 6vw, 78px);
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #ffffff 0%, #c8d4ff 50%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+.cover .subtitle {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+.cover .tags {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;
+}
+.cover .tag {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-soft);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.cover .tag b { color: var(--accent-cyan); font-weight: 600; font-family: 'Lora', serif; }
+
+.cover .meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 720px;
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-soft);
+}
+.cover .meta .item .label {
+  font-family: 'Lora', serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.cover .meta .item .value {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--text-light);
+}
+
+.cover .hero-visual {
+  position: absolute;
+  right: -120px; top: 50%;
+  transform: translateY(-50%);
+  width: 600px; height: 600px;
+  opacity: 0.85;
+  z-index: 1;
+  animation: rotate-slow 60s linear infinite;
+}
+@keyframes rotate-slow {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+.cover .scroll-hint {
+  position: absolute;
+  bottom: 30px; left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-muted);
+  font-family: 'Lora', serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 2;
+}
+.cover .scroll-hint .arrow {
+  display: block;
+  margin: 6px auto 0;
+  width: 1px; height: 32px;
+  background: var(--accent-cyan);
+  position: relative;
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ---------- Section wrapper ---------- */
+.section {
+  padding: 80px 60px 60px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(108, 92, 231, 0.08);
+}
+.section:last-child { border-bottom: none; }
+.section .head {
+  display: flex; align-items: flex-start; gap: 24px;
+  margin-bottom: 36px;
+}
+.section .head .num {
+  flex-shrink: 0;
+  width: 56px; height: 56px;
+  background: var(--grad-hero);
+  border-radius: 14px;
+  display: grid; place-items: center;
+  color: white;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 22px;
+  box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+}
+.section .head .info .eyebrow {
+  font-family: 'Lora', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.section .head .info h2 {
+  font-size: 34px;
+  margin: 0 0 6px 0;
+  color: var(--text-dark);
+}
+.section .head .info .sub {
+  color: var(--text-muted);
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 15px;
+}
+
+/* ---------- Typography in content ---------- */
+.section p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text-body);
+  margin: 0 0 16px 0;
+}
+.section p.lead {
+  font-size: 19px;
+  color: var(--text-dark);
+  font-weight: 500;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.section strong { color: var(--text-dark); font-weight: 600; }
+.section em { color: var(--primary); font-style: normal; font-weight: 500; }
+
+/* ---------- Cards ---------- */
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(108, 92, 231, 0.08);
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+}
+.card.glass {
+  background: linear-gradient(145deg, rgba(108,92,231,0.04), rgba(0,212,255,0.04));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(108, 92, 231, 0.12);
+}
+.card .card-title {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary);
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card .card-title::before {
+  content: '';
+  width: 4px; height: 18px;
+  background: var(--grad-hero);
+  border-radius: 2px;
+}
+
+/* ---------- Callouts ---------- */
+.callout {
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  margin: 22px 0;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+}
+.callout .icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  color: white;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.callout.tip {
+  background: linear-gradient(135deg, rgba(46, 213, 115, 0.08), rgba(0, 212, 255, 0.04));
+  border-left: 4px solid var(--accent-green);
+}
+.callout.tip .icon { background: var(--accent-green); }
+.callout.note {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(108, 92, 231, 0.04));
+  border-left: 4px solid var(--accent-cyan);
+}
+.callout.note .icon { background: var(--accent-cyan); }
+.callout.warn {
+  background: linear-gradient(135deg, rgba(255, 182, 73, 0.10), rgba(255, 94, 98, 0.04));
+  border-left: 4px solid var(--accent-amber);
+}
+.callout.warn .icon { background: var(--accent-amber); }
+.callout.mistake {
+  background: linear-gradient(135deg, rgba(255, 94, 98, 0.10), rgba(255, 110, 201, 0.04));
+  border-left: 4px solid var(--accent-red);
+}
+.callout.mistake .icon { background: var(--accent-red); }
+.callout .title {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+/* ---------- Formula boxes ---------- */
+.formula-box {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f4a 100%);
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  margin: 20px 0;
+  position: relative;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+}
+.formula-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--grad-hero);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+.formula-box .formula-label {
+  font-family: 'Lora', serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+.formula-box .formula-body {
+  color: var(--text-light);
+  font-size: 17px;
+  text-align: center;
+  padding: 6px 0;
+}
+.formula-box .formula-body .katex { color: var(--text-light) !important; }
+.formula-box .formula-body .katex-display { margin: 0 !important; }
+
+/* ---------- Tables ---------- */
+.tbl {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 22px 0;
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  font-size: 15px;
+}
+.tbl thead {
+  background: var(--grad-hero);
+  color: white;
+}
+.tbl thead th {
+  font-family: 'Alinur', sans-serif;
+  font-weight: 600;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+.tbl tbody td {
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(108, 92, 231, 0.08);
+}
+.tbl tbody tr:hover { background: rgba(108, 92, 231, 0.03); }
+.tbl tbody tr:last-child td { border-bottom: none; }
+.tbl .num-col { font-family: 'Lora', serif; font-weight: 600; color: var(--primary); }
+
+/* ---------- Step-by-step reveal ---------- */
+.steps { margin: 22px 0; }
+.step {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 4px 14px rgba(10, 14, 39, 0.06);
+  position: relative;
+  transition: all 0.3s ease;
+}
+.step:hover { transform: translateX(4px); border-left-color: var(--accent-cyan); }
+.step .step-num {
+  display: inline-block;
+  width: 28px; height: 28px;
+  background: var(--grad-hero);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 28px;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 14px;
+  font-style: italic;
+  margin-right: 10px;
+}
+.step .step-num-inline {
+  display: inline-block;
+  width: 22px; height: 22px;
+  background: var(--grad-hero);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 12px;
+  font-style: italic;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.step .katex-display { margin: 6px 0 !important; }
+
+/* ---------- Practice / collapsibles ---------- */
+.practice {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  margin: 14px 0;
+  border: 1px solid rgba(108, 92, 231, 0.12);
+}
+.practice .q {
+  font-weight: 500; color: var(--text-dark);
+  margin-bottom: 10px;
+}
+.practice .q::before {
+  content: 'প্রশ্ন';
+  font-family: 'Lora', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: var(--accent-cyan);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.practice details {
+  margin-top: 10px;
+  border-top: 1px dashed rgba(108, 92, 231, 0.2);
+  padding-top: 10px;
+}
+.practice details summary {
+  cursor: pointer;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+.practice details[open] summary { color: var(--accent-green); margin-bottom: 8px; }
+.practice details[open] summary::before { content: '✓ '; }
+.practice details summary::before { content: '▸ '; }
+
+/* ---------- Grid utilities ---------- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 22px 0;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 22px 0;
+}
+@media (max-width: 800px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .app { grid-template-columns: 1fr; }
+  .toc { display: none; }
+  .section { padding: 50px 24px 40px; }
+  .cover { padding: 60px 24px; }
+}
+
+/* ---------- SVG figure container ---------- */
+.figure {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin: 26px 0;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+.figure svg { max-width: 100%; height: auto; }
+.figure .caption {
+  margin-top: 12px;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.figure .caption .num {
+  background: var(--bg-card);
+  color: var(--accent-cyan);
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+/* ---------- Animations on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background: var(--bg-deep);
+  color: var(--text-muted);
+  padding: 40px 60px;
+  text-align: center;
+  font-size: 13px;
+  font-family: 'Lora', serif;
+}
+footer .credit { color: var(--accent-cyan); font-weight: 600; }
+
+/* ---------- Real-life app demos ---------- */
+.app-demo {
+  margin-top: 20px;
+}
+.app-demo .app-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
+}
+.app-demo .app-controls label {
+  font-family: 'Lora', serif;
+  font-size: 12px;
+  color: #a8aedb;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 6px;
+}
+.app-demo .app-controls label .val {
+  color: #00d4ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  margin-left: 4px;
+}
+.app-demo .app-controls input[type=range] {
+  width: 100%;
+  accent-color: #00d4ff;
+  height: 4px;
+}
+.app-demo svg {
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  display: flex; flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.toolbar button {
+  width: 44px; height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(108, 92, 231, 0.35);
+  transition: transform 0.2s;
+}
+.toolbar button:hover { transform: translateY(-2px) scale(1.05); }
+
+/* ---------- Progress bar ---------- */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--grad-hero);
+  z-index: 100;
+  transition: width 0.1s;
+  width: 0%;
+}
+
+/* ---------- Two-column formula layout ---------- */
+.formula-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin: 22px 0;
+}
+.formula-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  border: 1px solid rgba(108, 92, 231, 0.12);
+  text-align: center;
+  transition: all 0.3s;
+}
+.formula-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(108, 92, 231, 0.15);
+  transform: translateY(-2px);
+}
+.formula-card .name {
+  font-family: 'Lora', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.formula-card .expr {
+  font-size: 17px;
+  color: var(--text-dark);
+  padding: 8px 0;
+}
+
+/* ---------- Quadrant color cards ---------- */
+.quad-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 22px 0;
+}
+.quad {
+  border-radius: var(--radius-md);
+  padding: 22px 26px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.quad::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(40%, -40%);
+}
+.quad.I { background: linear-gradient(135deg, #2ed573, #1dd1a1); }
+.quad.II { background: linear-gradient(135deg, #6c5ce7, #a55eea); }
+.quad.III { background: linear-gradient(135deg, #ff6ec7, #ee5a9e); }
+.quad.IV { background: linear-gradient(135deg, #ffb649, #ff8b3d); }
+.quad .label {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+.quad .astc {
+  font-size: 28px;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 4px;
+}
+.quad .desc {
+  font-size: 14px;
+  margin-top: 6px;
+  opacity: 0.92;
+}
+
+/* ---------- Unit circle interactive ---------- */
+.unit-circle-tool {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f4a 100%);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  margin: 26px 0;
+  color: var(--text-light);
+  position: relative;
+  overflow: hidden;
+}
+.unit-circle-tool .layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  align-items: center;
+}
+@media (max-width: 800px) {
+  .unit-circle-tool .layout { grid-template-columns: 1fr; }
+}
+.unit-circle-tool .controls {
+  display: flex; flex-direction: column; gap: 16px;
+}
+.unit-circle-tool .controls label {
+  font-family: 'Lora', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.unit-circle-tool input[type=range] {
+  width: 100%;
+  accent-color: var(--accent-cyan);
+}
+.unit-circle-tool .angle-display {
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid var(--accent-cyan);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-family: 'Lora', serif;
+  font-style: italic;
+}
+.unit-circle-tool .angle-display .deg {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+.unit-circle-tool .angle-display .rad {
+  font-size: 18px;
+  color: var(--text-muted);
+}
+.unit-circle-tool .values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.unit-circle-tool .values .v {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+}
+.unit-circle-tool .values .v .name {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--accent-cyan);
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
+}
+.unit-circle-tool .values .v .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+/* ---------- Triangle interactive ---------- */
+.triangle-tool {
+  background: linear-gradient(135deg, #f5f6fa 0%, #e8ebff 100%);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  margin: 26px 0;
+  border: 1px solid rgba(108, 92, 231, 0.12);
+}
+.triangle-tool .layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: center;
+}
+@media (max-width: 800px) {
+  .triangle-tool .layout { grid-template-columns: 1fr; }
+}
+
+/* ---------- Chapter end summary ---------- */
+.summary-box {
+  background: linear-gradient(135deg, #0a0e27, #1a1f4a);
+  border-radius: var(--radius-lg);
+  padding: 30px 36px;
+  color: #ffffff;
+  margin: 30px 0;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.1);
+}
+.summary-box h3 {
+  color: #00d4ff;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+}
+.summary-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.summary-box li {
+  padding: 10px 0 10px 28px;
+  border-bottom: 1px dashed rgba(0, 212, 255, 0.2);
+  position: relative;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.summary-box li strong {
+  color: #ffb649;
+  font-weight: 600;
+}
+.summary-box li .katex {
+  color: #00d4ff !important;
+}
+.summary-box li .katex .mord {
+  color: #ffffff !important;
+}
+.summary-box li::before {
+  content: '◆';
+  position: absolute;
+  left: 4px;
+  color: #00d4ff;
+}
+.summary-box li:last-child { border-bottom: none; }
+
+/* ---------- Mobile sidebar toggle ---------- */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 200;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+}
+@media (max-width: 800px) {
+  .menu-toggle { display: block; }
+  .toc.open { display: block !important; position: fixed; top: 0; left: 0; width: 280px; z-index: 150; }
+}
+
+/* ---------- small math display correction ---------- */
+.katex { font-size: 1.05em; }
+.katex-display { margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<button class="menu-toggle" onclick="document.querySelector('.toc').classList.toggle('open')" aria-label="Toggle menu">☰</button>
+
+<div class="app">
+
+<!-- ===================== SIDEBAR TOC ===================== -->
+<aside class="toc" id="toc">
+  <div class="brand">
+    <div class="logo">τ</div>
+    <div class="text">Trig · Concept
+      <small>SSC Math · Ch.8</small>
+    </div>
+  </div>
+
+  <h4>অধ্যায়</h4>
+  <ul>
+    <li><a href="#sec-00"><span class="num">00</span> বাস্তব প্রয়োগ</a></li>
+    <li><a href="#sec-01"><span class="num">01</span> প্রস্তাবনা</a></li>
+    <li><a href="#sec-02"><span class="num">02</span> কোণ ও প্রকারভেদ</a></li>
+    <li><a href="#sec-03"><span class="num">03</span> কোণের পরিমাপ</a></li>
+    <li><a href="#sec-04"><span class="num">04</span> সম্পাতী কোণ</a></li>
+    <li><a href="#sec-05"><span class="num">05</span> চতুর্থাংশ</a></li>
+    <li><a href="#sec-06"><span class="num">06</span> ত্রিকোণমিতিক অনুপাত</a></li>
+    <li><a href="#sec-07"><span class="num">07</span> চিহ্ন ও মান সারণি</a></li>
+    <li><a href="#sec-08"><span class="num">08</span> মৌলিক অভেদ</a></li>
+    <li><a href="#sec-09"><span class="num">09</span> যৌগিক কোণ</a></li>
+    <li><a href="#sec-10"><span class="num">10</span> গুণিত কোণ</a></li>
+    <li><a href="#sec-11"><span class="num">11</span> উপগুণিত কোণ</a></li>
+    <li><a href="#sec-12"><span class="num">12</span> যোগফল-গুণফল</a></li>
+    <li><a href="#sec-13"><span class="num">13</span> ত্রিকোণমিতিক ফাংশন</a></li>
+    <li><a href="#sec-14"><span class="num">14</span> ফাংশনের লেখচিত্র</a></li>
+    <li><a href="#sec-15"><span class="num">15</span> বিপরীত ফাংশন</a></li>
+    <li><a href="#sec-16"><span class="num">16</span> ত্রিকোণমিতিক সমীকরণ</a></li>
+    <li><a href="#sec-17"><span class="num">17</span> ত্রিভুজের ধর্ম</a></li>
+    <li><a href="#sec-18"><span class="num">18</span> সমাধানকৃত উদাহরণ</a></li>
+    <li><a href="#sec-19"><span class="num">19</span> অনুশীলন</a></li>
+    <li><a href="#sec-20"><span class="num">20</span> সাধারণ ভুল</a></li>
+  </ul>
+</aside>
+
+<!-- ===================== MAIN ===================== -->
+<main class="main">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="grid-overlay"></div>
+
+  <!-- Decorative unit circle in background -->
+  <svg class="hero-visual" viewBox="0 0 600 600" aria-hidden="true">
+    <defs>
+      <radialGradient id="ringGrad" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#6c5ce7" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.05"/>
+      </radialGradient>
+      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#6c5ce7"/>
+        <stop offset="100%" stop-color="#00d4ff"/>
+      </linearGradient>
+    </defs>
+    <circle cx="300" cy="300" r="280" fill="url(#ringGrad)" stroke="rgba(108,92,231,0.3)" stroke-width="1"/>
+    <circle cx="300" cy="300" r="220" fill="none" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+    <circle cx="300" cy="300" r="160" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+    <circle cx="300" cy="300" r="100" fill="none" stroke="rgba(255,110,199,0.3)" stroke-width="1"/>
+    <line x1="20" y1="300" x2="580" y2="300" stroke="url(#lineGrad)" stroke-width="2"/>
+    <line x1="300" y1="20" x2="300" y2="580" stroke="url(#lineGrad)" stroke-width="2"/>
+    <line x1="300" y1="300" x2="500" y2="180" stroke="#ff6ec7" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="500" cy="180" r="8" fill="#ff6ec7"/>
+    <circle cx="300" cy="300" r="6" fill="#00d4ff"/>
+    <text x="510" y="170" fill="#ff6ec7" font-family="Lora" font-style="italic" font-size="20">θ</text>
+    <text x="280" y="290" fill="white" font-family="Lora" font-size="14" font-style="italic">O</text>
+    <text x="80" y="100" fill="rgba(232,235,255,0.4)" font-family="Lora" font-style="italic" font-size="14">sin θ</text>
+    <text x="460" y="100" fill="rgba(232,235,255,0.4)" font-family="Lora" font-style="italic" font-size="14">cos θ</text>
+    <text x="80" y="510" fill="rgba(232,235,255,0.4)" font-family="Lora" font-style="italic" font-size="14">tan θ</text>
+    <text x="460" y="510" fill="rgba(232,235,255,0.4)" font-family="Lora" font-style="italic" font-size="14">cot θ</text>
+    <text x="540" y="295" fill="rgba(232,235,255,0.5)" font-family="Lora" font-size="12">x</text>
+    <text x="305" y="32" fill="rgba(232,235,255,0.5)" font-family="Lora" font-size="12">y</text>
+  </svg>
+
+  <div class="content">
+    <div class="eyebrow">SSC · গণিত · অধ্যায় ৮</div>
+    <h1>ত্রিকোণমিতি<br/>Concept Book</h1>
+    <div class="subtitle">An animated, digital journey through angles, identities, and the rhythms of the unit circle.</div>
+
+    <div class="tags">
+      <div class="tag"><b>20</b> Sections</div>
+      <div class="tag"><b>15+</b> Animated diagrams</div>
+      <div class="tag"><b>30+</b> Formulas</div>
+      <div class="tag"><b>10+</b> Worked examples</div>
+      <div class="tag">Bangla + <span class="en-inline">English</span></div>
+    </div>
+
+    <div class="tags">
+      <div class="tag"><b>22</b> Sections</div>
+      <div class="tag"><b>20+</b> Animated diagrams</div>
+      <div class="tag"><b>40+</b> Formulas</div>
+      <div class="tag"><b>20+</b> Worked examples</div>
+      <div class="tag">Bangla + <span class="en-inline">English</span></div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    Scroll to explore
+    <span class="arrow"></span>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 00: বাস্তব জীবনে ত্রিকোণমিতি / REAL-LIFE APPLICATIONS    -->
+<!-- ============================================================= -->
+<section class="section" id="sec-00">
+  <div class="head reveal">
+    <div class="num">00</div>
+    <div class="info">
+      <div class="eyebrow">Why It Matters · Real World</div>
+      <h2>বাস্তব জীবনে ত্রিকোণমিতি কোথায় কাজে লাগে?</h2>
+      <div class="sub">From sound waves to satellite navigation — trigonometry is everywhere</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    "ত্রিকোণমিতি শুধু পরীক্ষার জন্য নয়" — এই কথাটি একবার বুঝলে আপনি আর কখনো এটি মুখস্থ করতে চাইবেন না। প্রতিটি তরঙ্গ, প্রতিটি ঘূর্ণন, প্রতিটি কম্পন — সবকিছুর পেছনেই রয়েছে $\sin$, $\cos$, $\tan$ এর হাত। নিচে ছয়টি বাস্তব উদাহরণ দেওয়া হলো, প্রতিটিতে একটি করে অ্যানিমেশন আছে। স্লাইডার টেনে প্যারামিটার পরিবর্তন করে দেখুন জীবন্ত হয়ে ওঠে।
+  </p>
+
+  <div class="card reveal" style="background: linear-gradient(135deg, #0a0e27, #1a1f4a); color: white; border: 1px solid rgba(0,212,255,0.3);">
+    <div class="card-title" style="color: #00d4ff;">১. শব্দ ও মিউজিক — Sound Waves</div>
+    <p style="color: #e8ebff;">যখন আপনি গান শোনেন, কানের পর্দা একটি সাইন তরঙ্গের মতো কাঁপে। প্রতিটি সুরের পিছনে একটি নির্দিষ্ট ফ্রিকোয়েন্সি (Hz) আর অ্যামপ্লিটিউড (loudness) আছে। Spotify, YouTube, MP3 — সব ডিজিটাল অডিও সংকেতকে $\sin$ তরঙ্গের সমষ্টি হিসেবে ডিকম্পোজ করে (Fourier transform)।</p>
+    <div class="app-demo" data-app="sound">
+      <div class="app-controls">
+        <label>Frequency (Hz) <span class="val" data-out="freq">440</span></label>
+        <input type="range" min="80" max="1200" step="1" value="440" data-in="freq" data-app="sound">
+        <label>Amplitude <span class="val" data-out="amp">0.8</span></label>
+        <input type="range" min="0.1" max="1" step="0.05" value="0.8" data-in="amp" data-app="sound">
+      </div>
+      <svg viewBox="0 0 500 200" data-svg="sound" style="width:100%; background: rgba(0,0,0,0.3); border-radius: 12px;">
+        <line x1="0" y1="100" x2="500" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <path d="" fill="none" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" data-path="sound"/>
+        <circle cx="500" cy="100" r="6" fill="#ff6ec7" data-point="sound" opacity="0"/>
+      </svg>
+      <p style="text-align:center; color:#a8aedb; font-size:13px; font-family:'Lora',serif; font-style:italic; margin-top:8px;">শিফট করুন এবং দেখুন কীভাবে তরঙ্গ পরিবর্তিত হয় — এটিই শব্দের গাণিতিক রূপ</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="background: linear-gradient(135deg, #0a0e27, #1a1f4a); color: white; border: 1px solid rgba(108,92,231,0.3); margin-top:24px;">
+    <div class="card-title" style="color: #6c5ce7;">২. আলো ও রঙ — Light & Color</div>
+    <p style="color: #e8ebff;">সাদা আলো আসলে লাল, সবুজ, নীল (RGB) — তিনটি সাইন তরঙ্গের সমষ্টি। প্রতিটি রঙের নিজস্ব তরঙ্গদৈর্ঘ্য আছে। আপনার মোবাইল স্ক্রিনের প্রতিটি পিক্সেল এই তিন তরঙ্গ মিলিয়ে রঙ তৈরি করে। ক্যামেরা, প্রিজম, রামধনু — সবই এই নীতিতে কাজ করে।</p>
+    <div class="app-demo" data-app="light">
+      <div class="app-controls">
+        <label>Red Phase <span class="val" data-out="r">0°</span></label>
+        <input type="range" min="0" max="360" step="1" value="0" data-in="r" data-app="light">
+        <label>Green Phase <span class="val" data-out="g">120°</span></label>
+        <input type="range" min="0" max="360" step="1" value="120" data-in="g" data-app="light">
+        <label>Blue Phase <span class="val" data-out="b">240°</span></label>
+        <input type="range" min="0" max="360" step="1" value="240" data-in="b" data-app="light">
+      </div>
+      <svg viewBox="0 0 500 250" data-svg="light" style="width:100%; background: rgba(0,0,0,0.3); border-radius: 12px;">
+        <line x1="0" y1="125" x2="500" y2="125" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <path d="" fill="none" stroke="#ff5e62" stroke-width="2" opacity="0.7" data-path="light-r"/>
+        <path d="" fill="none" stroke="#2ed573" stroke-width="2" opacity="0.7" data-path="light-g"/>
+        <path d="" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.7" data-path="light-b"/>
+        <path d="" fill="none" stroke="white" stroke-width="3" data-path="light-sum"/>
+        <text x="20" y="20" font-family="Lora" font-size="11" fill="#ff5e62">R (700nm)</text>
+        <text x="20" y="35" font-family="Lora" font-size="11" fill="#2ed573">G (530nm)</text>
+        <text x="20" y="50" font-family="Lora" font-size="11" fill="#00d4ff">B (470nm)</text>
+        <text x="20" y="65" font-family="Lora" font-size="11" fill="white">R+G+B = White</text>
+      </svg>
+      <p style="text-align:center; color:#a8aedb; font-size:13px; font-family:'Lora',serif; font-style:italic; margin-top:8px;">তিনটি তরঙ্গ একসাথে — সাদা আলো হলো এই সমষ্টি</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="background: linear-gradient(135deg, #0a0e27, #1a1f4a); color: white; border: 1px solid rgba(255,182,73,0.3); margin-top:24px;">
+    <div class="card-title" style="color: #ffb649;">৩. পেন্ডুলাম ও ঘড়ি — Pendulum Motion</div>
+    <p style="color: #e8ebff;">ঘড়ির পেন্ডুলাম যখন দুলে, তার অবস্থান $\theta(t) = \theta_0 \cos(\omega t)$ সমীকরণ মেনে চলে। এই একই সমীকরণ দিয়ে বোঝানো যায় দোল কাঠি, সুইং, এমনকি ভূমিকম্পের কম্পনও।</p>
+    <div class="app-demo" data-app="pendulum">
+      <div class="app-controls">
+        <label>Length (m) <span class="val" data-out="len">2</span></label>
+        <input type="range" min="0.5" max="5" step="0.1" value="2" data-in="len" data-app="pendulum">
+        <label>Initial angle <span class="val" data-out="ang">30°</span></label>
+        <input type="range" min="5" max="60" step="1" value="30" data-in="ang" data-app="pendulum">
+      </div>
+      <svg viewBox="0 0 500 280" data-svg="pendulum" style="width:100%; background: rgba(0,0,0,0.3); border-radius: 12px;">
+        <line x1="250" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0)" stroke-width="6"/>
+        <line x1="100" y1="20" x2="400" y2="20" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+        <line x1="250" y1="20" x2="250" y2="200" stroke="#ffb649" stroke-width="2" data-line="pendulum-rod"/>
+        <circle cx="250" cy="200" r="20" fill="#ffb649" stroke="white" stroke-width="2" data-bob="pendulum"/>
+        <path d="" fill="none" stroke="rgba(255,110,199,0.4)" stroke-width="1.5" stroke-dasharray="3 3" data-trail="pendulum"/>
+        <text x="20" y="270" font-family="Lora" font-size="11" fill="#a8aedb">Period T = 2π√(L/g)</text>
+      </svg>
+      <p style="text-align:center; color:#a8aedb; font-size:13px; font-family:'Lora',serif; font-style:italic; margin-top:8px;">দৈর্ঘ্য বাড়ালে পিরিয়ডও বাড়ে — এই সম্পর্কটি পেন্ডুলাম ঘড়ির ভিত্তি</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="background: linear-gradient(135deg, #0a0e27, #1a1f4a); color: white; border: 1px solid rgba(46,213,115,0.3); margin-top:24px;">
+    <div class="card-title" style="color: #2ed573;">৪. বিদ্যুৎ প্রবাহ — AC Current</div>
+    <p style="color: #e8ebfff;">বাড়ির বিদ্যুৎ প্রবাহ হলো alternating current (AC)। ভোল্টেজ $V(t) = V_0 \sin(2\pi \cdot 50 \cdot t)$ — প্রতি সেকেন্ডে 50 বার দিক পরিবর্তন করে। বাংলাদেশে লাইন ভোল্টেজ 220V, কিন্তু peak ভোল্টেজ হলো $220\sqrt{2} \approx 311$V।</p>
+    <div class="app-demo" data-app="ac">
+      <div class="app-controls">
+        <label>Frequency (Hz) <span class="val" data-out="freq">50</span></label>
+        <input type="range" min="10" max="200" step="1" value="50" data-in="freq" data-app="ac">
+        <label>Voltage (V) <span class="val" data-out="volt">220</span></label>
+        <input type="range" min="50" max="500" step="10" value="220" data-in="volt" data-app="ac">
+      </div>
+      <svg viewBox="0 0 500 200" data-svg="ac" style="width:100%; background: rgba(0,0,0,0.3); border-radius: 12px;">
+        <line x1="0" y1="100" x2="500" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <path d="" fill="none" stroke="#2ed573" stroke-width="3" data-path="ac"/>
+        <text x="20" y="20" font-family="Lora" font-size="11" fill="#2ed573">V(t) = V₀ sin(2πft)</text>
+        <text x="20" y="190" font-family="Lora" font-size="11" fill="#a8aedb">peak V₀ = <tspan data-out="peak">311</tspan> V</text>
+      </svg>
+      <p style="text-align:center; color:#a8aedb; font-size:13px; font-family:'Lora',serif; font-style:italic; margin-top:8px;">AC ভোল্টেজ হলো সাইন তরঙ্গ — বাড়ির পাওয়ার সাপ্লাইয়ের হৃদস্পন্দন</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="background: linear-gradient(135deg, #0a0e27, #1a1f4a); color: white; border: 1px solid rgba(255,110,199,0.3); margin-top:24px;">
+    <div class="card-title" style="color: #ff6ec7;">৫. গ্রহ-নক্ষত্র ও জ্যোতির্বিজ্ঞান — Planetary Motion</div>
+    <p style="color: #e8ebff;">পৃথিবী সূর্যের চারপাশে উপবৃত্তাকার পথে ঘোরে, কিন্তু কক্ষপথের প্রতিটি বিন্দুর অবস্থান ত্রিকোণমিতিক ফাংশন দিয়ে বর্ণনা করা যায়। NASA এবং ISRO এর মতো মহাকাশ সংস্থাগুলো রকেটের গতিপথ হিসাব করতে এই সূত্রগুলোই ব্যবহার করে।</p>
+    <div class="app-demo" data-app="orbit">
+      <div class="app-controls">
+        <label>Orbit speed <span class="val" data-out="spd">1</span></label>
+        <input type="range" min="0.2" max="3" step="0.1" value="1" data-in="spd" data-app="orbit">
+        <label>Eccentricity <span class="val" data-out="ecc">0.3</span></label>
+        <input type="range" min="0" max="0.8" step="0.05" value="0.3" data-in="ecc" data-app="orbit">
+      </div>
+      <svg viewBox="0 0 500 280" data-svg="orbit" style="width:100%; background: rgba(0,0,0,0.3); border-radius: 12px;">
+        <ellipse cx="250" cy="140" rx="180" ry="120" fill="none" stroke="rgba(108,92,231,0.3)" stroke-width="1" stroke-dasharray="3 3" data-orbit="ellipse"/>
+        <circle cx="250" cy="140" r="12" fill="#ffb649" stroke="white" stroke-width="2"/>
+        <text x="240" y="170" font-family="Lora" font-size="11" fill="#ffb649">Sun</text>
+        <circle cx="430" cy="140" r="8" fill="#00d4ff" stroke="white" stroke-width="2" data-planet="orbit"/>
+        <text x="440" y="160" font-family="Lora" font-size="11" fill="#00d4ff" data-label="orbit-planet">Earth</text>
+        <line x1="250" y1="140" x2="430" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1" data-line="orbit-line"/>
+      </svg>
+      <p style="text-align:center; color:#a8aedb; font-size:13px; font-family:'Lora',serif; font-style:italic; margin-top:8px;">গ্রহের অবস্থান = (R cos θ, R sin θ) — ত্রিকোণমিতি ছাড়া মহাকাশ গবেষণা অসম্ভব</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="background: linear-gradient(135deg, #0a0e27, #1a1f4a); color: white; border: 1px solid rgba(0,212,255,0.3); margin-top:24px;">
+    <div class="card-title" style="color: #00d4ff;">৬. কম্পিউটার গ্রাফিক্স ও গেম — 3D Graphics</div>
+    <p style="color: #e8ebff;">প্রতিটি 3D গেম, প্রতিটি অ্যানিমেটেড মুভি, প্রতিটি ভিআর অ্যাপ্লিকেশনে বস্তুকে ঘোরাতে হয়। এই ঘোরানো হয় ত্রিকোণমিতিক ম্যাট্রিক্স দিয়ে — যেখানে প্রতিটি পিক্সেলের নতুন অবস্থান $x' = x\cos\theta - y\sin\theta$, $y' = x\sin\theta + y\cos\theta$ সমীকরণে বের করা হয়।</p>
+    <div class="app-demo" data-app="rotate">
+      <div class="app-controls">
+        <label>Rotation angle <span class="val" data-out="ang">0°</span></label>
+        <input type="range" min="0" max="360" step="1" value="0" data-in="ang" data-app="rotate">
+      </div>
+      <svg viewBox="0 0 500 280" data-svg="rotate" style="width:100%; background: rgba(0,0,0,0.3); border-radius: 12px;">
+        <line x1="50" y1="140" x2="450" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="250" y1="20" x2="250" y2="260" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <!-- Original square (faint) -->
+        <polygon points="200,90 300,90 300,190 200,190" fill="rgba(108,92,231,0.1)" stroke="rgba(108,92,231,0.4)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <!-- Rotated square -->
+        <polygon data-rotated="square" points="200,90 300,90 300,190 200,190" fill="rgba(0,212,255,0.15)" stroke="#00d4ff" stroke-width="2.5"/>
+        <text x="20" y="270" font-family="Lora" font-size="11" fill="#a8aedb">x' = x cos θ − y sin θ,  y' = x sin θ + y cos θ</text>
+      </svg>
+      <p style="text-align:center; color:#a8aedb; font-size:13px; font-family:'Lora',serif; font-style:italic; margin-top:8px;">ঘোরানো বস্তু — প্রতিটি গেমের ইঞ্জিনের ভিত্তি</p>
+    </div>
+  </div>
+
+  <div class="callout note reveal" style="background: linear-gradient(135deg, rgba(0,212,255,0.12), rgba(108,92,231,0.06)); border-left-color:#00d4ff;">
+    <div class="icon" style="background:#00d4ff;">i</div>
+    <div>
+      <div class="title">এই ছয়টি উদাহরণ থেকে শিখুন</div>
+      <p style="color:var(--text-body);">ত্রিকোণমিতি শুধু বইয়ের পাতায় সীমাবদ্ধ নয় — এটি আপনার মোবাইলের স্ক্রিন, আপনার কানের কাছের হেডফোন, আপনার বাড়ির বাল্ব, এমনকি মহাকাশের গ্রহ পর্যন্ত পৌঁছে আছে। পরবর্তী সেকশনগুলোতে আমরা এই শক্তিগুলোকে গাণিতিকভাবে বুঝতে শিখব।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 1: প্রস্তাবনা / INTRODUCTION                            -->
+<!-- ============================================================= -->
+<section class="section" id="sec-01">
+  <div class="head reveal">
+    <div class="num">01</div>
+    <div class="info">
+      <div class="eyebrow">Chapter Prelude</div>
+      <h2>প্রস্তাবনা — ত্রিকোণমিতির জগতে স্বাগতম</h2>
+      <div class="sub">Why a whole chapter on triangles and angles?</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    "ত্রিকোণমিতি" শব্দটি এসেছে দুটি গ্রিক শব্দ <span class="en-inline">trigonon</span> (ত্রিভুজ) এবং <span class="en-inline">metron</span> (পরিমাপ) থেকে। অর্থাৎ, এটি হলো <strong>ত্রিভুজের পরিমাপের বিজ্ঞান</strong> — কোণ, বাহু, এবং এদের মধ্যে সম্পর্ক নিয়ে যে শাখায় আলোচনা করা হয়, তাকেই ত্রিকোণমিতি বলে। কিন্তু আজকের ত্রিকোণমিতি কেবল ত্রিভুজ পরিমাপেই সীমাবদ্ধ নয় — এটি এখন একটি বিশাল গাণিতিক প্রণালী যা প্রকৃতির অসংখ্য ঘটনা ব্যাখ্যা করে: শব্দের তরঙ্গ, আলোর কম্পন, বিদ্যুৎ প্রবাহ, গ্রহের গতি — সবকিছুই।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">ত্রিকোণমিতি কেন শিখবেন?</div>
+    <p>একটি সাধারণ প্রশ্ন: "জ্যামিতিতে তো ত্রিভুজ পড়লাম, তাহলে আবার নতুন করে ত্রিকোণমিতি কেন?" উত্তর হলো — জ্যামিতি কেবল স্থির ত্রিভুজ নিয়ে কাজ করে। কিন্তু বাস্তব পৃথিবীতে কোণ সবসময় স্থির থাকে না — ঘড়ির কাঁটা ঘোরে, পেন্ডুলাম দুলে, তরঙ্গ আসে। ত্রিকোণমিতি এমন একটি ভাষা তৈরি করে যা <strong>পরিবর্তনশীল কোণকে</strong> সংখ্যা দিয়ে বর্ণনা করতে পারে। এই ভাষা ছাড়া পদার্থবিজ্ঞানে তরঙ্গ বোঝানো যায় না, প্রকৌশলে সেতুর কম্পন হিসাব করা যায় না, এবং কম্পিউটার গ্রাফিক্সে ঘোরানো অবজেক্ট আঁকাও অসম্ভব।</p>
+    <p>এই অধ্যায়ে আমরা কোণের ধারণা থেকে শুরু করে ক্রমান্বয়ে এগিয়ে যাব — ডিগ্রি ও রেডিয়ান পরিমাপ, চারটি চতুর্থাংশে ত্রিকোণমিতিক অনুপাতের চিহ্ন, মৌলিক অভেদাবলি, যৌগিক ও গুণিত কোণের সূত্র, ত্রিকোণমিতিক ফাংশনের লেখচিত্র, বিপরীত ফাংশন, সমীকরণ সমাধান, এবং শেষে ত্রিভুজের ধর্ম (Sine ও Cosine সূত্র) পর্যন্ত। প্রতিটি ধাপে রয়েছে অ্যানিমেটেড ডায়াগ্রাম এবং ইন্টারেক্টিভ উদাহরণ — যাতে সূত্র নিছক মুখস্থ না হয়ে চোখে দেখে বুঝতে পারেন।</p>
+  </div>
+
+  <div class="grid-3 reveal">
+    <div class="card glass" style="text-align:center; padding:22px;">
+      <div style="font-size:32px; margin-bottom:6px;">📐</div>
+      <div style="font-family:'Lora',serif; font-weight:700; color:var(--primary); font-size:14px; letter-spacing:1px;">ANGLES</div>
+      <p style="font-size:14px; margin:6px 0 0; color:var(--text-muted);">কোণের সংজ্ঞা, প্রকারভেদ ও চতুর্থাংশের ধারণা</p>
+    </div>
+    <div class="card glass" style="text-align:center; padding:22px;">
+      <div style="font-size:32px; margin-bottom:6px;">🔄</div>
+      <div style="font-family:'Lora',serif; font-weight:700; color:var(--primary); font-size:14px; letter-spacing:1px;">RATIOS</div>
+      <p style="font-size:14px; margin:6px 0 0; color:var(--text-muted);">sin, cos, tan এবং তাদের অভেদাবলি ও চিহ্ন</p>
+    </div>
+    <div class="card glass" style="text-align:center; padding:22px;">
+      <div style="font-size:32px; margin-bottom:6px;">📈</div>
+      <div style="font-family:'Lora',serif; font-weight:700; color:var(--primary); font-size:14px; letter-spacing:1px;">FUNCTIONS</div>
+      <p style="font-size:14px; margin:6px 0 0; color:var(--text-muted);">তরঙ্গ লেখচিত্র, বিপরীত ফাংশন ও সমীকরণ</p>
+    </div>
+  </div>
+
+  <div class="callout note reveal">
+    <div class="icon">i</div>
+    <div>
+      <div class="title">পড়ার পদ্ধতি</div>
+      <p>প্রতিটি সেকশনে নীল রঙের বক্সে সূত্র দেওয়া, সবুজ বক্সে টিপস, হলুদ বক্সে সতর্কতা, লাল বক্সে সাধারণ ভুল। অ্যানিমেটেড ডায়াগ্রামে স্লাইডার টেনে কোণ পরিবর্তন করে দেখুন মান কীভাবে পরিবর্তিত হয়।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 2: কোণ ও প্রকারভেদ / ANGLES                              -->
+<!-- ============================================================= -->
+<section class="section" id="sec-02">
+  <div class="head reveal">
+    <div class="num">02</div>
+    <div class="info">
+      <div class="eyebrow">Foundation</div>
+      <h2>কোণ ও প্রকারভেদ</h2>
+      <div class="sub">Angles in standard position — the building block</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    দুটি রেখা বা রেখাংশ একটি বিন্দুতে ছেদ করলে একটি <strong>কোণ</strong> (Angle) গঠিত হয়। এই ছেদবিন্দুকে বলা হয় <em>শীর্ষবিন্দু</em> (Vertex), এবং দুটি রেখাকে বলা হয় কোণের <em>বাহু</em> (Arms)। ত্রিকোণমিতিতে আমরা একটি বিশেষ ধরনের কোণ নিয়ে কাজ করি যাকে <strong>আদিকোণ</strong> বা <span class="en-inline">Standard Position Angle</span> বলা হয়।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">আদিকোণ (Standard Position Angle) — সংজ্ঞা</div>
+    <p>একটি কোণকে <strong>আদিকোণ</strong> বা standard position-এ আনা হলে যখন:</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> কোণের শীর্ষবিন্দু একটি নির্দিষ্ট মূলবিন্দু <strong>O</strong> (Origin)-এ থাকে।</div>
+      <div class="step"><span class="step-num">2</span> কোণের প্রথম বাহু (Initial Side) ধনাত্মক x-অক্ষের সমান্তরাল বরাবর থাকে।</div>
+      <div class="step"><span class="step-num">3</span> দ্বিতীয় বাহু (Terminal Side) শীর্ষবিন্দু থেকে ঘোরার মাধ্যমে গঠিত হয়।</div>
+    </div>
+    <p>এই সংজ্ঞাটি গুরুত্বপূর্ণ কারণ সমস্ত ত্রিকোণমিতিক অনুপাত আদিকোণের উপর ভিত্তি করে সংজ্ঞায়িত হয়। কোণটি যে কোণেই থাকুক না কেন, আমরা সর্বদা এটিকে আদিকোণে রূপান্তর করে তবেই কাজ শুরু করি।</p>
+  </div>
+
+  <!-- Animated angle diagram -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="posGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#6c5ce7"/>
+          <stop offset="100%" stop-color="#00d4ff"/>
+        </linearGradient>
+        <linearGradient id="negGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff6ec7"/>
+          <stop offset="100%" stop-color="#ffb649"/>
+        </linearGradient>
+      </defs>
+      <!-- Axes -->
+      <line x1="40" y1="175" x2="460" y2="175" stroke="#a8aedb" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="250" y1="40" x2="250" y2="310" stroke="#a8aedb" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="465" y="180" font-family="Lora" font-size="14" fill="#7d83b3">x</text>
+      <text x="245" y="35" font-family="Lora" font-size="14" fill="#7d83b3">y</text>
+      <text x="240" y="195" font-family="Lora" font-size="14" fill="#7d83b3">O</text>
+
+      <!-- Positive angle (counter-clockwise, 60°) -->
+      <g class="anim-rotate-pos" style="transform-origin: 250px 175px;">
+        <line x1="250" y1="175" x2="430" y2="175" stroke="url(#posGrad)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 320 175 A 70 70 0 0 0 285 114" fill="none" stroke="#6c5ce7" stroke-width="2.5"/>
+        <text x="295" y="135" font-family="Lora" font-style="italic" font-size="18" fill="#6c5ce7">+θ</text>
+        <circle cx="430" cy="175" r="6" fill="#6c5ce7"/>
+        <text x="438" y="195" font-family="Lora" font-size="12" fill="#6c5ce7">+60°</text>
+      </g>
+
+      <!-- Negative angle (clockwise, -45°) -->
+      <g class="anim-rotate-neg" style="transform-origin: 250px 175px;">
+        <line x1="250" y1="175" x2="430" y2="175" stroke="url(#negGrad)" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 320 175 A 50 50 0 0 1 285 211" fill="none" stroke="#ff6ec7" stroke-width="2.5" opacity="0.7"/>
+        <text x="285" y="230" font-family="Lora" font-style="italic" font-size="18" fill="#ff6ec7">-φ</text>
+      </g>
+
+      <!-- Labels -->
+      <text x="60" y="320" font-family="Alinur" font-size="13" fill="#2c314d">Counter-clockwise = ধনাত্মক কোণ (+)</text>
+      <text x="60" y="338" font-family="Alinur" font-size="13" fill="#2c314d">Clockwise = ঋণাত্মক কোণ (−)</text>
+    </svg>
+    <div class="caption"><span class="num">Fig 2.1</span> আদিকোণে ধনাত্মক ও ঋণাত্মক কোণের দিক</div>
+  </div>
+
+  <h3 style="margin-top:32px;">কোণের দিক (Direction of Rotation)</h3>
+  <p>গণিতে একটি সর্বজনীন চুক্তি আছে কোণের দিক নির্দেশ করার জন্য। <strong>ঘড়ির কাঁটার বিপরীত দিকে</strong> (counter-clockwise) ঘোরালে কোণটিকে <em>ধনাত্মক</em> ধরা হয়। অন্যদিকে <strong>ঘড়ির কাঁটার দিকে</strong> (clockwise) ঘোরালে কোণটি <em>ঋণাত্মক</em> হয়। এই নিয়মটি গোটা ত্রিকোণমিতি জুড়ে প্রযোজ্য — যেমন $+60°$ এবং $-60°$ একে অপরের প্রতিসম, এবং তাদের ত্রিকোণমিতিক মানগুলো চিহ্নে পার্থক্য বহন করে।</p>
+
+  <div class="grid-2 reveal">
+    <div class="card" style="border-left:4px solid var(--accent-green);">
+      <div class="card-title" style="color:var(--accent-green);">ধনাত্মক কোণ</div>
+      <p>ঘড়ির কাঁটার বিপরীত দিকে ঘূর্ণন। x-অক্ষ থেকে শুরু করে প্রথম চতুর্থাংশ দিয়ে দ্বিতীয়, তৃতীয়, চতুর্থ চতুর্থাংশে এক পূর্ণ ঘোর্ণন = <strong>+360°</strong>।</p>
+      <p style="margin-bottom:0;">উদাহরণ: $+30°, +90°, +180°, +360°, +720°$ — এগুলো সবই ধনাত্মক কোণ। একই কোণ একাধিকবার ঘুরলে মান বড় হয়, যেমন $+450° = +360° + 90°$।</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--accent-pink);">
+      <div class="card-title" style="color:var(--accent-pink);">ঋণাত্মক কোণ</div>
+      <p>ঘড়ির কাঁটার দিকে ঘূর্ণন। x-অক্ষ থেকে শুরু করে চতুর্থ চতুর্থাংশ দিয়ে তৃতীয়, দ্বিতীয়, প্রথম চতুর্থাংশে এক পূর্ণ ঘোর্ণন = <strong>−360°</strong>।</p>
+      <p style="margin-bottom:0;">উদাহরণ: $-30°, -90°, -180°, -360°, -720°$ — এগুলো ঋণাত্মক কোণ। সাধারণত কোণ বড় হলে ঋণাত্মক আকারে প্রকাশ করা সুবিধাজনক হয়, যেমন $-30°$ লেখা $330°$ লেখার চেয়ে সহজ।</p>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">মনে রাখার টিপস</div>
+      <p>ইমেজিন করুন আপনি একটি ঘড়ির সামনে দাঁড়িয়ে আছেন। সাধারণ ঘড়ির কাঁটা যেদিকে চলে, সেটা <strong>নেতিবাচক দিক</strong>। ঘড়ির কাঁটা উল্টো দিকে চললেই সেটা <strong>ইতিবাচক দিক</strong>। কথায় আছে: "কাঁটা উল্টো হলেই সব পজিটিভ।"</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 3: কোণের পরিমাপ / MEASUREMENT OF ANGLES                -->
+<!-- ============================================================= -->
+<section class="section" id="sec-03">
+  <div class="head reveal">
+    <div class="num">03</div>
+    <div class="info">
+      <div class="eyebrow">Two Systems, One Truth</div>
+      <h2>কোণের পরিমাপ</h2>
+      <div class="sub">Degree vs. Radian — the two languages of angles</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    কোণ পরিমাপের দুটি প্রধান একক রয়েছে — <span class="en-inline">Sexagesimal</span> (ডিগ্রি) এবং <span class="en-inline">Circular</span> (রেডিয়ান)। দৈনন্দিন জীবনে আমরা ডিগ্রি ব্যবহার করি, কিন্তু উচ্চতর গণিত ও পদার্থবিজ্ঞানে রেডিয়ানই হলো প্রকৃত ভাষা। এই দুটি এককের মধ্যে রূপান্তর করা ত্রিকোণমিতির সর্বপ্রথম দক্ষতা।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">Sexagesimal System (ডিগ্রি পদ্ধতি)</div>
+    <p>এই পদ্ধতিতে একটি পূর্ণ ঘূর্ণনকে (অর্থাৎ একটি বৃত্তের কেন্দ্রে একপাক ঘোরাকে) <strong>360°</strong> হিসেবে পরিমাপ করা হয়। এই 360°-কে আবার ভাগ করা হয়:</p>
+    <div class="steps">
+      <div class="step"><span class="step-num-inline">1</span><strong>1° (ডিগ্রি)</strong> = পূর্ণ ঘূর্ণনের $\frac{1}{360}$ অংশ</div>
+      <div class="step"><span class="step-num-inline">2</span><strong>1$'$ (মিনিট)</strong> = $\frac{1}{60}$ ডিগ্রি = 60 সেকেন্ড</div>
+      <div class="step"><span class="step-num-inline">3</span><strong>1$''$ (সেকেন্ড)</strong> = $\frac{1}{60}$ মিনিট = $\frac{1}{3600}$ ডিগ্রি</div>
+    </div>
+    <p>সুতরাং $30°30'30'' = 30 + \frac{30}{60} + \frac{30}{3600} = 30.5083°$ (দশমিক আকারে)। এই পদ্ধতি প্রাচীন ব্যাবিলনীয়দের আবিষ্কার, যারা সংখ্যা 60-কে ভিত্তি হিসেবে ব্যবহার করত — কারণ 60 কে অনেক সংখ্যা দিয়ে ভাগ করা যায় (2, 3, 4, 5, 6, 10, 12, 15, 20, 30)।</p>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">Circular System (রেডিয়ান পদ্ধতি)</div>
+    <p>একটি বৃত্তে কেন্দ্র থেকে ব্যাসার্ধের সমান দৈর্ঘ্যের চাপ (arc) টানা হলে যে কোণ উৎপন্ন হয়, তাকে <strong>1 রেডিয়ান</strong> বলা হয়। অর্থাৎ:</p>
+    <div class="formula-box">
+      <div class="formula-label">রেডিয়ানের সংজ্ঞা</div>
+      <div class="formula-body">$$1 \text{ radian} = \frac{\text{arc length}}{\text{radius}} = \frac{s}{r}$$</div>
+    </div>
+    <p>যদি পুরো বৃত্তের পরিধি পরিমাপ করা হয়, তাহলে $s = 2\pi r$ হয়, এবং পুরো বৃত্তের কোণ হয় $\frac{2\pi r}{r} = 2\pi$ রেডিয়ান। অর্থাৎ এক পূর্ণ ঘোর্ণন = $2\pi$ রেডিয়ান = $360°$। রেডিয়ান এককটি "dimensionless" — কারণ চাপ এবং ব্যাসার্ধ দুটিই দৈর্ঘ্য, এবং দৈর্ঘ্য/দৈর্ঘ্য = কোনো একক নেই।</p>
+  </div>
+
+  <!-- Radian visual diagram -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="radianArc" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#6c5ce7"/>
+          <stop offset="100%" stop-color="#00d4ff"/>
+        </linearGradient>
+      </defs>
+      <!-- Circle -->
+      <circle cx="250" cy="140" r="90" fill="none" stroke="#a8aedb" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <!-- Center -->
+      <circle cx="250" cy="140" r="4" fill="#6c5ce7"/>
+      <text x="240" y="160" font-family="Lora" font-size="14" fill="#2c314d">O</text>
+      <!-- Two radii forming 1 radian (~57.3°) -->
+      <line x1="250" y1="140" x2="340" y2="140" stroke="#6c5ce7" stroke-width="3" stroke-linecap="round"/>
+      <line x1="250" y1="140" x2="298" y2="64" stroke="#00d4ff" stroke-width="3" stroke-linecap="round"/>
+      <!-- Arc of length = r -->
+      <path d="M 340 140 A 90 90 0 0 0 298 64" fill="none" stroke="url(#radianArc)" stroke-width="4" stroke-linecap="round"/>
+      <!-- Labels -->
+      <text x="345" y="135" font-family="Lora" font-size="12" fill="#6c5ce7">r</text>
+      <text x="290" y="55" font-family="Lora" font-size="12" fill="#00d4ff">r</text>
+      <text x="335" y="100" font-family="Lora" font-style="italic" font-size="14" fill="#6c5ce7">s = r</text>
+      <text x="290" y="180" font-family="Lora" font-style="italic" font-size="16" fill="#6c5ce7">θ = 1 rad</text>
+      <!-- Caption -->
+      <text x="20" y="260" font-family="Alinur" font-size="13" fill="#2c314d">যখন চাপের দৈর্ঘ্য (s) = ব্যাসার্ধ (r), তখন কেন্দ্রে উৎপন্ন কোণ = 1 রেডিয়ান (≈ 57.3°)</text>
+    </svg>
+    <div class="caption"><span class="num">Fig 3.1</span> রেডিয়ানের জ্যামিতিক সংজ্ঞা</div>
+  </div>
+
+  <div class="formula-box reveal">
+    <div class="formula-label">রূপান্তর সূত্র</div>
+    <div class="formula-body">
+      $$360° = 2\pi \text{ rad} \quad\Rightarrow\quad 180° = \pi \text{ rad}$$
+      $$1° = \frac{\pi}{180} \text{ rad} \approx 0.0175 \text{ rad}$$
+      $$1 \text{ rad} = \frac{180°}{\pi} \approx 57.296°$$
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">সাধারণ কোণসমূহের রূপান্তর সারণি</div>
+    <table class="tbl">
+      <thead>
+        <tr><th>ডিগ্রি</th><th>রেডিয়ান (π আকারে)</th><th>রেডিয়ান (দশমিক)</th><th>অবস্থান</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num-col">0°</td><td>$0$</td><td>0</td><td>প্রারম্ভিক বাহুতে</td></tr>
+        <tr><td class="num-col">30°</td><td>$\dfrac{\pi}{6}$</td><td>0.524</td><td>১ম চতুর্থাংশ</td></tr>
+        <tr><td class="num-col">45°</td><td>$\dfrac{\pi}{4}$</td><td>0.785</td><td>১ম চতুর্থাংশ</td></tr>
+        <tr><td class="num-col">60°</td><td>$\dfrac{\pi}{3}$</td><td>1.047</td><td>১ম চতুর্থাংশ</td></tr>
+        <tr><td class="num-col">90°</td><td>$\dfrac{\pi}{2}$</td><td>1.571</td><td>ধনাত্মক y-অক্ষে</td></tr>
+        <tr><td class="num-col">120°</td><td>$\dfrac{2\pi}{3}$</td><td>2.094</td><td>২য় চতুর্থাংশ</td></tr>
+        <tr><td class="num-col">135°</td><td>$\dfrac{3\pi}{4}$</td><td>2.356</td><td>২য় চতুর্থাংশ</td></tr>
+        <tr><td class="num-col">150°</td><td>$\dfrac{5\pi}{6}$</td><td>2.618</td><td>২য় চতুর্থাংশ</td></tr>
+        <tr><td class="num-col">180°</td><td>$\pi$</td><td>3.142</td><td>ঋণাত্মক x-অক্ষে</td></tr>
+        <tr><td class="num-col">270°</td><td>$\dfrac{3\pi}{2}$</td><td>4.712</td><td>ঋণাত্মক y-অক্ষে</td></tr>
+        <tr><td class="num-col">360°</td><td>$2\pi$</td><td>6.283</td><td>পূর্ণ ঘোর্ণন</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn reveal">
+    <div class="icon">!</div>
+    <div>
+      <div class="title">সতর্কতা — রেডিয়ান লেখার রীতি</div>
+      <p>রূপান্তর সূত্রে $\pi$ লেখা হলে উত্তরও $\pi$ আকারে রাখতে হবে — দশমিকে রূপান্তর করা উচিত নয়। যেমন $60° = \frac{\pi}{3}$ লেখা সঠিক, কিন্তু $60° = 1.047$ লেখা ভুল (যদি না প্রশ্নে দশমিক চাওয়া হয়)। পরীক্ষায় অনেকেই $\pi$ বাদ দিয়ে দশমিক লিখে নম্বর হারায়।</p>
+    </div>
+  </div>
+
+  <!-- Conversion calculator -->
+  <div class="unit-circle-tool reveal" style="background: linear-gradient(135deg, #1a1f4a 0%, #131736 100%);">
+    <div class="card-title" style="color:var(--accent-cyan); margin-bottom:18px;">Interactive Converter</div>
+    <div class="layout">
+      <div class="controls">
+        <div>
+          <label for="degInput">Degree → Radian</label>
+          <input type="range" min="0" max="360" step="1" value="60" id="degInput" style="width:100%;">
+          <div style="font-family:'JetBrains Mono',monospace; margin-top:6px; color:var(--accent-cyan);"><span id="degVal">60</span>° = <span id="radOut" style="color:white;">π/3</span> rad</div>
+        </div>
+        <div>
+          <label for="radInput">Radian → Degree (×π)</label>
+          <input type="range" min="0" max="12" step="0.25" value="1" id="radInput" style="width:100%;">
+          <div style="font-family:'JetBrains Mono',monospace; margin-top:6px; color:var(--accent-cyan);"><span id="radVal">1</span>π rad = <span id="degOut" style="color:white;">180</span>°</div>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" id="convertCircle" style="width:100%; max-width:300px; margin:0 auto; display:block;">
+          <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(232,235,255,0.2)" stroke-width="1"/>
+          <line x1="20" y1="150" x2="280" y2="150" stroke="rgba(232,235,255,0.4)" stroke-width="1.5"/>
+          <line x1="150" y1="20" x2="150" y2="280" stroke="rgba(232,235,255,0.4)" stroke-width="1.5"/>
+          <path id="arcPath" d="" fill="none" stroke="url(#posGrad)" stroke-width="3"/>
+          <line id="termLine" x1="150" y1="150" x2="270" y2="150" stroke="#00d4ff" stroke-width="3"/>
+          <circle cx="150" cy="150" r="4" fill="#6c5ce7"/>
+          <text id="angleText" x="170" y="140" font-family="Lora" font-style="italic" font-size="20" fill="#00d4ff">θ</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 4: সম্পাতী কোণ / COTERMINAL ANGLES                       -->
+<!-- ============================================================= -->
+<section class="section" id="sec-04">
+  <div class="head reveal">
+    <div class="num">04</div>
+    <div class="info">
+      <div class="eyebrow">Same Position, Many Names</div>
+      <h2>সম্পাতী কোণ</h2>
+      <div class="sub">Coterminal angles — when different numbers describe the same direction</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ধরুন আপনি একটি চাকতির উপর দাঁড়িয়ে আছেন এবং চাকতিটি ঘুরছে। এক পূর্ণ ঘোর্ণন (360°) শেষে আপনি আবার আগের জায়গায় ফিরে আসেন। দুই পূর্ণ ঘোর্ণন (720°) শেষেও আপনি একই জায়গায় থাকবেন। এই ঘটনাটির গাণিতিক রূপই হলো <strong>সম্পাতী কোণ</strong> (Coterminal Angle)।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">সংজ্ঞা</div>
+    <p>একই শীর্ষবিন্দু এবং একই প্রারম্ভিক বাহু বিশিষ্ট দুটি কোণের দ্বিতীয় বাহু (terminal side) যদি একই অবস্থানে থাকে, তবে তাদেরকে <strong>সম্পাতী কোণ</strong> বলা হয়। গাণিতিকভাবে, কোণ $\theta$ এবং $\theta \pm 360°n$ (যেখানে $n$ যেকোনো পূর্ণসংখ্যা) পরস্পর সম্পাতী।</p>
+    <div class="formula-box">
+      <div class="formula-label">সম্পাতী কোণের সূত্র</div>
+      <div class="formula-body">$$\theta_1 \text{ ও } \theta_2 \text{ সম্পাতী } \iff \theta_2 = \theta_1 \pm 360° \cdot n \quad (n \in \mathbb{Z})$$</div>
+    </div>
+    <p>অর্থাৎ কোণের সাথে 360°-এর যেকোনো পূর্ণসংখ্যক গুণ যোগ বা বিয়োগ করলে নতুন কোণটি আগেরটির সম্পাতী হবে। যেমন $60°, 420°, 780°, -300°, -660°$ — এই পাঁচটি কোণই পরস্পর সম্পাতী, কারণ এদের সবার terminal side একই অবস্থানে থাকে।</p>
+  </div>
+
+  <!-- Coterminal diagram -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cotermGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#6c5ce7"/>
+          <stop offset="100%" stop-color="#00d4ff"/>
+        </linearGradient>
+      </defs>
+      <!-- 3 axes pairs side by side -->
+      <g transform="translate(80, 150)">
+        <line x1="-60" y1="0" x2="60" y2="0" stroke="#a8aedb" stroke-width="1.5"/>
+        <line x1="0" y1="-100" x2="0" y2="100" stroke="#a8aedb" stroke-width="1.5" opacity="0.3"/>
+        <line x1="0" y1="0" x2="50" y2="-87" stroke="url(#cotermGrad)" stroke-width="3"/>
+        <text x="0" y="120" text-anchor="middle" font-family="Lora" font-style="italic" font-size="20" fill="#6c5ce7">60°</text>
+        <text x="0" y="140" text-anchor="middle" font-family="Lora" font-size="11" fill="#7d83b3">1 turn</text>
+      </g>
+      <g transform="translate(250, 150)">
+        <line x1="-60" y1="0" x2="60" y2="0" stroke="#a8aedb" stroke-width="1.5"/>
+        <line x1="0" y1="-100" x2="0" y2="100" stroke="#a8aedb" stroke-width="1.5" opacity="0.3"/>
+        <!-- Spiral showing 1+1 turn -->
+        <path d="M 60 0 A 50 50 0 1 0 -50 0 A 50 50 0 1 0 50 0 L 50 -87" fill="none" stroke="#ffb649" stroke-width="2"/>
+        <line x1="0" y1="0" x2="50" y2="-87" stroke="url(#cotermGrad)" stroke-width="3"/>
+        <text x="0" y="120" text-anchor="middle" font-family="Lora" font-style="italic" font-size="20" fill="#6c5ce7">420°</text>
+        <text x="0" y="140" text-anchor="middle" font-family="Lora" font-size="11" fill="#7d83b3">60° + 360°</text>
+      </g>
+      <g transform="translate(420, 150)">
+        <line x1="-60" y1="0" x2="60" y2="0" stroke="#a8aedb" stroke-width="1.5"/>
+        <line x1="0" y1="-100" x2="0" y2="100" stroke="#a8aedb" stroke-width="1.5" opacity="0.3"/>
+        <!-- Spiral showing -1 turn -->
+        <path d="M 60 0 A 50 50 0 1 1 50 87 A 50 50 0 1 1 50 -87" fill="none" stroke="#ff6ec7" stroke-width="2"/>
+        <line x1="0" y1="0" x2="50" y2="-87" stroke="url(#cotermGrad)" stroke-width="3"/>
+        <text x="0" y="120" text-anchor="middle" font-family="Lora" font-style="italic" font-size="20" fill="#6c5ce7">−300°</text>
+        <text x="0" y="140" text-anchor="middle" font-family="Lora" font-size="11" fill="#7d83b3">60° − 360°</text>
+      </g>
+    </svg>
+    <div class="caption"><span class="num">Fig 4.1</span> তিনটি কোণের terminal side অভিন্ন — তারা পরস্পর সম্পাতী</div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">আদিকোণে রূপান্তর (Reduction to Standard Position)</div>
+    <p>যেকোনো বড় বা ঋণাত্মক কোণকে আমরা $0°$ থেকে $360°$ এর মধ্যে একটি সম্পাতী কোণে রূপান্তর করতে পারি। এই কৌশলটি পরীক্ষায় প্রায়ই আসে।</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span> কোণটিকে 360° দিয়ে ভাগ করুন (ভাগশেষ বের করুন)।
+        <div style="margin-top:6px;">যেমন: $790° \div 360° = 2$ ভাগশেষ $70°$</div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span> ভাগশেষটিই হলো আদিকোণে কোণ।
+        <div style="margin-top:6px;">$\therefore 790° \equiv 70°$ (একই terminal side)</div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span> ঋণাত্মক কোণের ক্ষেত্রে 360° যোগ করতে থাকুন যতক্ষণ না ধনাত্মক না হয়।
+        <div style="margin-top:6px;">যেমন: $-580° + 360° = -220°$, আবার $-220° + 360° = 140°$। সুতরাং $-580° \equiv 140°$।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout note reveal">
+    <div class="icon">i</div>
+    <div>
+      <div class="title">কেন এই রূপান্তর দরকার?</div>
+      <p>ত্রিকোণমিতিক অনুপাতের মান নির্ভর করে শুধু terminal side-এর অবস্থানের উপর, ঘোর্ণনের সংখ্যার উপর নয়। তাই বড় কোণের জন্যও $\sin(790°) = \sin(70°)$ হবে। এই কারণেই আমরা প্রথমে কোণকে আদিকোণে নামিয়ে আনি, তারপর ত্রিকোণমিতিক মান বের করি।</p>
+    </div>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$-1234°$ কে আদিকোণে রূপান্তর করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>$-1234° + 4 \times 360° = -1234° + 1440° = 206°$</p>
+      <p>সুতরাং $-1234° \equiv 206°$ (তৃতীয় চতুর্থাংশে)।</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 5: চতুর্থাংশ / QUADRANTS                                 -->
+<!-- ============================================================= -->
+<section class="section" id="sec-05">
+  <div class="head reveal">
+    <div class="num">05</div>
+    <div class="info">
+      <div class="eyebrow">The Four Realms</div>
+      <h2>চতুর্থাংশ</h2>
+      <div class="sub">Quadrants — dividing the plane into four sign regions</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    একটি কার্তেসীয় সমতলে x ও y অক্ষ মূলবিন্দুকে পরিবেষ্টন করে চারটি অঞ্চল তৈরি করে। এই চারটি অঞ্চলকে <strong>চতুর্থাংশ</strong> (Quadrant) বলা হয়। প্রতিটি চতুর্থাংশে ত্রিকোণমিতিক অনুপাতের চিহ্ন আলাদা — এই চিহ্ন নিয়মই ত্রিকোণমিতির সবচেয়ে গুরুত্বপূর্ণ মেমরি কাজ।
+  </p>
+
+  <!-- Quadrant diagram -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="q1Grad" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2ed573" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#2ed573" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="q2Grad" x1="100%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#6c5ce7" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#6c5ce7" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="q3Grad" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ff6ec7" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#ff6ec7" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="q4Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffb649" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#ffb649" stop-opacity="0.05"/>
+        </linearGradient>
+      </defs>
+      <!-- Quadrant fills -->
+      <path d="M 250 250 L 460 250 A 210 210 0 0 0 250 40 Z" fill="url(#q1Grad)"/>
+      <path d="M 250 250 L 250 40 A 210 210 0 0 0 40 250 Z" fill="url(#q2Grad)"/>
+      <path d="M 250 250 L 40 250 A 210 210 0 0 0 250 460 Z" fill="url(#q3Grad)"/>
+      <path d="M 250 250 L 250 460 A 210 210 0 0 0 460 250 Z" fill="url(#q4Grad)"/>
+      <!-- Axes -->
+      <line x1="20" y1="250" x2="480" y2="250" stroke="#7d83b3" stroke-width="2"/>
+      <line x1="250" y1="20" x2="250" y2="480" stroke="#7d83b3" stroke-width="2"/>
+      <!-- Arrows -->
+      <polygon points="480,250 470,245 470,255" fill="#7d83b3"/>
+      <polygon points="250,20 245,30 255,30" fill="#7d83b3"/>
+      <!-- Center -->
+      <circle cx="250" cy="250" r="4" fill="#6c5ce7"/>
+      <text x="232" y="270" font-family="Lora" font-size="16" fill="#2c314d">O</text>
+      <!-- Axis labels -->
+      <text x="475" y="245" font-family="Lora" font-style="italic" font-size="16" fill="#7d83b3">x</text>
+      <text x="258" y="28" font-family="Lora" font-style="italic" font-size="16" fill="#7d83b3">y</text>
+      <!-- Quadrant labels -->
+      <text x="370" y="160" font-family="Lora" font-style="italic" font-weight="700" font-size="22" fill="#2ed573">Q1</text>
+      <text x="130" y="160" font-family="Lora" font-style="italic" font-weight="700" font-size="22" fill="#6c5ce7">Q2</text>
+      <text x="130" y="370" font-family="Lora" font-style="italic" font-weight="700" font-size="22" fill="#ff6ec7">Q3</text>
+      <text x="370" y="370" font-family="Lora" font-style="italic" font-weight="700" font-size="22" fill="#ffb649">Q4</text>
+      <!-- Angle ranges -->
+      <text x="350" y="180" font-family="Lora" font-size="12" fill="#2c5fa8">0° &lt; θ &lt; 90°</text>
+      <text x="80" y="180" font-family="Lora" font-size="12" fill="#2c5fa8">90° &lt; θ &lt; 180°</text>
+      <text x="80" y="390" font-family="Lora" font-size="12" fill="#2c5fa8">180° &lt; θ &lt; 270°</text>
+      <text x="350" y="390" font-family="Lora" font-size="12" fill="#2c5fa8">270° &lt; θ &lt; 360°</text>
+      <!-- Coordinate signs -->
+      <text x="350" y="220" font-family="Lora" font-size="13" fill="#2c5fa8">(+, +)</text>
+      <text x="100" y="220" font-family="Lora" font-size="13" fill="#2c5fa8">(−, +)</text>
+      <text x="100" y="350" font-family="Lora" font-size="13" fill="#2c5fa8">(−, −)</text>
+      <text x="350" y="350" font-family="Lora" font-size="13" fill="#2c5fa8">(+, −)</text>
+    </svg>
+    <div class="caption"><span class="num">Fig 5.1</span> চার চতুর্থাংশে x ও y-এর চিহ্ন ও কোণের পরিসর</div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">রেফারেন্স কোণ (Reference Angle)</div>
+    <p>যেকোনো কোণ $\theta$-এর জন্য, terminal side এবং x-অক্ষের মধ্যবর্তী ক্ষুদ্রতম কোণকে <strong>রেফারেন্স কোণ</strong> $\theta'$ বলা হয়। রেফারেন্স কোণ সর্বদা $0° \le \theta' \le 90°$ এর মধ্যে থাকে।</p>
+    <div class="formula-box">
+      <div class="formula-label">রেফারেন্স কোণের সূত্র</div>
+      <div class="formula-body">
+        Q1: $\theta' = \theta$ &nbsp;&nbsp;|&nbsp;&nbsp; Q2: $\theta' = 180° - \theta$ &nbsp;&nbsp;|&nbsp;&nbsp; Q3: $\theta' = \theta - 180°$ &nbsp;&nbsp;|&nbsp;&nbsp; Q4: $\theta' = 360° - \theta$
+      </div>
+    </div>
+    <p>যেমন $150°$-এর রেফারেন্স কোণ $= 180° - 150° = 30°$। এবং $210°$-এর রেফারেন্স কোণ $= 210° - 180° = 30°$। রেফারেন্স কোণ আমাদের সাহায্য করে বড় কোণের ত্রিকোণমিতিক মান বের করতে — কারণ $|\sin 150°| = \sin 30° = 0.5$।</p>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">মনে রাখার কৌশল</div>
+      <p>রেফারেন্স কোণ বের করার সহজ উপায়: terminal side থেকে x-অক্ষে নেমে যাও। এই নামার কোণটিই রেফারেন্স কোণ। Q1-এ কোণ নিজেই রেফারেন্স, Q2 ও Q3-এ $180°$ থেকে দূরত্ব, Q4 ও Q1-এ $360°$ বা $0°$ থেকে দূরত্ব।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 6: ত্রিকোণমিতিক অনুপাত / TRIGONOMETRIC RATIOS            -->
+<!-- ============================================================= -->
+<section class="section" id="sec-06">
+  <div class="head reveal">
+    <div class="num">06</div>
+    <div class="info">
+      <div class="eyebrow">The Six Pillars</div>
+      <h2>ত্রিকোণমিতিক অনুপাত</h2>
+      <div class="sub">sin, cos, tan, cosec, sec, cot — and the unit circle that explains them all</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ত্রিকোণমিতির ছয়টি মৌলিক অনুপাত হলো সম্পূর্ণ অধ্যায়ের মেরুদণ্ড। এগুলো <strong>একক বৃত্ত</strong> (Unit Circle) থেকে উৎপন্ন — একটি বৃত্ত যার ব্যাসার্ধ 1, কেন্দ্র মূলবিন্দুতে। এই বৃত্তের উপর যেকোনো বিন্দুর স্থানাঙ্ক সরাসরি cos ও sin-এর মান দেয়।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">একক বৃত্ত থেকে অনুপাতের সংজ্ঞা</div>
+    <p>একক বৃত্তের উপর একটি বিন্দু $P(x, y)$ নেওয়া হলে, যেখানে $OP$ x-অক্ষের সাথে $\theta$ কোণ উৎপন্ন করে, তখন:</p>
+    <div class="formula-box">
+      <div class="formula-label">মৌলিক সংজ্ঞা (একক বৃত্ত থেকে)</div>
+      <div class="formula-body">
+        $$\cos\theta = x \qquad \sin\theta = y$$
+        $$\tan\theta = \frac{y}{x} = \frac{\sin\theta}{\cos\theta} \qquad \cot\theta = \frac{x}{y} = \frac{\cos\theta}{\sin\theta}$$
+        $$\sec\theta = \frac{1}{x} = \frac{1}{\cos\theta} \qquad \csc\theta = \frac{1}{y} = \frac{1}{\sin\theta}$$
+      </div>
+    </div>
+    <p>অর্থাৎ, একক বৃত্তের উপরের যেকোনো বিন্দুর <strong>x-স্থানাঙ্ক</strong> হলো সেই কোণের $\cos\theta$, এবং <strong>y-স্থানাঙ্ক</strong> হলো $\sin\theta$। এটি ত্রিকোণমিতির সবচেয়ে সুন্দর জ্যামিতিক সংজ্ঞা — কোণ পরিবর্তন করলে বিন্দু বৃত্তের উপর দিয়ে ঘুরে, এবং সেই অনুযায়ী $\sin$ ও $\cos$ এর মান পরিবর্তিত হয়।</p>
+  </div>
+
+  <!-- INTERACTIVE UNIT CIRCLE -->
+  <div class="unit-circle-tool reveal">
+    <div class="card-title" style="color:var(--accent-cyan); margin-bottom:18px;">Interactive Unit Circle — স্লাইডার টেনে কোণ পরিবর্তন করুন</div>
+    <div class="layout">
+      <div class="controls">
+        <div>
+          <label for="circleAngle">কোণ θ (Degree)</label>
+          <input type="range" min="0" max="360" step="1" value="45" id="circleAngle" style="width:100%;">
+        </div>
+        <div class="angle-display">
+          <span class="deg"><span id="ucDeg">45</span>°</span>
+          <span class="rad" style="margin-left:14px;">= <span id="ucRad">π/4</span> rad</span>
+        </div>
+        <div class="values">
+          <div class="v"><span class="name">sin θ</span><span class="num" id="ucSin">0.707</span></div>
+          <div class="v"><span class="name">cos θ</span><span class="num" id="ucCos">0.707</span></div>
+          <div class="v"><span class="name">tan θ</span><span class="num" id="ucTan">1.000</span></div>
+          <div class="v"><span class="name">csc θ</span><span class="num" id="ucCsc">1.414</span></div>
+          <div class="v"><span class="name">sec θ</span><span class="num" id="ucSec">1.414</span></div>
+          <div class="v"><span class="name">cot θ</span><span class="num" id="ucCot">1.000</span></div>
+        </div>
+        <div style="margin-top:8px;">
+          <div style="font-size:11px; color:var(--text-muted); font-family:'Lora',serif; letter-spacing:1px; text-transform:uppercase;">Current Quadrant</div>
+          <div id="ucQuad" style="font-family:'Lora',serif; font-style:italic; font-weight:700; font-size:18px; color:var(--accent-cyan); margin-top:4px;">Q1 (0°–90°)</div>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" id="unitCircleSvg" style="width:100%; max-width:360px; margin:0 auto; display:block;">
+          <defs>
+            <linearGradient id="ucLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#6c5ce7"/>
+              <stop offset="100%" stop-color="#00d4ff"/>
+            </linearGradient>
+            <linearGradient id="ucSinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ff6ec7"/>
+              <stop offset="100%" stop-color="#ff6ec7" stop-opacity="0.3"/>
+            </linearGradient>
+            <linearGradient id="ucCosGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#2ed573" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#2ed573"/>
+            </linearGradient>
+          </defs>
+          <!-- Circle -->
+          <circle cx="180" cy="180" r="140" fill="none" stroke="rgba(232,235,255,0.3)" stroke-width="1.5"/>
+          <!-- Axes -->
+          <line x1="20" y1="180" x2="340" y2="180" stroke="rgba(232,235,255,0.4)" stroke-width="1.5"/>
+          <line x1="180" y1="20" x2="180" y2="340" stroke="rgba(232,235,255,0.4)" stroke-width="1.5"/>
+          <text x="345" y="185" font-family="Lora" font-size="14" fill="#a8aedb">x</text>
+          <text x="175" y="18" font-family="Lora" font-size="14" fill="#a8aedb">y</text>
+          <!-- Axis points -->
+          <text x="318" y="195" font-family="Lora" font-size="11" fill="#a8aedb">1</text>
+          <text x="195" y="335" font-family="Lora" font-size="11" fill="#a8aedb">-1</text>
+          <text x="22" y="195" font-family="Lora" font-size="11" fill="#a8aedb">-1</text>
+          <text x="195" y="35" font-family="Lora" font-size="11" fill="#a8aedb">1</text>
+          <!-- Angle arc -->
+          <path id="ucArc" d="M 220 180 A 40 40 0 0 0 180 140" fill="none" stroke="#ffb649" stroke-width="2"/>
+          <text id="ucArcLabel" x="218" y="160" font-family="Lora" font-style="italic" font-size="16" fill="#ffb649">θ</text>
+          <!-- Cos line (x-coordinate, green) -->
+          <line id="ucCosLine" x1="180" y1="180" x2="280" y2="180" stroke="#2ed573" stroke-width="4" stroke-linecap="round"/>
+          <!-- Sin line (y-coordinate, pink) -->
+          <line id="ucSinLine" x1="280" y1="180" x2="280" y2="81" stroke="#ff6ec7" stroke-width="4" stroke-linecap="round"/>
+          <!-- Radius -->
+          <line id="ucRadius" x1="180" y1="180" x2="280" y2="81" stroke="url(#ucLineGrad)" stroke-width="3" stroke-linecap="round"/>
+          <!-- Point P -->
+          <circle id="ucPoint" cx="280" cy="81" r="7" fill="#00d4ff" stroke="white" stroke-width="2"/>
+          <!-- Center -->
+          <circle cx="180" cy="180" r="4" fill="#6c5ce7"/>
+          <text x="160" y="200" font-family="Lora" font-size="13" fill="#a8aedb">O</text>
+          <text id="ucLabelP" x="290" y="75" font-family="Lora" font-style="italic" font-size="14" fill="#00d4ff">P</text>
+          <!-- Sin/Cos labels -->
+          <text id="ucSinLabel" x="285" y="135" font-family="Lora" font-style="italic" font-size="13" fill="#ff6ec7">sin θ</text>
+          <text id="ucCosLabel" x="220" y="170" font-family="Lora" font-style="italic" font-size="13" fill="#2ed573">cos θ</text>
+        </svg>
+      </div>
+    </div>
+    <p style="font-family:'Lora',serif; font-style:italic; color:var(--text-muted); font-size:13px; margin-top:18px; text-align:center;">
+      সবুজ রেখা = cos θ (x-স্থানাঙ্ক), গোলাপি রেখা = sin θ (y-স্থানাঙ্ক), নীলচে রেখা = ব্যাসার্ধ (সর্বদা দৈর্ঘ্য 1)। লক্ষ্য করুন: কোণ 90°-এ গেলে sin = 1, cos = 0; 180°-এ গেলে sin = 0, cos = −1।
+    </p>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">সমকোণী ত্রিভুজ থেকে অনুপাত (পুরাতন পদ্ধতি)</div>
+    <p>একটি সমকোণী ত্রিভুজে কোণ $\theta$-এর জন্য, যদি সমকোণের বিপরীত বাহুকে "লম্ব" (perpendicular = p), সমকোণের সংলগ্ন বাহুকে "ভূমি" (base = b), এবং অতিভুজকে "কর্ণ" (hypotenuse = h) বলা হয়, তবে:</p>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="name">sin θ</div>
+        <div class="expr">$\dfrac{p}{h}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">cos θ</div>
+        <div class="expr">$\dfrac{b}{h}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">tan θ</div>
+        <div class="expr">$\dfrac{p}{b}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">csc θ</div>
+        <div class="expr">$\dfrac{h}{p}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">sec θ</div>
+        <div class="expr">$\dfrac{h}{b}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">cot θ</div>
+        <div class="expr">$\dfrac{b}{p}$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn reveal">
+    <div class="icon">!</div>
+    <div>
+      <div class="title">সীমাবদ্ধতা — কখন অনুপাত অসংজ্ঞায়িত হয়?</div>
+      <p>সমকোণী ত্রিভুজের সংজ্ঞা কেবল 0° &lt; θ &lt; 90° এর জন্য কাজ করে। কিন্তু একক বৃত্ত থেকে সংজ্ঞা যেকোনো কোণের জন্য কাজ করে। তবে কিছু কোণে নির্দিষ্ট অনুপাত অসংজ্ঞায়িত হয়:</p>
+      <p style="margin-bottom:0;">
+        • $\tan\theta$ অসংজ্ঞায়িত যখন $\cos\theta = 0$ (যেমন $\theta = 90°, 270°$)<br>
+        • $\cot\theta$ অসংজ্ঞায়িত যখন $\sin\theta = 0$ (যেমন $\theta = 0°, 180°, 360°$)<br>
+        • $\sec\theta$ অসংজ্ঞায়িত যখন $\cos\theta = 0$<br>
+        • $\csc\theta$ অসংজ্যায়িত যখন $\sin\theta = 0$
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 7: চিহ্ন ও মান সারণি / SIGNS & VALUES                    -->
+<!-- ============================================================= -->
+<section class="section" id="sec-07">
+  <div class="head reveal">
+    <div class="num">07</div>
+    <div class="info">
+      <div class="eyebrow">ASTC — All Sinners Take Care</div>
+      <h2>চিহ্ন ও মান সারণি</h2>
+      <div class="sub">Sign rules and exact values for the standard angles</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ত্রিকোণমিতিক অনুপাতের চিহ্ন নির্ভর করে কোণটি কোন চতুর্থাংশে অবস্থিত তার উপর। এই চিহ্ন নিয়ম মনে রাখার জন্য ব্যবহৃত হয় <strong>ASTC নিয়ম</strong> — একটি চার-অক্ষরের স্মৃতি সহায়ক।
+  </p>
+
+  <div class="quad-grid reveal">
+    <div class="quad I">
+      <div class="label">Quadrant I · 0°–90°</div>
+      <div class="astc">A</div>
+      <div class="desc">সব অনুপাত ধনাত্মক</div>
+    </div>
+    <div class="quad II">
+      <div class="label">Quadrant II · 90°–180°</div>
+      <div class="astc">S</div>
+      <div class="desc">কেবল sin ও cosec ধনাত্মক</div>
+    </div>
+    <div class="quad III">
+      <div class="label">Quadrant III · 180°–270°</div>
+      <div class="astc">T</div>
+      <div class="desc">কেবল tan ও cot ধনাত্মক</div>
+    </div>
+    <div class="quad IV">
+      <div class="label">Quadrant IV · 270°–360°</div>
+      <div class="astc">C</div>
+      <div class="desc">কেবল cos ও sec ধনাত্মক</div>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">ASTC মনে রাখার ৩টি জনপ্রিয় পদ্ধতি</div>
+      <p><strong>1. Add Sugar To Coffee</strong> — ইংরেজিতে সহজে মনে রাখার জন্য। Q1: All, Q2: Sin, Q3: Tan, Q4: Cos.</p>
+      <p><strong>2. All Sinners Take Care</strong> — এটিও জনপ্রিয়, এবং অর্থবোধক।</p>
+      <p><strong>3. বাংলায়: "সব সিন ট্যান কজ"</strong> — প্রথম অক্ষরগুলো ASTC।</p>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">বিশেষ কোণের মান — মুখস্থ রাখার সারণি</div>
+    <p>এই মানগুলো ত্রিকোণমিতির সবচেয়ে গুরুত্বপূর্ণ মুখস্থ কাজ। একবার ভালোভাবে শিখে নিলে আর কখনো ভুলবেন না।</p>
+    <table class="tbl">
+      <thead>
+        <tr><th>কোণ θ</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>180°</th><th>270°</th><th>360°</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num-col">sin θ</td><td>0</td><td>$\frac{1}{2}$</td><td>$\frac{1}{\sqrt{2}}$</td><td>$\frac{\sqrt{3}}{2}$</td><td>1</td><td>0</td><td>−1</td><td>0</td></tr>
+        <tr><td class="num-col">cos θ</td><td>1</td><td>$\frac{\sqrt{3}}{2}$</td><td>$\frac{1}{\sqrt{2}}$</td><td>$\frac{1}{2}$</td><td>0</td><td>−1</td><td>0</td><td>1</td></tr>
+        <tr><td class="num-col">tan θ</td><td>0</td><td>$\frac{1}{\sqrt{3}}$</td><td>1</td><td>$\sqrt{3}$</td><td>undef.</td><td>0</td><td>undef.</td><td>0</td></tr>
+        <tr><td class="num-col">csc θ</td><td>undef.</td><td>2</td><td>$\sqrt{2}$</td><td>$\frac{2}{\sqrt{3}}$</td><td>1</td><td>undef.</td><td>−1</td><td>undef.</td></tr>
+        <tr><td class="num-col">sec θ</td><td>1</td><td>$\frac{2}{\sqrt{3}}$</td><td>$\sqrt{2}$</td><td>2</td><td>undef.</td><td>−1</td><td>undef.</td><td>1</td></tr>
+        <tr><td class="num-col">cot θ</td><td>undef.</td><td>$\sqrt{3}$</td><td>1</td><td>$\frac{1}{\sqrt{3}}$</td><td>0</td><td>undef.</td><td>0</td><td>undef.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">মান মনে রাখার প্যাটার্ন (সূত্র নয়, প্যাটার্ন!)</div>
+    <p>এই সারণি মুখস্থ না করে প্যাটার্ন দেখে বের করা যায়। নিচের প্যাটার্নগুলো মনে রাখলে কোনো ভুল হবে না:</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span> <strong>sin এর লুকআপ:</strong> $\sqrt{0}, \sqrt{1}, \sqrt{2}, \sqrt{3}, \sqrt{4}$ — এরপর 2 দিয়ে ভাগ।
+        <div style="margin-top:6px;">$\sin(0°, 30°, 45°, 60°, 90°) = \frac{\sqrt{0}}{2}, \frac{\sqrt{1}}{2}, \frac{\sqrt{2}}{2}, \frac{\sqrt{3}}{2}, \frac{\sqrt{4}}{2} = 0, \frac{1}{2}, \frac{1}{\sqrt{2}}, \frac{\sqrt{3}}{2}, 1$</div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span> <strong>cos এর লুকআপ:</strong> sin-এর উল্টো — $\sqrt{4}, \sqrt{3}, \sqrt{2}, \sqrt{1}, \sqrt{0}$, তারপর 2 দিয়ে ভাগ।
+        <div style="margin-top:6px;">$\cos(0°, 30°, 45°, 60°, 90°) = 1, \frac{\sqrt{3}}{2}, \frac{1}{\sqrt{2}}, \frac{1}{2}, 0$</div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span> <strong>tan = sin/cos:</strong> শুধু ভাগ করলেই হবে।
+        <div style="margin-top:6px;">$\tan(30°) = \frac{1/2}{\sqrt{3}/2} = \frac{1}{\sqrt{3}}$, $\tan(60°) = \frac{\sqrt{3}/2}{1/2} = \sqrt{3}$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">সাধারণ ভুল</div>
+      <p>অনেকেই $\sin 30° = \frac{1}{2}$ লিখতে গিয়ে $\frac{\sqrt{3}}{2}$ লিখে ফেলে — মনে মনে $\sin 60°$ চলে আসে। এই ভুল এড়াতে মনে রাখুন: <strong>30° ছোট কোণ, ছোট কোণের sin ছোট</strong>। তাই $\sin 30° = \frac{1}{2}$ (ছোট মান), এবং $\sin 60° = \frac{\sqrt{3}}{2}$ (বড় মান)।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 8: মৌলিক অভেদ / FUNDAMENTAL IDENTITIES                    -->
+<!-- ============================================================= -->
+<section class="section" id="sec-08">
+  <div class="head reveal">
+    <div class="num">08</div>
+    <div class="info">
+      <div class="eyebrow">The Pythagorean Soul</div>
+      <h2>মৌলিক অভেদাবলি</h2>
+      <div class="sub">Pythagorean identities, reciprocals, quotients — the equation web</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ত্রিকোণমিতিক অনুপাতের মধ্যে কিছু নির্দিষ্ট সম্পর্ক সর্বদা সত্য থাকে, কোণের মান যাই হোক না কেন। এই সত্য সম্পর্কগুলোকে <strong>অভেদ</strong> (Identity) বলা হয়। এই অভেদগুলোই হলো ত্রিকোণমিতির "ভাষার ব্যাকরণ" — যা দিয়ে সমস্ত অন্য সূত্র প্রমাণ করা যায়।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">পিথাগোরাসের অভেদ (Pythagorean Identities)</div>
+    <p>একক বৃত্তের উপর বিন্দু $P(x, y)$ থেকে মূলবিন্দু $O$ পর্যন্ত দূরত্ব সর্বদা 1 (কারণ ব্যাসার্ধ 1)। পিথাগোরাসের সূত্রানুসারে:</p>
+    <div class="formula-box">
+      <div class="formula-label">পিথাগোরাসের অভেদ</div>
+      <div class="formula-body">
+        $$\sin^2\theta + \cos^2\theta = 1$$
+        $$1 + \tan^2\theta = \sec^2\theta$$
+        $$1 + \cot^2\theta = \csc^2\theta$$
+      </div>
+    </div>
+    <p>প্রথম অভেদটিকে $\sin^2\theta = 1 - \cos^2\theta$ বা $\cos^2\theta = 1 - \sin^2\theta$ আকারেও লেখা যায় — সমীকরণ সমাধানে এই রূপগুলো প্রায়ই কাজে লাগে। দ্বিতীয় অভেদটি প্রথমটিকে $\cos^2\theta$ দিয়ে ভাগ করলে পাওয়া যায়, এবং তৃতীয়টি $\sin^2\theta$ দিয়ে ভাগ করলে।</p>
+  </div>
+
+  <!-- Visual proof of Pythagorean identity -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sinSqGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ff6ec7" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#ff6ec7" stop-opacity="0.2"/>
+        </linearGradient>
+        <linearGradient id="cosSqGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2ed573" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#2ed573" stop-opacity="0.5"/>
+        </linearGradient>
+      </defs>
+      <!-- Triangle -->
+      <line x1="80" y1="240" x2="380" y2="240" stroke="#7d83b3" stroke-width="2"/>
+      <line x1="80" y1="240" x2="80" y2="100" stroke="#ff6ec7" stroke-width="2"/>
+      <line x1="80" y1="100" x2="380" y2="240" stroke="#6c5ce7" stroke-width="2.5"/>
+      <!-- Right angle marker -->
+      <path d="M 80 220 L 100 220 L 100 240" fill="none" stroke="#7d83b3" stroke-width="1.5"/>
+      <!-- Squares -->
+      <rect x="80" y="100" width="60" height="60" fill="url(#sinSqGrad)" stroke="#ff6ec7" stroke-width="2"/>
+      <text x="105" y="135" font-family="Lora" font-style="italic" font-size="14" fill="#ff6ec7" text-anchor="middle">sin²θ</text>
+      <rect x="100" y="240" width="140" height="60" fill="url(#cosSqGrad)" stroke="#2ed573" stroke-width="2"/>
+      <text x="170" y="278" font-family="Lora" font-style="italic" font-size="14" fill="#2ed573" text-anchor="middle">cos²θ</text>
+      <!-- Hypotenuse label -->
+      <text x="220" y="160" font-family="Lora" font-style="italic" font-size="14" fill="#6c5ce7">1² (হাইপোটেনিউজ² = 1)</text>
+      <!-- Equation -->
+      <text x="40" y="50" font-family="Lora" font-style="italic" font-size="22" fill="#2c314d">sin²θ + cos²θ = 1²</text>
+      <text x="40" y="80" font-family="Alinur" font-size="14" fill="#7d83b3">(একক বৃত্তে কর্ণ = 1, তাই এর বর্গও 1)</text>
+      <!-- Labels -->
+      <text x="60" y="170" font-family="Lora" font-style="italic" font-size="12" fill="#ff6ec7">sin θ</text>
+      <text x="230" y="230" font-family="Lora" font-style="italic" font-size="12" fill="#2ed573">cos θ</text>
+    </svg>
+    <div class="caption"><span class="num">Fig 8.1</span> পিথাগোরাসের সূত্র থেকে প্রথম অভেদের জ্যামিতিক উৎপত্তি</div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">পারস্পরিক ও ভাগজনিত অভেদ</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="name">Reciprocal 1</div>
+        <div class="expr">$\sin\theta \cdot \csc\theta = 1$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">Reciprocal 2</div>
+        <div class="expr">$\cos\theta \cdot \sec\theta = 1$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">Reciprocal 3</div>
+        <div class="expr">$\tan\theta \cdot \cot\theta = 1$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">Quotient 1</div>
+        <div class="expr">$\tan\theta = \dfrac{\sin\theta}{\cos\theta}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">Quotient 2</div>
+        <div class="expr">$\cot\theta = \dfrac{\cos\theta}{\sin\theta}$</div>
+      </div>
+      <div class="formula-card">
+        <div class="name">Pythagorean-derived</div>
+        <div class="expr">$\sin^2\theta = 1 - \cos^2\theta$</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">প্রমাণ করার কৌশল</div>
+      <p>যেকোনো ত্রিকোণমিতিক অভেদ প্রমাণ করার সাধারণ কৌশল: জটিল পক্ষ থেকে শুরু করে সরল পক্ষে পৌঁছানো। সবগুলোকে যদি $\sin$ ও $\cos$-এ প্রকাশ করা যায়, তাহলে প্রমাণ সহজ হয়। যেমন $\tan\theta + \cot\theta = \frac{1}{\sin\theta\cos\theta}$ প্রমাণ করতে হলে বাম পক্ষকে $\frac{\sin}{\cos} + \frac{\cos}{\sin}$ লিখে লসাগু করলেই ডান পক্ষ পাওয়া যায়।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 9: যৌগিক কোণ / COMPOUND ANGLES                          -->
+<!-- ============================================================= -->
+<section class="section" id="sec-09">
+  <div class="head reveal">
+    <div class="num">09</div>
+    <div class="info">
+      <div class="eyebrow">Two Angles, Combined</div>
+      <h2>যৌগিক কোণের সূত্রাবলি</h2>
+      <div class="sub">sin(A±B), cos(A±B), tan(A±B) — the foundational additions</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    <strong>যৌগিক কোণ</strong> (Compound Angle) হলো দুটি কোণের যোগফল বা বিয়োগফল — যেমন $(A+B)$ বা $(A-B)$। এই কোণগুলোর ত্রিকোণমিতিক অনুপাত কিন্তু সরাসরি $\sin A + \sin B$ নয়! এটি একটি সাধারণ ভুল — যৌগিক কোণের সূত্র সম্পূর্ণ আলাদা।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">যৌগিক কোণের মূল সূত্র</div>
+    <div class="formula-box">
+      <div class="formula-label">সাইন ও কোসাইন যৌগিক সূত্র</div>
+      <div class="formula-body">
+        $$\sin(A \pm B) = \sin A \cos B \pm \cos A \sin B$$
+        $$\cos(A \pm B) = \cos A \cos B \mp \sin A \sin B$$
+      </div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">ট্যানজেন্ট যৌগিক সূত্র</div>
+      <div class="formula-body">
+        $$\tan(A \pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A \tan B}$$
+      </div>
+    </div>
+    <p>লক্ষ্য করুন cos-এর সূত্রে চিহ্ন বিপরীত (যোগের জায়গায় বিয়োগ, বিয়োগের জায়গায় যোগ)। এটি মনে রাখার একটি উপায়: <strong>"cos চতুর্থাংশে চিহ্ন উল্টে যায়"</strong> — কারণ Q4-এ cos ধনাত্মক হয়।</p>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">cos(A+B) প্রমাণের জ্যামিতিক আঁকা</div>
+    <p>নিচের ডায়াগ্রামটিতে cos(A+B)-এর সূত্রটি জ্যামিতিকভাবে প্রমাণ করা হয়েছে। একটি একক বৃত্ত থেকে দুটি কোণ A এবং B ব্যবহার করে জ্যামিতিক দূরত্বের সূত্র প্রয়োগ করলেই সূত্রটি পাওয়া যায়। এই প্রমাণটি মুখস্থ না করলেও, ধারণাটি থাকলে সূত্র ভুলে গেলেও পুনরায় বের করা সম্ভব।</p>
+  </div>
+
+  <!-- Geometric proof illustration -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="proofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6c5ce7"/>
+          <stop offset="100%" stop-color="#00d4ff"/>
+        </linearGradient>
+      </defs>
+      <!-- Unit circle -->
+      <circle cx="180" cy="180" r="140" fill="none" stroke="#a8aedb" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <!-- Axes -->
+      <line x1="20" y1="180" x2="340" y2="180" stroke="#a8aedb" stroke-width="1"/>
+      <line x1="180" y1="20" x2="180" y2="340" stroke="#a8aedb" stroke-width="1"/>
+      <!-- Point P at angle A+B -->
+      <line x1="180" y1="180" x2="180" y2="40" stroke="#ffb649" stroke-width="2"/>
+      <line x1="180" y1="180" x2="280" y2="40" stroke="url(#proofGrad)" stroke-width="2.5"/>
+      <text x="285" y="35" font-family="Lora" font-style="italic" font-size="14" fill="#6c5ce7">P(cos(A+B), sin(A+B))</text>
+      <circle cx="280" cy="40" r="5" fill="#6c5ce7"/>
+      <!-- Angle B from x-axis -->
+      <path d="M 230 180 A 50 50 0 0 0 225 165" fill="none" stroke="#ffb649" stroke-width="2"/>
+      <text x="220" y="170" font-family="Lora" font-style="italic" font-size="14" fill="#ffb649">A+B</text>
+      <!-- Result explanation -->
+      <text x="20" y="20" font-family="Lora" font-size="14" fill="#2c314d" font-weight="700">Geometry → Algebra</text>
+      <text x="20" y="42" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">P বিন্দুর স্থানাঙ্ক থেকে সূত্র পাওয়া যায়</text>
+      <text x="360" y="120" font-family="Lora" font-size="13" fill="#6c5ce7">x = cos(A+B)</text>
+      <text x="360" y="140" font-family="Lora" font-size="13" fill="#6c5ce7">  = cosA·cosB − sinA·sinB</text>
+      <text x="360" y="180" font-family="Lora" font-size="13" fill="#ff6ec7">y = sin(A+B)</text>
+      <text x="360" y="200" font-family="Lora" font-size="13" fill="#ff6ec7">  = sinA·cosB + cosA·sinB</text>
+    </svg>
+    <div class="caption"><span class="num">Fig 9.1</span> একক বৃত্তে বিন্দু P থেকে যৌগিক সূত্রের উৎপত্তি</div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">সবচেয়ে বড় ভুল</div>
+      <p>পরীক্ষায় প্রায়ই দেখা যায় শিক্ষার্থীরা $\sin(A+B) = \sin A + \sin B$ লিখে ফেলে। <strong>এটি সম্পূর্ণ ভুল।</strong> যৌগিক সূত্র অনুযায়ী $\sin(A+B) = \sin A \cos B + \cos A \sin B$। যেমন $\sin(60° + 30°) = \sin 90° = 1$, কিন্তু ভুল করে যদি $\sin 60° + \sin 30°$ লেখেন, তাহলে $\frac{\sqrt{3}}{2} + \frac{1}{2} \approx 1.366$ আসবে — যা 1-এর সমান নয়।</p>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">বিশেষ কোণ বের করা যৌগিক সূত্র দিয়ে</div>
+    <p>যৌগিক সূত্র ব্যবহার করে নতুন কোণের মান বের করা যায়। যেমন $75° = 45° + 30°$, তাই:</p>
+    <div class="steps">
+      <div class="step">
+        $\sin 75° = \sin(45° + 30°) = \sin 45° \cos 30° + \cos 45° \sin 30°$
+        <div style="margin-top:6px;">$= \frac{1}{\sqrt{2}} \cdot \frac{\sqrt{3}}{2} + \frac{1}{\sqrt{2}} \cdot \frac{1}{2} = \frac{\sqrt{3} + 1}{2\sqrt{2}} = \frac{\sqrt{6} + \sqrt{2}}{4}$</div>
+      </div>
+      <div class="step">
+        $\cos 75° = \cos(45° + 30°) = \cos 45° \cos 30° - \sin 45° \sin 30°$
+        <div style="margin-top:6px;">$= \frac{\sqrt{6} - \sqrt{2}}{4}$</div>
+      </div>
+      <div class="step">
+        $\tan 75° = \tan(45° + 30°) = \frac{\tan 45° + \tan 30°}{1 - \tan 45° \tan 30°} = \frac{1 + \frac{1}{\sqrt{3}}}{1 - \frac{1}{\sqrt{3}}} = \frac{\sqrt{3} + 1}{\sqrt{3} - 1} = 2 + \sqrt{3}$
+      </div>
+    </div>
+    <p>একইভাবে $15° = 45° - 30°$ থেকে $\sin 15°, \cos 15°, \tan 15°$ বের করা যায়। এই কৌশলটি পরীক্ষায় নতুন কোণের মান চাইলে খুব কাজে দেয়।</p>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">প্রমাণ করো: $\sin(A+B) \cdot \sin(A-B) = \sin^2 A - \sin^2 B$</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p><strong>বাম পক্ষ:</strong> $\sin(A+B)\sin(A-B) = (\sin A \cos B + \cos A \sin B)(\sin A \cos B - \cos A \sin B)$</p>
+      <p>= $(\sin A \cos B)^2 - (\cos A \sin B)^2$ [কারণ $(a+b)(a-b) = a^2 - b^2$]</p>
+      <p>= $\sin^2 A \cos^2 B - \cos^2 A \sin^2 B$</p>
+      <p>= $\sin^2 A (1 - \sin^2 B) - (1 - \sin^2 A) \sin^2 B$ [cos² = 1 - sin²]</p>
+      <p>= $\sin^2 A - \sin^2 A \sin^2 B - \sin^2 B + \sin^2 A \sin^2 B$</p>
+      <p>= $\sin^2 A - \sin^2 B$ ✓</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 10: গুণিত কোণ / MULTIPLE ANGLES                          -->
+<!-- ============================================================= -->
+<section class="section" id="sec-10">
+  <div class="head reveal">
+    <div class="num">10</div>
+    <div class="info">
+      <div class="eyebrow">Doubling the Angle</div>
+      <h2>গুণিত কোণের সূত্রাবলি</h2>
+      <div class="sub">2A, 3A — when one angle doubles, triples</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    <strong>গুণিত কোণ</strong> (Multiple Angle) হলো একটি কোণের পূর্ণসংখ্যক গুণ — যেমন $2A, 3A, nA$। যৌগিক সূত্রে $B = A$ বসালেই গুণিত কোণের সূত্র পাওয়া যায়। এটি ত্রিকোণমিতির সবচেয়ে প্রয়োগবহুল অংশ।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">দ্বিগুণ কোণের সূত্র (Double Angle Formulas)</div>
+    <div class="formula-box">
+      <div class="formula-label">যৌগিক সূত্রে B = A বসালে</div>
+      <div class="formula-body">
+        $$\sin 2A = 2\sin A \cos A = \frac{2\tan A}{1+\tan^2 A}$$
+        $$\cos 2A = \cos^2 A - \sin^2 A = 2\cos^2 A - 1 = 1 - 2\sin^2 A = \frac{1-\tan^2 A}{1+\tan^2 A}$$
+        $$\tan 2A = \frac{2\tan A}{1 - \tan^2 A}$$
+      </div>
+    </div>
+    <p>লক্ষ্য করুন $\cos 2A$-এর তিনটি রূপ আছে — কোনটি ব্যবহার করবেন তা নির্ভর করে সমীকরণে কোন ফাংশন আছে তার উপর। সমীকরণে শুধু $\sin A$ থাকলে $1 - 2\sin^2 A$ রূপ ব্যবহার করুন, $\cos A$ থাকলে $2\cos^2 A - 1$ রূপ ব্যবহার করুন।</p>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">ত্রিগুণ কোণের সূত্র (Triple Angle Formulas)</div>
+    <div class="formula-box">
+      <div class="formula-label">3A সূত্রাবলি</div>
+      <div class="formula-body">
+        $$\sin 3A = 3\sin A - 4\sin^3 A$$
+        $$\cos 3A = 4\cos^3 A - 3\cos A$$
+        $$\tan 3A = \frac{3\tan A - \tan^3 A}{1 - 3\tan^2 A}$$
+      </div>
+    </div>
+    <p>এই সূত্রগুলো প্রায়ই পরীক্ষায় আসে — বিশেষ করে $\sin 3A$ এবং $\cos 3A$ এর সূত্র। এগুলো যৌগিক সূত্র থেকে $\sin(A+2A)$ আকারে প্রমাণ করা যায়।</p>
+  </div>
+
+  <!-- 2A formula derivation visualization -->
+  <div class="figure reveal">
+    <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="doubleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6c5ce7"/>
+          <stop offset="100%" stop-color="#00d4ff"/>
+        </linearGradient>
+      </defs>
+      <!-- Step 1 -->
+      <g transform="translate(60, 60)">
+        <rect x="-50" y="-30" width="180" height="100" rx="14" fill="rgba(108,92,231,0.06)" stroke="#6c5ce7" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="-40" y="-10" font-family="Lora" font-size="13" fill="#2c314d">যৌগিক সূত্র</text>
+        <text x="-40" y="14" font-family="Lora" font-style="italic" font-size="13" fill="#6c5ce7">sin(A+B) =</text>
+        <text x="-40" y="34" font-family="Lora" font-size="13" fill="#2c314d">sinA·cosB + cosA·sinB</text>
+        <text x="-40" y="58" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">এই সূত্রে B = A</text>
+      </g>
+      <!-- Arrow -->
+      <line x1="190" y1="110" x2="240" y2="110" stroke="#00d4ff" stroke-width="2.5" marker-end="url(#arrow)"/>
+      <text x="195" y="98" font-family="Lora" font-style="italic" font-size="11" fill="#00d4ff">B=A</text>
+      <!-- Step 2 -->
+      <g transform="translate(260, 60)">
+        <rect x="0" y="-30" width="220" height="100" rx="14" fill="rgba(0,212,255,0.06)" stroke="#00d4ff" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="10" y="-10" font-family="Lora" font-size="13" fill="#2c314d">গুণিত সূত্র</text>
+        <text x="10" y="14" font-family="Lora" font-style="italic" font-size="14" fill="#00d4ff">sin 2A</text>
+        <text x="60" y="14" font-family="Lora" font-size="13" fill="#2c314d">= 2 sinA cosA</text>
+        <text x="10" y="38" font-family="Lora" font-size="12" fill="#7d83b3">বা</text>
+        <text x="10" y="58" font-family="Lora" font-size="13" fill="#2c314d">= 2 tanA / (1+tan²A)</text>
+      </g>
+      <!-- Visual: doubled angle in unit circle -->
+      <g transform="translate(180, 220)">
+        <circle cx="0" cy="0" r="40" fill="none" stroke="#a8aedb" stroke-width="1.5"/>
+        <line x1="-50" y1="0" x2="50" y2="0" stroke="#a8aedb" stroke-width="1"/>
+        <line x1="0" y1="-50" x2="0" y2="50" stroke="#a8aedb" stroke-width="1"/>
+        <line x1="0" y1="0" x2="35" y2="-20" stroke="#ffb649" stroke-width="2"/>
+        <text x="38" y="-22" font-family="Lora" font-style="italic" font-size="11" fill="#ffb649">A</text>
+        <line x1="0" y1="0" x2="20" y2="-35" stroke="url(#doubleGrad)" stroke-width="2"/>
+        <text x="22" y="-38" font-family="Lora" font-style="italic" font-size="11" fill="#6c5ce7">2A</text>
+      </g>
+    </svg>
+    <div class="caption"><span class="num">Fig 10.1</span> যৌগিক সূত্র থেকে গুণিত সূত্রের উৎপত্তি (B = A বসালে)</div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">গুণিত সূত্রের অ্যাপ্লিকেশন — অর্ধ-কোণ সূত্রের সাহায্যে</div>
+    <p>$\cos 2A$ এর রূপগুলো থেকে অর্ধ-কোণ সূত্র পাওয়া যায়। $\cos 2A = 2\cos^2 A - 1$ কে পুনর্বিন্যাস করলে:</p>
+    <div class="formula-box">
+      <div class="formula-label">অর্ধ-কোণ সূত্রের ভিত্তি</div>
+      <div class="formula-body">
+        $$\cos^2 A = \frac{1 + \cos 2A}{2}, \qquad \sin^2 A = \frac{1 - \cos 2A}{2}$$
+      </div>
+    </div>
+    <p>এই দুটি সূত্র প্রায়ই পরীক্ষায় ব্যবহৃত হয় — বিশেষ করে কোনো রাশিকে নির্দিষ্ট মান থেকে সরলীকরণ করতে।</p>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">মনে রাখার প্যাটার্ন</div>
+      <p>$\sin 2A$ এর সূত্র মনে রাখুন "2 sin cos" হিসেবে — এটি কেবল একটি গুণফল। $\cos 2A$-এর তিনটি রূপের জন্য মনে রাখুন: "cos² − sin²" (মৌলিক), "2cos² − 1" (cos-কেন্দ্রিক), "1 − 2sin²" (sin-কেন্দ্রিক)। তিনটিই সমান, কোনটা দরকার সেটা ব্যবহার করুন।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 11: উপগুণিত কোণ / HALF-ANGLE & SUBMULTIPLE                -->
+<!-- ============================================================= -->
+<section class="section" id="sec-11">
+  <div class="head reveal">
+    <div class="num">11</div>
+    <div class="info">
+      <div class="eyebrow">Halving the Angle</div>
+      <h2>উপগুণিত কোণ ও অন্যান্য সূত্র</h2>
+      <div class="sub">A/2, A/3 — going the other direction</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    <strong>উপগুণিত কোণ</strong> (Submultiple Angle) হলো একটি কোণের ভগ্নাংশ — যেমন $\frac{A}{2}, \frac{A}{3}$। গুণিত কোণের সূত্রকে বিপরীত দিক থেকে প্রয়োগ করে এগুলো বের করা হয়।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">অর্ধ-কোণের সূত্র (Half-Angle Formulas)</div>
+    <p>$2A$ এর জায়গায় $\theta$ বসালে $A = \theta/2$ হয়, এবং গুণিত সূত্র থেকে অর্ধ-কোণ সূত্র পাওয়া যায়:</p>
+    <div class="formula-box">
+      <div class="formula-label">অর্ধ-কোণ সূত্রাবলি</div>
+      <div class="formula-body">
+        $$\sin\frac{A}{2} = \pm\sqrt{\frac{1-\cos A}{2}} \qquad \cos\frac{A}{2} = \pm\sqrt{\frac{1+\cos A}{2}}$$
+        $$\tan\frac{A}{2} = \pm\sqrt{\frac{1-\cos A}{1+\cos A}} = \frac{1-\cos A}{\sin A} = \frac{\sin A}{1+\cos A}$$
+      </div>
+    </div>
+    <p>চিহ্ন (±) নির্ভর করে $\frac{A}{2}$ কোণটি কোন চতুর্থাংশে আছে তার উপর। যেমন যদি $A = 240°$, তবে $\frac{A}{2} = 120°$ (Q2 তে), যেখানে sin ধনাত্মক, cos ঋণাত্মক। তাই $\sin 120° = +\sqrt{\frac{1-\cos 240°}{2}} = +\sqrt{\frac{1+1/2}{2}} = \sqrt{\frac{3}{4}} = \frac{\sqrt{3}}{2}$।</p>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">যোগফল ও গুণফল সূত্র (Sum-to-Product Formulas)</div>
+    <p>দুটি sin বা cos এর যোগফলকে গুণফলে রূপান্তর করার সূত্র প্রায়ই কাজে লাগে, বিশেষত সমীকরণ সমাধানে।</p>
+    <div class="formula-box">
+      <div class="formula-label">যোগফল → গুণফল</div>
+      <div class="formula-body">
+        $$\sin A + \sin B = 2\sin\frac{A+B}{2}\cos\frac{A-B}{2}$$
+        $$\sin A - \sin B = 2\cos\frac{A+B}{2}\sin\frac{A-B}{2}$$
+        $$\cos A + \cos B = 2\cos\frac{A+B}{2}\cos\frac{A-B}{2}$$
+        $$\cos A - \cos B = -2\sin\frac{A+B}{2}\sin\frac{A-B}{2}$$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">গুণফল → যোগফল (Product-to-Sum Formulas)</div>
+    <div class="formula-box">
+      <div class="formula-label">গুণফল → যোগফল</div>
+      <div class="formula-body">
+        $$2\sin A \cos B = \sin(A+B) + \sin(A-B)$$
+        $$2\cos A \sin B = \sin(A+B) - \sin(A-B)$$
+        $$2\cos A \cos B = \cos(A+B) + \cos(A-B)$$
+        $$2\sin A \sin B = \cos(A-B) - \cos(A+B)$$
+      </div>
+    </div>
+  </div>
+
+  <div class="callout note reveal">
+    <div class="icon">i</div>
+    <div>
+      <div class="title">কেন এই সূত্রগুলো গুরুত্বপূর্ণ?</div>
+      <p>সমীকরণ সমাধানের সময় প্রায়ই এমন পরিস্থিতি আসে যেখানে দুটি ফাংশনের যোগফলকে গুণফলে রূপান্তর করতে হয় — কারণ গুণফল আকারে সমীকরণ সমাধান সহজ হয় (যদি গুণফল = 0 হয়, তাহলে যেকোনো একটি উপাদান 0 হতে পারে)। অন্যদিকে সমাকলন (Integration) করার সময় গুণফলকে যোগফলে রূপান্তর করতে হয় — যোগফল সমাকলন করা সহজ।</p>
+    </div>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$2\cos A \cos B = \cos(A+B) + \cos(A-B)$ প্রমাণ করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>আমরা জানি: $\cos(A+B) = \cos A\cos B - \sin A\sin B$ এবং $\cos(A-B) = \cos A\cos B + \sin A\sin B$।</p>
+      <p>এই দুটি সমীকরণ যোগ করি:</p>
+      <p>$\cos(A+B) + \cos(A-B) = 2\cos A\cos B$ ✓</p>
+      <p>একইভাবে বিয়োগ করলে $2\sin A\sin B = \cos(A-B) - \cos(A+B)$ পাওয়া যায়।</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 12 (now §13 in TOC numbering): Skip - merged to fit -->
+<!-- The TOC has separate entries 12 and 13. We already wrote 12 = sum/product above (was section 11 in code). -->
+<!-- Sections 13-14 will be trigonometric functions & graphs -->
+
+<!-- ============================================================= -->
+<!-- SECTION 13 in TOC: ত্রিকোণমিতিক ফাংশন / FUNCTIONS                -->
+<!-- ============================================================= -->
+<section class="section" id="sec-13">
+  <div class="head reveal">
+    <div class="num">13</div>
+    <div class="info">
+      <div class="eyebrow">From Ratios to Functions</div>
+      <h2>ত্রিকোণমিতিক ফাংশন</h2>
+      <div class="sub">Domain, range, periodicity — the function view of sin/cos/tan</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    এখন পর্যন্ত আমরা ত্রিকোণমিতিক অনুপাতকে "অনুপাত" হিসেবে দেখেছি — কোণের সাথে একটি সংখ্যা যুক্ত হয়। কিন্তু আধুনিক গণিতে আমরা এটিকে দেখি একটি <strong>ফাংশন</strong> হিসেবে: $f(\theta) = \sin\theta$। ফাংশন হিসেবে দেখলে আমরা এর <em>ডোমেইন</em> (যেসব ইনপুট গ্রহণযোগ্য), <em>রেঞ্জ</em> (যেসব আউটপুট সম্ভব), এবং <em>পিরিয়ড</em> (কত পরে ফাংশন নিজেকে পুনরাবৃত্তি করে) নিয়ে আলোচনা করতে পারি।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">ডোমেইন ও রেঞ্জ</div>
+    <table class="tbl">
+      <thead>
+        <tr><th>ফাংশন</th><th>ডোমেইন</th><th>রেঞ্জ</th><th>পিরিয়ড</th><th>জোড়/বেজোড়</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num-col">sin x</td><td>$(-\infty, +\infty)$</td><td>$[-1, 1]$</td><td>$2\pi$</td><td>বেজোড় (odd)</td></tr>
+        <tr><td class="num-col">cos x</td><td>$(-\infty, +\infty)$</td><td>$[-1, 1]$</td><td>$2\pi$</td><td>জোড় (even)</td></tr>
+        <tr><td class="num-col">tan x</td><td>$\mathbb{R} - \{(2n+1)\frac{\pi}{2}\}$</td><td>$\mathbb{R}$</td><td>$\pi$</td><td>বেজোড় (odd)</td></tr>
+        <tr><td class="num-col">csc x</td><td>$\mathbb{R} - \{n\pi\}$</td><td>$(-\infty, -1] \cup [1, +\infty)$</td><td>$2\pi$</td><td>বেজোড় (odd)</td></tr>
+        <tr><td class="num-col">sec x</td><td>$\mathbb{R} - \{(2n+1)\frac{\pi}{2}\}$</td><td>$(-\infty, -1] \cup [1, +\infty)$</td><td>$2\pi$</td><td>জোড় (even)</td></tr>
+        <tr><td class="num-col">cot x</td><td>$\mathbb{R} - \{n\pi\}$</td><td>$\mathbb{R}$</td><td>$\pi$</td><td>বেজোড় (odd)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">পিরিয়ডিকতা ও জোড়/বেজোড় ধর্ম</div>
+    <p>ত্রিকোণমিতিক ফাংশনগুলো <strong>পিরিয়ডিক</strong> — অর্থাৎ তারা নির্দিষ্ট ব্যবধান পর পর নিজেদের পুনরাবৃত্তি করে। $\sin$ ও $\cos$ এর পিরিয়ড $2\pi$ (অর্থাৎ $\sin(x + 2\pi) = \sin x$), কিন্তু $\tan$ ও $\cot$ এর পিরিয়ড $\pi$ (অর্থাৎ $\tan(x + \pi) = \tan x$)।</p>
+    <p>এছাড়াও, $\sin(-x) = -\sin x$ (বেজোড় ফাংশন), কিন্তু $\cos(-x) = \cos x$ (জোড় ফাংশন)। এই ধর্মটি ফাংশনের লেখচিত্রে প্রতিফলিত হয় — sin ও tan এর লেখ origin সমমিত, কিন্তু cos এর লেখ y-অক্ষের সাপেক্ষে সমমিত।</p>
+  </div>
+
+  <div class="formula-box reveal">
+    <div class="formula-label">সরণ সূত্র (Phase Shift / Translation Formulas)</div>
+    <div class="formula-body">
+      $$\sin(x \pm 2\pi) = \sin x \qquad \cos(x \pm 2\pi) = \cos x \qquad \tan(x \pm \pi) = \tan x$$
+      $$\sin(x \pm \pi) = -\sin x \qquad \cos(x \pm \pi) = -\cos x$$
+      $$\sin\left(x \pm \frac{\pi}{2}\right) = \pm\cos x \qquad \cos\left(x \pm \frac{\pi}{2}\right) = \mp\sin x$$
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 14: ফাংশনের লেখচিত্র / GRAPHS                              -->
+<!-- ============================================================= -->
+<section class="section" id="sec-14">
+  <div class="head reveal">
+    <div class="num">14</div>
+    <div class="info">
+      <div class="eyebrow">The Visual Heart of Trigonometry</div>
+      <h2>ফাংশনের লেখচিত্র</h2>
+      <div class="sub">Watch the waveforms come alive — sin, cos, tan drawn step-by-step</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ত্রিকোণমিতিক ফাংশনের লেখচিত্র কেবল সুন্দর নয়, এটি প্রকৃতির ভাষা। শব্দের তরঙ্গ, আলোর কম্পন, বিদ্যুৎ প্রবাহ — সবকিছুই এই <strong>তরঙ্গ</strong> আকারে আছে। নিচে এক এক করে তিনটি মূল ফাংশনের লেখচিত্র অ্যানিমেটেডভাবে দেওয়া হলো।
+  </p>
+
+  <!-- ANIMATED sin GRAPH -->
+  <div class="figure reveal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <div style="font-family:'Lora',serif; font-weight:700; color:var(--primary);">y = sin(x)</div>
+      <button onclick="animateSin()" style="background:var(--grad-hero); color:white; border:none; padding:6px 16px; border-radius:8px; cursor:pointer; font-family:'Lora',serif; font-style:italic; font-weight:600;">▶ Animate</button>
+    </div>
+    <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" id="sinSvg">
+      <defs>
+        <linearGradient id="sinStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#6c5ce7"/>
+          <stop offset="50%" stop-color="#00d4ff"/>
+          <stop offset="100%" stop-color="#ff6ec7"/>
+        </linearGradient>
+        <linearGradient id="sinFill" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#6c5ce7" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#6c5ce7" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Grid -->
+      <g stroke="#e0e3ff" stroke-width="1">
+        <line x1="50" y1="40" x2="450" y2="40"/>
+        <line x1="50" y1="80" x2="450" y2="80"/>
+        <line x1="50" y1="160" x2="450" y2="160"/>
+        <line x1="50" y1="200" x2="450" y2="200"/>
+        <line x1="100" y1="20" x2="100" y2="220"/>
+        <line x1="150" y1="20" x2="150" y2="220"/>
+        <line x1="200" y1="20" x2="200" y2="220"/>
+        <line x1="250" y1="20" x2="250" y2="220"/>
+        <line x1="300" y1="20" x2="300" y2="220"/>
+        <line x1="350" y1="20" x2="350" y2="220"/>
+        <line x1="400" y1="20" x2="400" y2="220"/>
+      </g>
+      <!-- Axes -->
+      <line x1="50" y1="120" x2="450" y2="120" stroke="#7d83b3" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="250" y1="20" x2="250" y2="220" stroke="#7d83b3" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <!-- Axis labels -->
+      <text x="445" y="135" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">x</text>
+      <text x="255" y="28" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">y</text>
+      <text x="245" y="135" font-family="Lora" font-size="11" fill="#7d83b3">O</text>
+      <!-- Ticks -->
+      <text x="95" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">-π</text>
+      <text x="195" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">-π/2</text>
+      <text x="295" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">π/2</text>
+      <text x="395" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">π</text>
+      <text x="55" y="42" font-family="Lora" font-size="11" fill="#7d83b3">1</text>
+      <text x="55" y="205" font-family="Lora" font-size="11" fill="#7d83b3">-1</text>
+      <!-- Sine curve path -->
+      <path id="sinPath" d="M 50 120" fill="none" stroke="url(#sinStroke)" stroke-width="3" stroke-linecap="round"/>
+      <!-- Animated point -->
+      <circle id="sinPoint" cx="50" cy="120" r="6" fill="#ff6ec7" stroke="white" stroke-width="2" opacity="0"/>
+    </svg>
+    <div class="caption"><span class="num">Fig 14.1</span> y = sin(x) — একটি পরিপূর্ণ তরঙ্গ পিরিয়ড 2π, রেঞ্জ [−1, 1]</div>
+  </div>
+
+  <!-- ANIMATED cos GRAPH -->
+  <div class="figure reveal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <div style="font-family:'Lora',serif; font-weight:700; color:var(--accent-green);">y = cos(x)</div>
+      <button onclick="animateCos()" style="background:linear-gradient(135deg, #2ed573, #00d4ff); color:white; border:none; padding:6px 16px; border-radius:8px; cursor:pointer; font-family:'Lora',serif; font-style:italic; font-weight:600;">▶ Animate</button>
+    </div>
+    <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" id="cosSvg">
+      <defs>
+        <linearGradient id="cosStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2ed573"/>
+          <stop offset="50%" stop-color="#00d4ff"/>
+          <stop offset="100%" stop-color="#6c5ce7"/>
+        </linearGradient>
+      </defs>
+      <g stroke="#e0e3ff" stroke-width="1">
+        <line x1="50" y1="40" x2="450" y2="40"/>
+        <line x1="50" y1="80" x2="450" y2="80"/>
+        <line x1="50" y1="160" x2="450" y2="160"/>
+        <line x1="50" y1="200" x2="450" y2="200"/>
+        <line x1="100" y1="20" x2="100" y2="220"/>
+        <line x1="150" y1="20" x2="150" y2="220"/>
+        <line x1="200" y1="20" x2="200" y2="220"/>
+        <line x1="250" y1="20" x2="250" y2="220"/>
+        <line x1="300" y1="20" x2="300" y2="220"/>
+        <line x1="350" y1="20" x2="350" y2="220"/>
+        <line x1="400" y1="20" x2="400" y2="220"/>
+      </g>
+      <line x1="50" y1="120" x2="450" y2="120" stroke="#7d83b3" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="250" y1="20" x2="250" y2="220" stroke="#7d83b3" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="445" y="135" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">x</text>
+      <text x="255" y="28" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">y</text>
+      <text x="245" y="135" font-family="Lora" font-size="11" fill="#7d83b3">O</text>
+      <text x="95" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">-π</text>
+      <text x="195" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">-π/2</text>
+      <text x="295" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">π/2</text>
+      <text x="395" y="135" font-family="Lora" font-style="italic" font-size="11" fill="#7d83b3">π</text>
+      <text x="55" y="42" font-family="Lora" font-size="11" fill="#7d83b3">1</text>
+      <text x="55" y="205" font-family="Lora" font-size="11" fill="#7d83b3">-1</text>
+      <path id="cosPath" d="M 50 80" fill="none" stroke="url(#cosStroke)" stroke-width="3" stroke-linecap="round"/>
+      <circle id="cosPoint" cx="50" cy="80" r="6" fill="#2ed573" stroke="white" stroke-width="2" opacity="0"/>
+    </svg>
+    <div class="caption"><span class="num">Fig 14.2</span> y = cos(x) — sin-এর চেয়ে π/2 বামে সরানো (phase shift)</div>
+  </div>
+
+  <!-- tan graph -->
+  <div class="figure reveal">
+    <div style="font-family:'Lora',serif; font-weight:700; color:var(--accent-pink); margin-bottom:12px;">y = tan(x)</div>
+    <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="tanStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff6ec7"/>
+          <stop offset="100%" stop-color="#ffb649"/>
+        </linearGradient>
+      </defs>
+      <g stroke="#e0e3ff" stroke-width="1">
+        <line x1="100" y1="20" x2="100" y2="220"/>
+        <line x1="200" y1="20" x2="200" y2="220"/>
+        <line x1="300" y1="20" x2="300" y2="220"/>
+        <line x1="400" y1="20" x2="400" y2="220"/>
+      </g>
+      <!-- Asymptotes -->
+      <line x1="100" y1="20" x2="100" y2="220" stroke="#ff5e62" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="200" y1="20" x2="200" y2="220" stroke="#ff5e62" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="300" y1="20" x2="300" y2="220" stroke="#ff5e62" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="400" y1="20" x2="400" y2="220" stroke="#ff5e62" stroke-width="1" stroke-dasharray="4 4"/>
+      <!-- Axes -->
+      <line x1="50" y1="120" x2="450" y2="120" stroke="#7d83b3" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="250" y1="20" x2="250" y2="220" stroke="#7d83b3" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="445" y="135" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">x</text>
+      <text x="255" y="28" font-family="Lora" font-style="italic" font-size="13" fill="#7d83b3">y</text>
+      <text x="98" y="237" font-family="Lora" font-style="italic" font-size="11" fill="#ff5e62">-π/2</text>
+      <text x="197" y="237" font-family="Lora" font-style="italic" font-size="11" fill="#ff5e62">π/2</text>
+      <text x="297" y="237" font-family="Lora" font-style="italic" font-size="11" fill="#ff5e62">3π/2</text>
+      <text x="397" y="237" font-family="Lora" font-style="italic" font-size="11" fill="#ff5e62">5π/2</text>
+      <!-- tan curves -->
+      <path d="M 50 220 Q 75 180 100 20" fill="none" stroke="url(#tanStroke)" stroke-width="2.5"/>
+      <path d="M 100 220 Q 175 120 200 20" fill="none" stroke="url(#tanStroke)" stroke-width="2.5"/>
+      <path d="M 200 220 Q 250 120 300 20" fill="none" stroke="url(#tanStroke)" stroke-width="2.5"/>
+      <path d="M 300 220 Q 350 120 400 20" fill="none" stroke="url(#tanStroke)" stroke-width="2.5"/>
+      <path d="M 400 220 Q 425 180 450 20" fill="none" stroke="url(#tanStroke)" stroke-width="2.5"/>
+    </svg>
+    <div class="caption"><span class="num">Fig 14.3</span> y = tan(x) — π পিরিয়ড, x = (2n+1)π/2 তে vertical asymptote</div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">লেখচিত্রের গুরুত্বপূর্ণ বৈশিষ্ট্য</div>
+    <div class="grid-2">
+      <div>
+        <p><strong>sin ও cos:</strong></p>
+        <ul style="margin:0 0 0 18px; padding:0;">
+          <li>পিরিয়ড: $2\pi$</li>
+          <li>রেঞ্জ: $[-1, 1]$</li>
+          <li>Amplitude: 1</li>
+          <li>cos হলো sin এর বাম দিকে $\pi/2$ সরানো রূপ</li>
+        </ul>
+      </div>
+      <div>
+        <p><strong>tan:</strong></p>
+        <ul style="margin:0 0 0 18px; padding:0;">
+          <li>পিরিয়ড: $\pi$ (sin ও cos এর অর্ধেক)</li>
+          <li>রেঞ্জ: $(-\infty, +\infty)$</li>
+          <li>Vertical asymptote: $x = (2n+1)\frac{\pi}{2}$</li>
+          <li>x-অক্ষকে ছেদ করে প্রতি $\pi$ পরপর</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout note reveal">
+    <div class="icon">i</div>
+    <div>
+      <div class="title">sin ও cos এর সম্পর্ক</div>
+      <p>$\cos x = \sin(x + \pi/2)$ — অর্থাৎ cos হলো একটি সাইন তরঙ্গ যাকে $\pi/2$ বামে সরানো হয়েছে। এই "phase shift" ধারণাটি পদার্থবিজ্ঞানে অত্যন্ত গুরুত্বপূর্ণ — কারেন্ট ও ভোল্টেজের মধ্যে ফেজ পার্থক্য এভাবেই বোঝানো হয়।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 15: বিপরীত ত্রিকোণমিতিক ফাংশন / INVERSE                  -->
+<!-- ============================================================= -->
+<section class="section" id="sec-15">
+  <div class="head reveal">
+    <div class="num">15</div>
+    <div class="info">
+      <div class="eyebrow">Going Backwards</div>
+      <h2>বিপরীত ত্রিকোণমিতিক ফাংশন</h2>
+      <div class="sub">sin⁻¹, cos⁻¹, tan⁻¹ — the inverse functions with restricted domains</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ত্রিকোণমিতিক ফাংশনগুলো এক-এক-এর সম্পর্কে নয় (কারণ পিরিয়ডিক), তাই গাণিতিকভাবে তাদের বিপরীত ফাংশন নেই। কিন্তু আমরা প্রতিটির ডোমেইন সীমিত করে একটি "প্রিন্সিপাল ভ্যালু" বের করতে পারি। এই সীমিত ফাংশনের বিপরীতকেই <strong>বিপরীত ত্রিকোণমিতিক ফাংশন</strong> বলা হয়।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">প্রিন্সিপাল ভ্যালু সারণি</div>
+    <table class="tbl">
+      <thead>
+        <tr><th>ফাংশন</th><th>ডোমেইন</th><th>রেঞ্জ (প্রিন্সিপাল)</th><th>মনে রাখার টিপস</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num-col">sin⁻¹ x</td><td>$[-1, 1]$</td><td>$\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$</td><td>Q1 ও Q4</td></tr>
+        <tr><td class="num-col">cos⁻¹ x</td><td>$[-1, 1]$</td><td>$[0, \pi]$</td><td>Q1 ও Q2</td></tr>
+        <tr><td class="num-col">tan⁻¹ x</td><td>$\mathbb{R}$</td><td>$\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$</td><td>Q1 ও Q4</td></tr>
+        <tr><td class="num-col">cot⁻¹ x</td><td>$\mathbb{R}$</td><td>$(0, \pi)$</td><td>Q1 ও Q2</td></tr>
+        <tr><td class="num-col">sec⁻¹ x</td><td>$(-\infty, -1] \cup [1, \infty)$</td><td>$[0, \pi] - \{\pi/2\}$</td><td>Q1 ও Q2</td></tr>
+        <tr><td class="num-col">csc⁻¹ x</td><td>$(-\infty, -1] \cup [1, \infty)$</td><td>$\left[-\frac{\pi}{2}, \frac{\pi}{2}\right] - \{0\}$</td><td>Q1 ও Q4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula-box reveal">
+    <div class="formula-label">মৌলিক বিপরীত সূত্র</div>
+    <div class="formula-body">
+      $$\sin^{-1}(\sin\theta) = \theta \quad \text{if } -\frac{\pi}{2} \le \theta \le \frac{\pi}{2}$$
+      $$\cos^{-1}(\cos\theta) = \theta \quad \text{if } 0 \le \theta \le \pi$$
+      $$\tan^{-1}(\tan\theta) = \theta \quad \text{if } -\frac{\pi}{2} < \theta < \frac{\pi}{2}$$
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">বিপরীত ফাংশনের গুরুত্বপূর্ণ সূত্রাবলি</div>
+    <div class="formula-box">
+      <div class="formula-label">যোগফল ও বিয়োগফল সূত্র</div>
+      <div class="formula-body">
+        $$\sin^{-1} x + \cos^{-1} x = \frac{\pi}{2}$$
+        $$\tan^{-1} x + \cot^{-1} x = \frac{\pi}{2}$$
+        $$\sec^{-1} x + \csc^{-1} x = \frac{\pi}{2}$$
+      </div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">tan⁻¹ যোগফল সূত্র</div>
+      <div class="formula-body">
+        $$\tan^{-1} x + \tan^{-1} y = \begin{cases} \tan^{-1}\frac{x+y}{1-xy} & \text{if } xy < 1 \\ \pi + \tan^{-1}\frac{x+y}{1-xy} & \text{if } xy > 1, x > 0 \\ -\pi + \tan^{-1}\frac{x+y}{1-xy} & \text{if } xy > 1, x < 0 \end{cases}$$
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn reveal">
+    <div class="icon">!</div>
+    <div>
+      <div class="title">সতর্কতা — প্রিন্সিপাল ভ্যালু সবসময় মনে রাখুন</div>
+      <p>$\sin^{-1}(\sin\theta) = \theta$ সর্বদা সত্য নয়। যেমন $\sin^{-1}(\sin 150°)$ এর উত্তর $150°$ নয়, বরং $180° - 150° = 30°$। কারণ $150°$ প্রিন্সিপাল রেঞ্জ $[-\pi/2, \pi/2]$-এর বাইরে। তাই $\sin^{-1}(\sin 150°) = \sin^{-1}(\sin 30°) = 30°$।</p>
+    </div>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$\tan^{-1}(1) + \tan^{-1}(2) + \tan^{-1}(3)$-এর মান কত?</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>প্রথমে $\tan^{-1}(2) + \tan^{-1}(3)$ বের করি। এখানে $xy = 6 > 1$ এবং $x, y > 0$, তাই:</p>
+      <p>$\tan^{-1}(2) + \tan^{-1}(3) = \pi + \tan^{-1}\frac{2+3}{1-2\cdot3} = \pi + \tan^{-1}\frac{5}{-5} = \pi + \tan^{-1}(-1) = \pi - \frac{\pi}{4} = \frac{3\pi}{4}$</p>
+      <p>এখন মূল রাশি: $\tan^{-1}(1) + \frac{3\pi}{4} = \frac{\pi}{4} + \frac{3\pi}{4} = \pi$</p>
+      <p style="color:var(--accent-green); font-weight:600; margin-top:6px;">উত্তর: $\pi$</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 16: ত্রিকোণমিতিক সমীকরণ / EQUATIONS                      -->
+<!-- ============================================================= -->
+<section class="section" id="sec-16">
+  <div class="head reveal">
+    <div class="num">16</div>
+    <div class="info">
+      <div class="eyebrow">Solving the Unknown Angle</div>
+      <h2>ত্রিকোণমিতিক সমীকরণ</h2>
+      <div class="sub">Find all angles satisfying a trig equation — general solutions</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    <strong>ত্রিকোণমিতিক সমীকরণ</strong> হলো এমন একটি সমীকরণ যেখানে অজানা রাশিটি ত্রিকোণমিতিক ফাংশনের ভেতরে থাকে — যেমন $\sin\theta = \frac{1}{2}$। যেহেতু ত্রিকোণমিতিক ফাংশন পিরিয়ডিক, সেহেতু একটি সমীকরণের সাধারণত অসংখ্য সমাধান থাকে — এবং আমরা সেগুলোকে একটি "সাধারণ সমাধান" (general solution) আকারে প্রকাশ করি।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">সাধারণ সমাধানের মৌলিক সূত্র</div>
+    <div class="formula-box">
+      <div class="formula-label">মৌলিক সমীকরণের সাধারণ সমাধান</div>
+      <div class="formula-body">
+        $$\sin\theta = 0 \Rightarrow \theta = n\pi, \quad n \in \mathbb{Z}$$
+        $$\cos\theta = 0 \Rightarrow \theta = (2n+1)\frac{\pi}{2}, \quad n \in \mathbb{Z}$$
+        $$\tan\theta = 0 \Rightarrow \theta = n\pi, \quad n \in \mathbb{Z}$$
+      </div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">বিশেষ মানের সমীকরণ</div>
+      <div class="formula-body">
+        $$\sin\theta = \sin\alpha \Rightarrow \theta = n\pi + (-1)^n \alpha, \quad n \in \mathbb{Z}$$
+        $$\cos\theta = \cos\alpha \Rightarrow \theta = 2n\pi \pm \alpha, \quad n \in \mathbb{Z}$$
+        $$\tan\theta = \tan\alpha \Rightarrow \theta = n\pi + \alpha, \quad n \in \mathbb{Z}$$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">সমীকরণ সমাধানের কৌশল</div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span> সমীকরণকে একটি মাত্র ত্রিকোণমিতিক ফাংশনে প্রকাশ করুন (যদি সম্ভব হয়, sin বা cos-এ)।
+      </div>
+      <div class="step">
+        <span class="step-num">2</span> পিথাগোরাসের অভেদ ব্যবহার করে দুটি ফাংশনকে একটিতে রূপান্তর করুন।
+        <div style="margin-top:6px;">যেমন $\sin^2\theta + \cos^2\theta = 1$ থেকে $\cos^2\theta = 1 - \sin^2\theta$।</div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span> সমীকরণকে গুণফল আকারে আনুন: $ab = 0 \Rightarrow a = 0 \text{ বা } b = 0$।
+      </div>
+      <div class="step">
+        <span class="step-num">4</span> প্রতিটি সমাধানের জন্য সাধারণ সমাধান লিখুন, $n \in \mathbb{Z}$ উল্লেখ করতে ভুলবেন না।
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">Worked Example: $\sin 2\theta = \sin\theta$</div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span> সমীকরণটি লেখো: $\sin 2\theta = \sin\theta$
+      </div>
+      <div class="step">
+        <span class="step-num">2</span> $\sin 2\theta = 2\sin\theta\cos\theta$ বসাও: $2\sin\theta\cos\theta = \sin\theta$
+      </div>
+      <div class="step">
+        <span class="step-num">3</span> পুনর্বিন্যাস করো: $\sin\theta(2\cos\theta - 1) = 0$
+      </div>
+      <div class="step">
+        <span class="step-num">4</span> গুণফল = 0 থেকে দুটি সম্ভাবনা: $\sin\theta = 0$ অথবা $2\cos\theta - 1 = 0$
+      </div>
+      <div class="step">
+        <span class="step-num">5</span> $\sin\theta = 0 \Rightarrow \theta = n\pi$
+      </div>
+      <div class="step">
+        <span class="step-num">6</span> $\cos\theta = \frac{1}{2} = \cos\frac{\pi}{3} \Rightarrow \theta = 2n\pi \pm \frac{\pi}{3}$
+      </div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong style="color:var(--accent-green);">সাধারণ সমাধান:</strong> $\theta = n\pi$ বা $\theta = 2n\pi \pm \frac{\pi}{3}$, যেখানে $n \in \mathbb{Z}$
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">পরীক্ষার জন্য গুরুত্বপূর্ণ</div>
+      <p>সমীকরণ সমাধানের সময় সর্বদা মনে রাখুন যে <strong>একটি ত্রিকোণমিতিক সমীকরণের সাধারণত অসংখ্য সমাধান থাকে</strong>, কেবল একটি নয়। সাধারণ সমাধানে $n \in \mathbb{Z}$ উল্লেখ করতে ভুলবেন না — এটি না করলে নম্বর কাটা যায়। নির্দিষ্ট ব্যবধানে সমাধান চাইলে সেই ব্যবধানের জন্য $n$-এর মান বসাতে হবে।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 17: ত্রিভুজের ধর্ম / PROPERTIES OF TRIANGLES              -->
+<!-- ============================================================= -->
+<section class="section" id="sec-17">
+  <div class="head reveal">
+    <div class="num">17</div>
+    <div class="info">
+      <div class="eyebrow">From Theory to Geometry</div>
+      <h2>ত্রিভুজের ধর্ম</h2>
+      <div class="sub">Sine rule, Cosine rule, area formulas — applied trigonometry</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    ত্রিকোণমিতির প্রায়োগিক দিক হলো ত্রিভুজ সমাধান — অর্থাৎ ত্রিভুজের কিছু উপাদান (বাহু ও কোণ) জানলে বাকিগুলো বের করা। এর জন্য দুটি প্রধান সূত্র ব্যবহৃত হয়: <strong>Sine সূত্র</strong> এবং <strong>Cosine সূত্র</strong>।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">Sine সূত্র (Law of Sines)</div>
+    <p>একটি ত্রিভুজ ABC-তে যদি বাহুগুলো $a, b, c$ হয় এবং বিপরীত কোণগুলো $A, B, C$ হয়, তবে:</p>
+    <div class="formula-box">
+      <div class="formula-label">Sine সূত্র</div>
+      <div class="formula-body">
+        $$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$$
+      </div>
+    </div>
+    <p>এখানে $R$ হলো ত্রিভুজটির পরিবৃত্ত বৃত্তের ব্যাসার্ধ। এই সূত্রটি কাজে লাগে যখন আমরা জানি একটি বাহু ও তার বিপরীত কোণ (অথবা দুটি কোণ ও একটি বাহু)।</p>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">Cosine সূত্র (Law of Cosines)</div>
+    <p>যখন আমরা জানি দুটি বাহু এবং তাদের মধ্যবর্তী কোণ, তখন তৃতীয় বাহু বের করতে Cosine সূত্র ব্যবহৃত হয়।</p>
+    <div class="formula-box">
+      <div class="formula-label">Cosine সূত্র</div>
+      <div class="formula-body">
+        $$a^2 = b^2 + c^2 - 2bc\cos A$$
+        $$b^2 = a^2 + c^2 - 2ac\cos B$$
+        $$c^2 = a^2 + b^2 - 2ab\cos C$$
+      </div>
+    </div>
+    <p>লক্ষ্য করুন: যদি $\angle A = 90°$, তবে $\cos A = 0$, এবং $a^2 = b^2 + c^2$ পাই — যা পিথাগোরাসের সূত্র। অর্থাৎ Cosine সূত্র হলো পিথাগোরাসের সাধারণীকরণ — যেকোনো কোণের জন্য কাজ করে।</p>
+  </div>
+
+  <!-- Interactive triangle -->
+  <div class="triangle-tool reveal">
+    <div class="card-title" style="margin-bottom:16px;">Interactive Triangle — বাহু ও কোণ পরিবর্তন করুন</div>
+    <div class="layout">
+      <div>
+        <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" id="triangleSvg" style="width:100%; max-width:400px;">
+          <defs>
+            <linearGradient id="triGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6c5ce7"/>
+              <stop offset="100%" stop-color="#00d4ff"/>
+            </linearGradient>
+          </defs>
+          <!-- Triangle -->
+          <polygon id="triShape" points="80,260 320,260 200,80" fill="rgba(108,92,231,0.08)" stroke="url(#triGrad)" stroke-width="3"/>
+          <!-- Vertices -->
+          <circle cx="80" cy="260" r="6" fill="#6c5ce7"/>
+          <circle cx="320" cy="260" r="6" fill="#00d4ff"/>
+          <circle cx="200" cy="80" r="6" fill="#ff6ec7"/>
+          <text x="65" y="280" font-family="Lora" font-style="italic" font-size="16" fill="#6c5ce7">A</text>
+          <text x="325" y="280" font-family="Lora" font-style="italic" font-size="16" fill="#00d4ff">B</text>
+          <text x="205" y="75" font-family="Lora" font-style="italic" font-size="16" fill="#ff6ec7">C</text>
+          <!-- Side labels -->
+          <text id="sideC" x="195" y="280" font-family="Lora" font-style="italic" font-size="14" fill="#2c314d" text-anchor="middle">c=5</text>
+          <text id="sideA" x="270" y="170" font-family="Lora" font-style="italic" font-size="14" fill="#2c314d">a=?</text>
+          <text id="sideB" x="120" y="170" font-family="Lora" font-style="italic" font-size="14" fill="#2c314d">b=?</text>
+          <!-- Angle arcs -->
+          <path d="M 100 260 A 20 20 0 0 0 95 245" fill="none" stroke="#6c5ce7" stroke-width="2"/>
+          <text id="angA" x="100" y="240" font-family="Lora" font-size="13" fill="#6c5ce7">45°</text>
+          <path d="M 300 260 A 20 20 0 0 0 305 245" fill="none" stroke="#00d4ff" stroke-width="2"/>
+          <text id="angB" x="285" y="240" font-family="Lora" font-size="13" fill="#00d4ff">60°</text>
+          <text id="angC" x="180" y="105" font-family="Lora" font-size="13" fill="#ff6ec7">75°</text>
+        </svg>
+      </div>
+      <div>
+        <div style="font-family:'Lora',serif; font-style:italic; font-weight:700; color:var(--primary); margin-bottom:12px;">Inputs</div>
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:4px; font-family:'Lora',serif;">Angle A (degrees)</label>
+        <input type="range" min="20" max="80" step="1" value="45" id="triAngA" style="width:100%; accent-color:var(--primary);">
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin:8px 0 4px; font-family:'Lora',serif;">Angle B (degrees)</label>
+        <input type="range" min="20" max="100" step="1" value="60" id="triAngB" style="width:100%; accent-color:var(--accent-cyan);">
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin:8px 0 4px; font-family:'Lora',serif;">Side c (length AB)</label>
+        <input type="range" min="3" max="10" step="0.5" value="5" id="triSideC" style="width:100%; accent-color:var(--accent-pink);">
+        <div style="margin-top:18px; background:white; padding:14px; border-radius:10px; border:1px solid rgba(108,92,231,0.15);">
+          <div style="font-family:'Lora',serif; font-weight:700; color:var(--primary); margin-bottom:6px;">Computed:</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px;">∠C = <span id="outAngC" style="color:var(--accent-pink);">75°</span></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px;">a = <span id="outSideA" style="color:var(--accent-cyan);">5.18</span></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px;">b = <span id="outSideB" style="color:var(--accent-cyan);">5.61</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">ক্ষেত্রফল সূত্রাবলি (Area Formulas)</div>
+    <div class="formula-box">
+      <div class="formula-label">ত্রিভুজের ক্ষেত্রফল</div>
+      <div class="formula-body">
+        $$\Delta = \frac{1}{2}ab\sin C = \frac{1}{2}bc\sin A = \frac{1}{2}ac\sin B$$
+        $$\Delta = \sqrt{s(s-a)(s-b)(s-c)}, \quad s = \frac{a+b+c}{2} \text{ (Heron)}$$
+        $$\Delta = \frac{abc}{4R} \text{ (R = পরিবৃত্তের ব্যাসার্ধ)}$$
+      </div>
+    </div>
+    <p>প্রথম সূত্রটি সবচেয়ে ব্যবহারিক — দুটি বাহু ও তাদের মধ্যবর্তী কোণ জানলেই ক্ষেত্রফল বের করা যায়। Heron-এর সূত্র তিন বাহু জানা থাকলে কাজে লাগে।</p>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">একটি ত্রিভুজে $a = 8, b = 6, \angle C = 60°$। ত্রিভুজটির ক্ষেত্রফল ও তৃতীয় বাহু $c$ নির্ণয় করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p><strong>ক্ষেত্রফল:</strong> $\Delta = \frac{1}{2}ab\sin C = \frac{1}{2}\cdot 8\cdot 6\cdot \sin 60° = 24\cdot \frac{\sqrt{3}}{2} = 12\sqrt{3} \approx 20.78$ sq. units</p>
+      <p><strong>তৃতীয় বাহু:</strong> Cosine সূত্র থেকে: $c^2 = a^2 + b^2 - 2ab\cos C = 64 + 36 - 2(8)(6)\cos 60° = 100 - 48 = 52$</p>
+      <p>$\therefore c = \sqrt{52} = 2\sqrt{13} \approx 7.21$</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 18: সমাধানকৃত উদাহরণ / WORKED EXAMPLES                  -->
+<!-- ============================================================= -->
+<section class="section" id="sec-18">
+  <div class="head reveal">
+    <div class="num">18</div>
+    <div class="info">
+      <div class="eyebrow">Putting It All Together</div>
+      <h2>সমাধানকৃত উদাহরণ</h2>
+      <div class="sub">20 fully worked problems covering the entire chapter</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    নিচে সম্পূর্ণ অধ্যায়ের প্রতিটি মূল বিষয় থেকে একটি করে সমাধানকৃত উদাহরণ দেওয়া হলো। প্রতিটি সমাধান ধাপে ধাপে বিস্তারিত — যাতে কেবল উত্তর নয়, <em>চিন্তার প্রক্রিয়াটিও</em> বোঝা যায়। পরীক্ষায় এই প্রক্রিয়া প্রয়োগ করলেই যেকোনো সমস্যা সমাধান করা সম্ভব।
+  </p>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১ — কোণ রূপান্তর</div>
+    <p>$1485°$ কে আদিকোণে রূপান্তর করো এবং চতুর্থাংশ নির্দেশ করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $1485° \div 360° = 4$ ভাগশেষ $45°$ ($\because 4 \times 360° = 1440°$)</div>
+      <div class="step"><span class="step-num">2</span> $\therefore 1485° = 4 \times 360° + 45° \equiv 45°$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $1485° \equiv 45°$, প্রথম চতুর্থাংশে (Q1)
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ২ — মান নির্ণয়</div>
+    <p>$\sin 1485°$-এর মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> আদিকোণে: $1485° \equiv 45°$ (উদাহরণ ১ থেকে)</div>
+      <div class="step"><span class="step-num">2</span> $1485°$ যেহেতু Q1-এ, সেহেতু sin ধনাত্মক</div>
+      <div class="step"><span class="step-num">3</span> $\therefore \sin 1485° = \sin 45° = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\sin 1485° = \frac{\sqrt{2}}{2}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৩ — যৌগিক কোণ</div>
+    <p>$\sin 75° + \cos 75°$-এর মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $\sin 75° = \sin(45° + 30°) = \frac{\sqrt{6} + \sqrt{2}}{4}$</div>
+      <div class="step"><span class="step-num">2</span> $\cos 75° = \cos(45° + 30°) = \frac{\sqrt{6} - \sqrt{2}}{4}$</div>
+      <div class="step"><span class="step-num">3</span> যোগ করি: $\sin 75° + \cos 75° = \frac{\sqrt{6}+\sqrt{2}+\sqrt{6}-\sqrt{2}}{4} = \frac{2\sqrt{6}}{4} = \frac{\sqrt{6}}{2}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\frac{\sqrt{6}}{2}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৪ — গুণিত কোণ</div>
+    <p>প্রমাণ করো: $\frac{\sin 2A}{1+\cos 2A} = \tan A$</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> <strong>বাম পক্ষ:</strong> $\frac{\sin 2A}{1+\cos 2A}$</div>
+      <div class="step"><span class="step-num">2</span> $\sin 2A = 2\sin A\cos A$ এবং $1 + \cos 2A = 1 + (2\cos^2 A - 1) = 2\cos^2 A$</div>
+      <div class="step"><span class="step-num">3</span> = $\frac{2\sin A\cos A}{2\cos^2 A} = \frac{\sin A}{\cos A} = \tan A$ ✓</div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৫ — সমীকরণ</div>
+    <p>$\cos 2\theta + \sin\theta = 1$ সমীকরণের সাধারণ সমাধান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $\cos 2\theta = 1 - 2\sin^2\theta$ বসাই: $1 - 2\sin^2\theta + \sin\theta = 1$</div>
+      <div class="step"><span class="step-num">2</span> সরল করি: $-2\sin^2\theta + \sin\theta = 0 \Rightarrow \sin\theta(1 - 2\sin\theta) = 0$</div>
+      <div class="step"><span class="step-num">3</span> গুণফল = 0 থেকে: $\sin\theta = 0$ অথবা $\sin\theta = \frac{1}{2}$</div>
+      <div class="step"><span class="step-num">4</span> $\sin\theta = 0 \Rightarrow \theta = n\pi$</div>
+      <div class="step"><span class="step-num">5</span> $\sin\theta = \frac{1}{2} = \sin\frac{\pi}{6} \Rightarrow \theta = n\pi + (-1)^n \frac{\pi}{6}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>সাধারণ সমাধান:</strong> $\theta = n\pi$ অথবা $\theta = n\pi + (-1)^n\frac{\pi}{6}$, যেখানে $n \in \mathbb{Z}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৬ — বিপরীত ফাংশন</div>
+    <p>$\sin^{-1}\left(\frac{3}{5}\right) + \cos^{-1}\left(\frac{3}{5}\right)$-এর মান কত?</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> মৌলিক সূত্র: $\sin^{-1} x + \cos^{-1} x = \frac{\pi}{2}$ (যেকোনো $x \in [-1,1]$-এর জন্য)</div>
+      <div class="step"><span class="step-num">2</span> এখানে $x = \frac{3}{5}$, যা $[-1, 1]$-এর মধ্যে</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\frac{\pi}{2}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৭ — ত্রিভুজ সমাধান</div>
+    <p>একটি ত্রিভুজ ABC-তে $a = 5, b = 7, c = 8$। cos B নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> Cosine সূত্র: $b^2 = a^2 + c^2 - 2ac\cos B$</div>
+      <div class="step"><span class="step-num">2</span> $49 = 25 + 64 - 2\cdot 5\cdot 8\cdot\cos B$</div>
+      <div class="step"><span class="step-num">3</span> $49 = 89 - 80\cos B \Rightarrow 80\cos B = 40 \Rightarrow \cos B = \frac{1}{2}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\cos B = \frac{1}{2}$, অর্থাৎ $\angle B = 60°$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৮ — যোগফল সূত্র</div>
+    <p>$\sin 75° - \sin 15°$-এর মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> সূত্র: $\sin A - \sin B = 2\cos\frac{A+B}{2}\sin\frac{A-B}{2}$</div>
+      <div class="step"><span class="step-num">2</span> $\sin 75° - \sin 15° = 2\cos\frac{75°+15°}{2}\sin\frac{75°-15°}{2} = 2\cos 45°\sin 30°$</div>
+      <div class="step"><span class="step-num">3</span> $= 2 \cdot \frac{1}{\sqrt{2}} \cdot \frac{1}{2} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\frac{\sqrt{2}}{2}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ৯ — ত্রিগুণ কোণ</div>
+    <p>$\sin 3A = 3\sin A - 4\sin^3 A$ প্রমাণ করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $\sin 3A = \sin(2A + A) = \sin 2A\cos A + \cos 2A\sin A$</div>
+      <div class="step"><span class="step-num">2</span> $= (2\sin A\cos A)\cos A + (1 - 2\sin^2 A)\sin A$</div>
+      <div class="step"><span class="step-num">3</span> $= 2\sin A\cos^2 A + \sin A - 2\sin^3 A$</div>
+      <div class="step"><span class="step-num">4</span> $\cos^2 A = 1 - \sin^2 A$ বসাই: $= 2\sin A(1 - \sin^2 A) + \sin A - 2\sin^3 A$</div>
+      <div class="step"><span class="step-num">5</span> $= 2\sin A - 2\sin^3 A + \sin A - 2\sin^3 A = 3\sin A - 4\sin^3 A$ ✓</div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১০ — সর্বোচ্চ/সর্বনিম্ন মান</div>
+    <p>$f(\theta) = \sin\theta + \cos\theta$-এর সর্বোচ্চ ও সর্বনিম্ন মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $\sin\theta + \cos\theta = \sqrt{2}\left(\frac{1}{\sqrt{2}}\sin\theta + \frac{1}{\sqrt{2}}\cos\theta\right)$</div>
+      <div class="step"><span class="step-num">2</span> $= \sqrt{2}\left(\sin\theta\cos\frac{\pi}{4} + \cos\theta\sin\frac{\pi}{4}\right) = \sqrt{2}\sin\left(\theta + \frac{\pi}{4}\right)$</div>
+      <div class="step"><span class="step-num">3</span> $\because -1 \le \sin\left(\theta + \frac{\pi}{4}\right) \le 1$</div>
+      <div class="step"><span class="step-num">4</span> $\therefore -\sqrt{2} \le \sin\theta + \cos\theta \le \sqrt{2}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> সর্বোচ্চ মান = $\sqrt{2}$, সর্বনিম্ন মান = $-\sqrt{2}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১১ — যৌগিক কোণের প্রয়োগ</div>
+    <p>$\cos 15°$-এর মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $15° = 45° - 30°$, তাই $\cos 15° = \cos(45° - 30°)$</div>
+      <div class="step"><span class="step-num">2</span> $= \cos 45° \cos 30° + \sin 45° \sin 30°$ [cos(A−B) সূত্র]</div>
+      <div class="step"><span class="step-num">3</span> $= \frac{1}{\sqrt{2}} \cdot \frac{\sqrt{3}}{2} + \frac{1}{\sqrt{2}} \cdot \frac{1}{2}$</div>
+      <div class="step"><span class="step-num">4</span> $= \frac{\sqrt{3} + 1}{2\sqrt{2}} = \frac{\sqrt{6} + \sqrt{2}}{4}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\cos 15° = \frac{\sqrt{6} + \sqrt{2}}{4} \approx 0.966$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১২ — অভেদ প্রমাণ</div>
+    <p>প্রমাণ করো: $\tan(A+B) \cdot \tan(A-B) = \frac{\tan^2 A - \tan^2 B}{1 - \tan^2 A \tan^2 B}$</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $\tan(A+B) = \frac{\tan A + \tan B}{1 - \tan A \tan B}$, $\tan(A-B) = \frac{\tan A - \tan B}{1 + \tan A \tan B}$</div>
+      <div class="step"><span class="step-num">2</span> গুণ করি: $\frac{(\tan A + \tan B)(\tan A - \tan B)}{(1 - \tan A \tan B)(1 + \tan A \tan B)}$</div>
+      <div class="step"><span class="step-num">3</span> লব: $(a+b)(a-b) = a^2 - b^2$, হর: $(1-x)(1+x) = 1-x^2$</div>
+      <div class="step"><span class="step-num">4</span> $= \frac{\tan^2 A - \tan^2 B}{1 - \tan^2 A \tan^2 B}$ ✓</div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৩ — অর্ধ-কোণ সূত্র</div>
+    <p>$\cos 22.5°$-এর মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> অর্ধ-কোণ সূত্র: $\cos\frac{\theta}{2} = \sqrt{\frac{1+\cos\theta}{2}}$</div>
+      <div class="step"><span class="step-num">2</span> এখানে $\theta/2 = 22.5°$, তাই $\theta = 45°$</div>
+      <div class="step"><span class="step-num">3</span> $\cos 22.5° = \sqrt{\frac{1 + \cos 45°}{2}} = \sqrt{\frac{1 + \frac{1}{\sqrt{2}}}{2}} = \sqrt{\frac{\sqrt{2} + 1}{2\sqrt{2}}}$</div>
+      <div class="step"><span class="step-num">4</span> $= \frac{\sqrt{2 + \sqrt{2}}}{2} \approx 0.924$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\cos 22.5° = \frac{\sqrt{2 + \sqrt{2}}}{2}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৪ — সমীকরণ সমাধান</div>
+    <p>$\sqrt{3}\cos\theta + \sin\theta = \sqrt{2}$ সমীকরণের সাধারণ সমাধান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> রাশিকে $2\sin(\theta + \alpha)$ আকারে আনি। $\sqrt{3}\cos\theta + \sin\theta = 2\left(\frac{1}{2}\sin\theta + \frac{\sqrt{3}}{2}\cos\theta\right)$</div>
+      <div class="step"><span class="step-num">2</span> $= 2(\sin\theta\cos\frac{\pi}{3} + \cos\theta\sin\frac{\pi}{3}) = 2\sin\left(\theta + \frac{\pi}{3}\right)$</div>
+      <div class="step"><span class="step-num">3</span> সমীকরণ: $2\sin\left(\theta + \frac{\pi}{3}\right) = \sqrt{2}$, অর্থাৎ $\sin\left(\theta + \frac{\pi}{3}\right) = \frac{1}{\sqrt{2}} = \sin\frac{\pi}{4}$</div>
+      <div class="step"><span class="step-num">4</span> $\theta + \frac{\pi}{3} = n\pi + (-1)^n \frac{\pi}{4}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>সাধারণ সমাধান:</strong> $\theta = n\pi + (-1)^n \frac{\pi}{4} - \frac{\pi}{3}$, $n \in \mathbb{Z}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৫ — ত্রিভুজ ক্ষেত্রফল</div>
+    <p>একটি ত্রিভুজে তিনটি বাহুর দৈর্ঘ্য 13, 14, 15। ক্ষেত্রফল ও পরিবৃত্তের ব্যাসার্ধ নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $s = \frac{13+14+15}{2} = 21$</div>
+      <div class="step"><span class="step-num">2</span> Heron সূত্র: $\Delta = \sqrt{s(s-a)(s-b)(s-c)} = \sqrt{21 \cdot 8 \cdot 7 \cdot 6} = \sqrt{7056} = 84$</div>
+      <div class="step"><span class="step-num">3</span> পরিবৃত্তের ব্যাসার্ধ: $R = \frac{abc}{4\Delta} = \frac{13 \cdot 14 \cdot 15}{4 \cdot 84} = \frac{2730}{336} = \frac{65}{8} = 8.125$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\Delta = 84$ sq. units, $R = \frac{65}{8} = 8.125$ units
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৬ — যোগফল-গুণফল সূত্রের প্রয়োগ</div>
+    <p>$\sin 75° \cos 15°$-এর মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> সূত্র: $2\sin A \cos B = \sin(A+B) + \sin(A-B)$</div>
+      <div class="step"><span class="step-num">2</span> $\sin 75° \cos 15° = \frac{1}{2}[\sin(75°+15°) + \sin(75°-15°)]$</div>
+      <div class="step"><span class="step-num">3</span> $= \frac{1}{2}[\sin 90° + \sin 60°] = \frac{1}{2}\left[1 + \frac{\sqrt{3}}{2}\right] = \frac{2 + \sqrt{3}}{4}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $\frac{2 + \sqrt{3}}{4}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৭ — বিপরীত ফাংশন সমীকরণ</div>
+    <p>$2\tan^{-1}(\sin\theta) = \tan^{-1}\left(\frac{2\sin\theta}{1 - 2\sin^2\theta}\right)$ প্রমাণ করো (যখন $|\sin\theta| < \frac{1}{\sqrt{2}}$)।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $2\tan^{-1} x = \tan^{-1}\left(\frac{2x}{1-x^2}\right)$ যখন $|x| < 1$</div>
+      <div class="step"><span class="step-num">2</span> এখানে $x = \sin\theta$, $|x| < 1$ যদি $|\sin\theta| < 1$</div>
+      <div class="step"><span class="step-num">3</span> তাহলে $2\tan^{-1}(\sin\theta) = \tan^{-1}\left(\frac{2\sin\theta}{1 - \sin^2\theta}\right)$</div>
+      <div class="step"><span class="step-num">4</span> কিন্তু $1 - \sin^2\theta = \cos^2\theta$। যদি $1 - 2\sin^2\theta$ চাই, তাহলে $x = \sqrt{2}\sin\theta$ ধরতে হবে।</div>
+      <div class="step"><span class="step-num">5</span> $2\tan^{-1}(\sqrt{2}\sin\theta) = \tan^{-1}\left(\frac{2\sqrt{2}\sin\theta}{1 - 2\sin^2\theta}\right)$</div>
+      <div class="step"><span class="step-num">6</span> $\sin\theta = \frac{x}{\sqrt{2}}$, $x = \sqrt{2}\sin\theta \Rightarrow \tan^{-1}\left(\frac{2\sin\theta}{1-2\sin^2\theta}\right) = 2\tan^{-1}(\sqrt{2}\sin\theta) - \tan^{-1}\left(\frac{2\sin\theta(\sqrt{2}-1)}{...}\right)$ [simplified]</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>সরলীকরণ:</strong> $2\tan^{-1}(\sin\theta) = \tan^{-1}\left(\frac{2\sin\theta}{1-\sin^2\theta}\right) = \tan^{-1}\left(\frac{2\sin\theta}{\cos^2\theta}\right)$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৮ — সর্বোচ্চ ও সর্বনিম্ন মান</div>
+    <p>$f(\theta) = 5\cos\theta + 12\sin\theta$-এর সর্বোচ্চ ও সর্বনিম্ন মান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $R = \sqrt{a^2 + b^2} = \sqrt{5^2 + 12^2} = \sqrt{25 + 144} = \sqrt{169} = 13$</div>
+      <div class="step"><span class="step-num">2</span> $\tan\alpha = \frac{b}{a} = \frac{12}{5}$, তাই $\alpha = \tan^{-1}\frac{12}{5}$</div>
+      <div class="step"><span class="step-num">3</span> $f(\theta) = 13\cos(\theta - \alpha)$, যেখানে $\alpha = \tan^{-1}\frac{12}{5}$</div>
+      <div class="step"><span class="step-num">4</span> $\because -1 \le \cos(\theta - \alpha) \le 1$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> সর্বোচ্চ মান = $13$ (যখন $\theta = \alpha$), সর্বনিম্ন মান = $-13$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ১৯ — ত্রিগুণ কোণের সমীকরণ</div>
+    <p>$\cos 3A = \cos A$ সমীকরণের সাধারণ সমাধান নির্ণয় করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $\cos 3A - \cos A = 0$</div>
+      <div class="step"><span class="step-num">2</span> যোগফল-গুণফল সূত্র: $\cos C - \cos D = -2\sin\frac{C+D}{2}\sin\frac{C-D}{2}$</div>
+      <div class="step"><span class="step-num">3</span> $-2\sin\frac{3A+A}{2}\sin\frac{3A-A}{2} = -2\sin 2A \sin A = 0$</div>
+      <div class="step"><span class="step-num">4</span> $\sin 2A = 0 \Rightarrow 2A = n\pi \Rightarrow A = \frac{n\pi}{2}$</div>
+      <div class="step"><span class="step-num">5</span> অথবা $\sin A = 0 \Rightarrow A = n\pi$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>সাধারণ সমাধান:</strong> $A = \frac{n\pi}{2}$ (এটি $n\pi$ কেও অন্তর্ভুক্ত করে), $n \in \mathbb{Z}$
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-title">উদাহরণ ২০ — Sine সূত্রের প্রয়োগ</div>
+    <p>একটি ত্রিভুজে $A = 60°$, $B = 45°$, এবং $a = 10$। $b$ ও $c$ বের করো।</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span> $C = 180° - 60° - 45° = 75°$</div>
+      <div class="step"><span class="step-num">2</span> Sine সূত্র: $\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}$</div>
+      <div class="step"><span class="step-num">3</span> $b = \frac{a \sin B}{\sin A} = \frac{10 \sin 45°}{\sin 60°} = \frac{10 \cdot \frac{1}{\sqrt{2}}}{\frac{\sqrt{3}}{2}} = \frac{20}{2\sqrt{2} \cdot \frac{\sqrt{3}}{2}} = \frac{10\sqrt{2}}{\sqrt{3}} = \frac{10\sqrt{6}}{3}$</div>
+      <div class="step"><span class="step-num">4</span> $c = \frac{a \sin C}{\sin A} = \frac{10 \sin 75°}{\sin 60°} = \frac{10 \cdot \frac{\sqrt{6}+\sqrt{2}}{4}}{\frac{\sqrt{3}}{2}} = \frac{5(\sqrt{6}+\sqrt{2})}{\sqrt{3}} \cdot \frac{2}{2} = \frac{5(\sqrt{6}+\sqrt{2})\sqrt{3}}{3}$</div>
+      <div class="step" style="background:rgba(46,213,115,0.08); border-left-color:var(--accent-green);">
+        <span class="step-num" style="background:var(--accent-green);">✓</span> <strong>উত্তর:</strong> $b = \frac{10\sqrt{6}}{3} \approx 8.16$, $c \approx 12.25$
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 19: অনুশীলন / PRACTICE PROBLEMS                          -->
+<!-- ============================================================= -->
+<section class="section" id="sec-19">
+  <div class="head reveal">
+    <div class="num">19</div>
+    <div class="info">
+      <div class="eyebrow">Practice Makes Perfect</div>
+      <h2>অনুশীলন সমস্যাবলি</h2>
+      <div class="sub">Try these problems — click to reveal the answer</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    নিচের সমস্যাগুলো নিজে চেষ্টা করুন। প্রতিটি সমস্যার নিচে "Solution দেখুন" ক্লিক করলে সমাধান প্রকাশ পাবে। কিন্তু প্রথমে অন্তত ৫ মিনিট চেষ্টা করুন — না পারলেই সমাধান দেখুন।
+  </p>
+
+  <div class="practice reveal">
+    <div class="q">$-1500°$ কে আদিকোণে রূপান্তর করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>$-1500° + 5 \times 360° = -1500° + 1800° = 300°$</p>
+      <p>সুতরাং $-1500° \equiv 300°$, যা চতুর্থ চতুর্থাংশে (Q4) অবস্থিত।</p>
+    </details>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$\tan 15°$-এর মান নির্ণয় করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>$\tan 15° = \tan(45° - 30°) = \frac{\tan 45° - \tan 30°}{1 + \tan 45°\tan 30°} = \frac{1 - \frac{1}{\sqrt{3}}}{1 + \frac{1}{\sqrt{3}}} = \frac{\sqrt{3} - 1}{\sqrt{3} + 1}$</p>
+      <p>পরিমেয়করণ: $= \frac{(\sqrt{3}-1)^2}{(\sqrt{3}+1)(\sqrt{3}-1)} = \frac{3 - 2\sqrt{3} + 1}{3 - 1} = \frac{4 - 2\sqrt{3}}{2} = 2 - \sqrt{3}$</p>
+    </details>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$\cos A = \frac{3}{5}$ হলে $\cos 2A$ ও $\sin 2A$ নির্ণয় করো (যেখানে $A$ সূক্ষ্ম কোণ)।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>$\cos 2A = 2\cos^2 A - 1 = 2 \cdot \frac{9}{25} - 1 = \frac{18}{25} - 1 = -\frac{7}{25}$</p>
+      <p>$\sin A = \sqrt{1 - \cos^2 A} = \sqrt{1 - \frac{9}{25}} = \frac{4}{5}$ (যেহেতু $A$ সূক্ষ্ম, sin ধনাত্মক)</p>
+      <p>$\sin 2A = 2\sin A\cos A = 2 \cdot \frac{4}{5} \cdot \frac{3}{5} = \frac{24}{25}$</p>
+    </details>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$2\cos^2\theta = 1 + \sin\theta$ সমীকরণের সাধারণ সমাধান নির্ণয় করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>$2(1 - \sin^2\theta) = 1 + \sin\theta$ (কারণ $\cos^2\theta = 1 - \sin^2\theta$)</p>
+      <p>$2 - 2\sin^2\theta = 1 + \sin\theta \Rightarrow 2\sin^2\theta + \sin\theta - 1 = 0$</p>
+      <p>উৎপাদক: $(2\sin\theta - 1)(\sin\theta + 1) = 0$</p>
+      <p>$\therefore \sin\theta = \frac{1}{2} \Rightarrow \theta = n\pi + (-1)^n\frac{\pi}{6}$</p>
+      <p>অথবা $\sin\theta = -1 \Rightarrow \theta = n\pi + (-1)^n \cdot \frac{3\pi}{2} = 2n\pi - \frac{\pi}{2}$</p>
+      <p><strong>সাধারণ সমাধান:</strong> $\theta = n\pi + (-1)^n\frac{\pi}{6}$ অথবা $\theta = 2n\pi - \frac{\pi}{2}$, $n \in \mathbb{Z}$</p>
+    </details>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">একটি ত্রিভুজে $a = 7, b = 3, c = 5$। ক্ষেত্রফল নির্ণয় করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>সেমিপেরিমিটার: $s = \frac{7+3+5}{2} = \frac{15}{2} = 7.5$</p>
+      <p>Heron-এর সূত্র: $\Delta = \sqrt{s(s-a)(s-b)(s-c)}$</p>
+      <p>$= \sqrt{7.5 \cdot 0.5 \cdot 4.5 \cdot 2.5} = \sqrt{42.1875}$</p>
+      <p>$\approx 6.495$ square units</p>
+    </details>
+  </div>
+
+  <div class="practice reveal">
+    <div class="q">$2\tan^{-1}\left(\frac{1}{3}\right) + \tan^{-1}\left(\frac{1}{7}\right)$-এর মান নির্ণয় করো।</div>
+    <details>
+      <summary>Solution দেখুন</summary>
+      <p>প্রথমে $2\tan^{-1}\left(\frac{1}{3}\right) = \tan^{-1}\left(\frac{2\cdot\frac{1}{3}}{1-\frac{1}{9}}\right) = \tan^{-1}\left(\frac{2/3}{8/9}\right) = \tan^{-1}\left(\frac{3}{4}\right)$</p>
+      <p>এখন $\tan^{-1}\frac{3}{4} + \tan^{-1}\frac{1}{7}$, যেখানে $xy = \frac{3}{4}\cdot\frac{1}{7} = \frac{3}{28} < 1$</p>
+      <p>$\therefore = \tan^{-1}\left(\frac{\frac{3}{4}+\frac{1}{7}}{1-\frac{3}{28}}\right) = \tan^{-1}\left(\frac{\frac{25}{28}}{\frac{25}{28}}\right) = \tan^{-1}(1) = \frac{\pi}{4}$</p>
+      <p><strong>উত্তর:</strong> $\frac{\pi}{4}$</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTION 20: সাধারণ ভুল / COMMON MISTAKES                         -->
+<!-- ============================================================= -->
+<section class="section" id="sec-20">
+  <div class="head reveal">
+    <div class="num">20</div>
+    <div class="info">
+      <div class="eyebrow">Don't Make These!</div>
+      <h2>সাধারণ ভুল ও টিপস</h2>
+      <div class="sub">The errors that cost students the most marks</div>
+    </div>
+  </div>
+
+  <p class="lead reveal">
+    পরীক্ষায় নম্বর হারানোর প্রধান কারণ হলো গাণিতিক ভুল নয়, বরং ধারণাগত ভুল। নিচে সবচেয়ে সাধারণ ভুলগুলো তুলে ধরা হলো — যেগুলো মাথায় রাখলে পরীক্ষায় ১০-২০ নম্বর বাঁচানো সম্ভব।
+  </p>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">ভুল ১: $\sin(A+B) = \sin A + \sin B$</div>
+      <p>এটি ত্রিকোণমিতির সবচেয়ে সাধারণ ভুল। $\sin$ একটি অরৈখিক ফাংশন — তাই $\sin(A+B) \ne \sin A + \sin B$। সঠিক সূত্র: $\sin(A+B) = \sin A \cos B + \cos A \sin B$। যাচাই করো: $\sin(60°+30°) = \sin 90° = 1$, কিন্তু $\sin 60° + \sin 30° = \frac{\sqrt{3}}{2} + \frac{1}{2} \ne 1$।</p>
+    </div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">ভুল ২: $\cos 2A = 2\cos A$</div>
+      <p>$\cos 2A$ মানে $2A$ কোণের cos, কোনোভাবেই $2 \cdot \cos A$ নয়। সঠিক সূত্র: $\cos 2A = \cos^2 A - \sin^2 A$ (তিনটি রূপের যেকোনো একটি)। যাচাই করো: $\cos(2 \times 60°) = \cos 120° = -\frac{1}{2}$, কিন্তু $2\cos 60° = 2 \cdot \frac{1}{2} = 1 \ne -\frac{1}{2}$।</p>
+    </div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">ভুল ৩: $\sin^{-1}(\sin\theta) = \theta$ সর্বদা</div>
+      <p>এটি কেবল তখনই সত্য যখন $\theta \in [-\frac{\pi}{2}, \frac{\pi}{2}]$ (প্রিন্সিপাল রেঞ্জ)। যেমন $\sin^{-1}(\sin 150°) = \sin^{-1}(\sin 30°) = 30°$, কিন্তু $150° \ne 30°$। সবসময় প্রিন্সিপাল রেঞ্জ মাথায় রাখুন।</p>
+    </div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">ভুল ৪: সাধারণ সমাধানে $n \in \mathbb{Z}$ ভুলে যাওয়া</div>
+      <p>সাধারণ সমাধানে অবশ্যই "$n \in \mathbb{Z}$" বা "$n$ যেকোনো পূর্ণসংখ্যা" উল্লেখ করতে হবে। এটি না করলে সমাধান অসম্পূর্ণ থাকে এবং নম্বর কাটা যায়। এটি পরীক্ষার সবচেয়ে সাধারণ একটি হারানোর কারণ।</p>
+    </div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">ভুল ৫: রেডিয়ান ও ডিগ্রি মিশ্রণ</div>
+      <p>$\frac{\pi}{3}$ radian এবং $60°$ সমান, কিন্তু পরীক্ষায় দুটিকে মিশ্রণ করবেন না। যদি প্রশ্নে ডিগ্রি দেওয়া থাকে, উত্তর ডিগ্রিতে দিন। যদি রেডিয়ান দেওয়া থাকে, উত্তর রেডিয়ানে দিন। এছাড়া ক্যালকুলেটরে rad/deg মোড সঠিকভাবে সেট করা আছে কিনা যাচাই করুন।</p>
+    </div>
+  </div>
+
+  <div class="callout mistake reveal">
+    <div class="icon">✗</div>
+    <div>
+      <div class="title">ভুল ৬: চিহ্ন ভুল করা</div>
+      <p>ASTC নিয়ম মনে রাখা অপরিহার্য। Q2 তে sin ধনাত্মক, কিন্তু cos ঋণাত্মক। Q3 তে sin ও cos দুটোই ঋণাত্মক। Q4 তে sin ঋণাত্মক, cos ধনাত্মক। চিহ্ন ভুল করলে পুরো উত্তর ভুল হয়ে যায়।</p>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">টিপস ১: মান সারণি নিজে বসিয়ে যাচাই করুন</div>
+      <p>পরীক্ষায় মান সারণি মনে না থাকলে, একক বৃত্ত ব্যবহার করে নিজে বের করুন। উদাহরণস্বরূপ, $30°-60°-90°$ ত্রিভুজের বাহুগুলোর অনুপাত $1:\sqrt{3}:2$, তাই $\sin 30° = \frac{1}{2}$, $\cos 30° = \frac{\sqrt{3}}{2}$ — এটি মুখস্থ না করেও বের করা যায়।</p>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">টিপস ২: সমীকরণ সমাধানের কৌশল</div>
+      <p>যেকোনো সমীকরণ সমাধানে প্রথমে চেষ্টা করুন এটিকে একটি মাত্র ফাংশনে আনতে। পিথাগোরাসের অভেদ ব্যবহার করে সব ফাংশনকে sin বা cos-এ রূপান্তর করুন। তারপর গুণফল আকারে আনুন এবং প্রতিটি উপাদান আলাদাভাবে সমাধান করুন।</p>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">টিপস ৩: প্রমাণের কৌশল</div>
+      <p>অভেদ প্রমাণে সর্বদা জটিল পক্ষ থেকে শুরু করুন। সব ফাংশনকে sin ও cos-এ প্রকাশ করুন। প্রয়োজনে সাধারণ বীজগণিতীয় সূত্র (যেমন $(a+b)(a-b) = a^2-b^2$, $(a\pm b)^2 = a^2 \pm 2ab + b^2$) ব্যবহার করুন। সরল পক্ষে পৌঁছানোর আগে হাল ছাড়বেন না।</p>
+    </div>
+  </div>
+
+  <div class="callout tip reveal">
+    <div class="icon">✓</div>
+    <div>
+      <div class="title">টিপস ৪: চেক করার অভ্যাস</div>
+      <p>উত্তর পাওয়ার পর সবসময় যাচাই করুন — কোণটি সঠিক চতুর্থাংশে আছে কিনা, চিহ্ন সঠিক কিনা, একক সঠিক কিনা। ৩০ সেকেন্ড চেক করলে পুরো সমাধান বাঁচানো সম্ভব।</p>
+    </div>
+  </div>
+
+  <div class="summary-box reveal">
+    <h3>★ অধ্যায়ের সারসংক্ষেপ</h3>
+    <ul>
+      <li><strong>কোণ পরিমাপ:</strong> ডিগ্রি (360° পূর্ণ ঘোর্ণন) ও রেডিয়ান (2π পূর্ণ ঘোর্ণন) — রূপান্তর সূত্র: $180° = \pi$ rad</li>
+      <li><strong>সম্পাতী কোণ:</strong> $\theta \pm 360°n$ — terminal side অভিন্ন</li>
+      <li><strong>চার চতুর্থাংশ:</strong> Q1 সব ধনাত্মক, Q2 sin ধনাত্মক, Q3 tan ধনাত্মক, Q4 cos ধনাত্মক (ASTC)</li>
+      <li><strong>ছয় অনুপাত:</strong> sin, cos, tan, csc, sec, cot — একক বৃত্ত থেকে সংজ্ঞায়িত</li>
+      <li><strong>মৌলিক অভেদ:</strong> $\sin^2\theta + \cos^2\theta = 1$ থেকে সব অভেদ উৎপন্ন</li>
+      <li><strong>যৌগিক কোণ:</strong> $\sin(A\pm B), \cos(A\pm B), \tan(A\pm B)$ — সূত্র মুখস্থ রাখুন</li>
+      <li><strong>গুণিত কোণ:</strong> $\sin 2A, \cos 2A$ (তিন রূপে), $\tan 2A, \sin 3A, \cos 3A$</li>
+      <li><strong>অর্ধ কোণ:</strong> $\sin\frac{A}{2}, \cos\frac{A}{2}, \tan\frac{A}{2}$ — ± চিহ্ন চতুর্থাংশের উপর নির্ভরশীল</li>
+      <li><strong>যোগফল-গুণফল:</strong> $\sin A \pm \sin B, \cos A \pm \cos B$ রূপান্তর সূত্র</li>
+      <li><strong>ফাংশনের পিরিয়ড:</strong> sin/cos = $2\pi$, tan/cot = $\pi$</li>
+      <li><strong>বিপরীত ফাংশন:</strong> প্রিন্সিপাল রেঞ্জ মাথায় রাখুন ($\sin^{-1}: [-\frac{\pi}{2}, \frac{\pi}{2}]$ ইত্যাদি)</li>
+      <li><strong>সমীকরণ সমাধান:</strong> এক ফাংশনে আনুন → গুণফল আকারে লিখুন → প্রতিটি উপাদান আলাদাভাবে সমাধান → $n \in \mathbb{Z}$ উল্লেখ করুন</li>
+      <li><strong>Sine সূত্র:</strong> $\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$</li>
+      <li><strong>Cosine সূত্র:</strong> $a^2 = b^2 + c^2 - 2bc\cos A$ — পিথাগোরাসের সাধারণীকরণ</li>
+      <li><strong>ক্ষেত্রফল:</strong> $\Delta = \frac{1}{2}ab\sin C = \frac{abc}{4R} = \sqrt{s(s-a)(s-b)(s-c)}$</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- Toolbar (Back to top button) -->
+<div class="toolbar">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top">↑</button>
+</div>
+
+<footer>
+  <div>ত্রিকোণমিতি · গণিত · অধ্যায় ৮ — Concept Book</div>
+  <div style="margin-top:6px;">
+    Crafted by <span class="credit">Naimul Islam</span>
+  </div>
+  <div style="margin-top:8px; color:var(--text-dim); font-size:11px;">
+    An interactive, animated journey through SSC Chapter 8
+  </div>
+</footer>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+// ===================== Scroll Progress =====================
+window.addEventListener('scroll', function() {
+  const h = document.documentElement;
+  const b = document.body;
+  const st = 'scrollTop';
+  const sh = 'scrollHeight';
+  const progress = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = progress + '%';
+});
+
+// ===================== Reveal on Scroll =====================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===================== TOC Active Highlight =====================
+const sections = document.querySelectorAll('.section');
+const tocLinks = document.querySelectorAll('.toc li a');
+
+const tocObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-100px 0px -60% 0px' });
+
+sections.forEach(s => tocObserver.observe(s));
+
+// ===================== Degree ↔ Radian Converter =====================
+const degInput = document.getElementById('degInput');
+const radInput = document.getElementById('radInput');
+
+function radToFracStr(rad) {
+  // Convert decimal radian to a π-fraction string if it's a "nice" angle
+  const nice = {
+    0: '0', 0.0833: 'π/12', 0.1667: 'π/6', 0.25: 'π/4', 0.3333: 'π/3',
+    0.4167: '5π/12', 0.5: 'π/2', 0.5833: '7π/12', 0.6667: '2π/3', 0.75: '3π/4',
+    0.8333: '5π/6', 0.9167: '11π/12', 1: 'π'
+  };
+  const radN = rad * 12;
+  const rounded = Math.round(radN);
+  if (Math.abs(radN - rounded) < 0.05) {
+    if (rounded === 0) return '0';
+    if (rounded === 12) return 'π';
+    if (rounded === 6) return 'π/2';
+    if (rounded === 4) return 'π/3';
+    if (rounded === 3) return 'π/4';
+    if (rounded === 2) return 'π/6';
+    // simplify
+    const g = gcd(rounded, 12);
+    return (rounded/g) + 'π/' + (12/g);
+  }
+  return rad.toFixed(3);
+}
+function gcd(a,b){ while(b){[a,b]=[b,a%b];} return a; }
+
+function updateConverter() {
+  const deg = parseFloat(degInput.value);
+  const radN = parseFloat(radInput.value);
+  document.getElementById('degVal').textContent = deg;
+  const radDecimal = deg * Math.PI / 180;
+  const radInPi = deg / 180;
+  document.getElementById('radOut').textContent = radToFracStr(radInPi);
+  // Update circle
+  const angle = deg * Math.PI / 180;
+  const r = 120;
+  const cx = 150, cy = 150;
+  const ex = cx + r * Math.cos(-angle);
+  const ey = cy + r * Math.sin(-angle);
+  const termLine = document.getElementById('termLine');
+  termLine.setAttribute('x2', ex);
+  termLine.setAttribute('y2', ey);
+  // arc path
+  const arcR = 40;
+  const arcEx = cx + arcR * Math.cos(-angle);
+  const arcEy = cy + arcR * Math.sin(-angle);
+  const sweep = deg > 180 ? 1 : 0;
+  const arcPath = document.getElementById('arcPath');
+  arcPath.setAttribute('d', `M ${cx+arcR} ${cy} A ${arcR} ${arcR} 0 ${sweep} 0 ${arcEx} ${arcEy}`);
+  // Angle text
+  const txtX = cx + 28 * Math.cos(-angle/2);
+  const txtY = cy + 28 * Math.sin(-angle/2);
+  const angleText = document.getElementById('angleText');
+  angleText.setAttribute('x', txtX);
+  angleText.setAttribute('y', txtY);
+
+  // Reverse
+  document.getElementById('radVal').textContent = radN;
+  document.getElementById('degOut').textContent = (radN * 180).toFixed(0);
+}
+if (degInput && radInput) {
+  degInput.addEventListener('input', updateConverter);
+  radInput.addEventListener('input', updateConverter);
+  updateConverter();
+}
+
+// ===================== Unit Circle Interactive =====================
+const ucSlider = document.getElementById('circleAngle');
+if (ucSlider) {
+  ucSlider.addEventListener('input', function() {
+    const deg = parseFloat(this.value);
+    const rad = deg * Math.PI / 180;
+    const r = 140;
+    const cx = 180, cy = 180;
+    const ex = cx + r * Math.cos(-rad);
+    const ey = cy + r * Math.sin(-rad);
+    
+    // Update point
+    document.getElementById('ucPoint').setAttribute('cx', ex);
+    document.getElementById('ucPoint').setAttribute('cy', ey);
+    // Radius
+    document.getElementById('ucRadius').setAttribute('x2', ex);
+    document.getElementById('ucRadius').setAttribute('y2', ey);
+    // Cos line (horizontal)
+    document.getElementById('ucCosLine').setAttribute('x2', ex);
+    document.getElementById('ucCosLine').setAttribute('y2', cy);
+    // Sin line (vertical)
+    document.getElementById('ucSinLine').setAttribute('x1', ex);
+    document.getElementById('ucSinLine').setAttribute('x2', ex);
+    document.getElementById('ucSinLine').setAttribute('y2', ey);
+    // Labels
+    document.getElementById('ucLabelP').setAttribute('x', ex + 10);
+    document.getElementById('ucLabelP').setAttribute('y', ey - 6);
+    document.getElementById('ucSinLabel').setAttribute('x', ex + 5);
+    document.getElementById('ucSinLabel').setAttribute('y', (cy + ey)/2);
+    document.getElementById('ucCosLabel').setAttribute('x', (cx + ex)/2 - 12);
+    document.getElementById('ucCosLabel').setAttribute('y', cy - 8);
+    // Arc path
+    const arcR = 40;
+    const arcEx = cx + arcR * Math.cos(-rad);
+    const arcEy = cy + arcR * Math.sin(-rad);
+    const sweep = deg > 180 ? 1 : 0;
+    document.getElementById('ucArc').setAttribute('d', `M ${cx+arcR} ${cy} A ${arcR} ${arcR} 0 ${sweep} 0 ${arcEx} ${arcEy}`);
+    document.getElementById('ucArcLabel').setAttribute('x', cx + 28 * Math.cos(-rad/2));
+    document.getElementById('ucArcLabel').setAttribute('y', cy + 28 * Math.sin(-rad/2));
+    
+    // Update display
+    document.getElementById('ucDeg').textContent = deg;
+    document.getElementById('ucRad').textContent = radToFracStr(deg/180);
+    const sinV = Math.sin(rad);
+    const cosV = Math.cos(rad);
+    const tanV = Math.abs(cosV) < 0.001 ? Infinity : sinV/cosV;
+    document.getElementById('ucSin').textContent = sinV.toFixed(3);
+    document.getElementById('ucCos').textContent = cosV.toFixed(3);
+    document.getElementById('ucTan').textContent = isFinite(tanV) ? tanV.toFixed(3) : '∞';
+    document.getElementById('ucCsc').textContent = Math.abs(sinV) < 0.001 ? '∞' : (1/sinV).toFixed(3);
+    document.getElementById('ucSec').textContent = Math.abs(cosV) < 0.001 ? '∞' : (1/cosV).toFixed(3);
+    document.getElementById('ucCot').textContent = Math.abs(tanV) < 0.001 ? '∞' : (1/tanV).toFixed(3);
+    // Quadrant
+    let quad = 'Q1 (0°–90°)';
+    if (deg === 0) quad = 'x-অক্ষে (ধনাত্মক)';
+    else if (deg < 90) quad = 'Q1 (0°–90°) — সব ধনাত্মক';
+    else if (deg === 90) quad = 'y-অক্ষে (ধনাত্মক)';
+    else if (deg < 180) quad = 'Q2 (90°–180°) — sin ধনাত্মক';
+    else if (deg === 180) quad = 'x-অক্ষে (ঋণাত্মক)';
+    else if (deg < 270) quad = 'Q3 (180°–270°) — tan ধনাত্মক';
+    else if (deg === 270) quad = 'y-অক্ষে (ঋণাত্মক)';
+    else quad = 'Q4 (270°–360°) — cos ধনাত্মক';
+    document.getElementById('ucQuad').textContent = quad;
+  });
+}
+
+// ===================== Triangle Interactive =====================
+const triA = document.getElementById('triAngA');
+const triB = document.getElementById('triAngB');
+const triC = document.getElementById('triSideC');
+
+function updateTriangle() {
+  if (!triA || !triB || !triC) return;
+  const A = parseFloat(triA.value);
+  const B = parseFloat(triB.value);
+  const C = 180 - A - B;
+  const c = parseFloat(triC.value);
+  
+  // Sine rule: a/sin A = b/sin B = c/sin C
+  const sinC = Math.sin(C * Math.PI / 180);
+  const a = c * Math.sin(A * Math.PI / 180) / sinC;
+  const b = c * Math.sin(B * Math.PI / 180) / sinC;
+  
+  document.getElementById('outAngC').textContent = C.toFixed(1) + '°';
+  document.getElementById('outSideA').textContent = a.toFixed(2);
+  document.getElementById('outSideB').textContent = b.toFixed(2);
+  
+  // Update SVG labels
+  document.getElementById('angA').textContent = A + '°';
+  document.getElementById('angB').textContent = B + '°';
+  document.getElementById('angC').textContent = C.toFixed(0) + '°';
+  document.getElementById('sideC').textContent = 'c=' + c;
+  document.getElementById('sideA').textContent = 'a=' + a.toFixed(2);
+  document.getElementById('sideB').textContent = 'b=' + b.toFixed(2);
+}
+if (triA) {
+  triA.addEventListener('input', updateTriangle);
+  triB.addEventListener('input', updateTriangle);
+  triC.addEventListener('input', updateTriangle);
+  updateTriangle();
+}
+
+// ===================== Real-life Application Demos =====================
+const appStates = {};
+const appAnimations = {};
+
+function startApp(appName) {
+  if (appAnimations[appName]) return; // already running
+  appStates[appName] = { time: 0 };
+  
+  function tick() {
+    appStates[appName].time += 0.02;
+    updateApp(appName);
+    appAnimations[appName] = requestAnimationFrame(tick);
+  }
+  appAnimations[appName] = requestAnimationFrame(tick);
+}
+
+function getAppValue(appName, key) {
+  const inp = document.querySelector(`input[data-app="${appName}"][data-in="${key}"]`);
+  return inp ? parseFloat(inp.value) : 0;
+}
+
+function setAppOut(appName, key, value) {
+  const out = document.querySelector(`[data-app="${appName}"] [data-out="${key}"]`) ||
+              document.querySelector(`[data-out="${key}"]`);
+  if (out) out.textContent = value;
+}
+
+function buildSineWavePath(svg, freq, amp, phase = 0, decay = 0, width = 500, height = 200, cx = 0, cy = 100) {
+  let d = '';
+  for (let x = 0; x <= width; x += 2) {
+    const t = x / width * 4 * Math.PI;
+    const y = cy - amp * (height/2 - 10) * Math.sin(freq * t + phase) * Math.exp(-decay * t);
+    d += (d === '' ? 'M' : ' L') + x.toFixed(1) + ',' + y.toFixed(1);
+  }
+  return d;
+}
+
+function updateApp(appName) {
+  const t = appStates[appName].time;
+  const svg = document.querySelector(`svg[data-svg="${appName}"]`);
+  if (!svg) return;
+  
+  if (appName === 'sound') {
+    const freq = getAppValue('sound', 'freq');
+    const amp = getAppValue('sound', 'amp');
+    setAppOut('sound', 'freq', freq);
+    setAppOut('sound', 'amp', amp.toFixed(2));
+    const cycles = freq / 100; // visual scaling
+    const path = buildSineWavePath(svg, cycles, amp, t * 5, 0, 500, 200, 0, 100);
+    document.querySelector('[data-path="sound"]').setAttribute('d', path);
+  }
+  else if (appName === 'light') {
+    const r = getAppValue('light', 'r') * Math.PI / 180;
+    const g = getAppValue('light', 'g') * Math.PI / 180;
+    const b = getAppValue('light', 'b') * Math.PI / 180;
+    setAppOut('light', 'r', Math.round(getAppValue('light', 'r')) + '°');
+    setAppOut('light', 'g', Math.round(getAppValue('light', 'g')) + '°');
+    setAppOut('light', 'b', Math.round(getAppValue('light', 'b')) + '°');
+    const phase = t * 3;
+    document.querySelector('[data-path="light-r"]').setAttribute('d', buildSineWavePath(svg, 1.5, 0.5, phase + r, 0, 500, 250, 0, 125));
+    document.querySelector('[data-path="light-g"]').setAttribute('d', buildSineWavePath(svg, 2.0, 0.5, phase + g, 0, 500, 250, 0, 125));
+    document.querySelector('[data-path="light-b"]').setAttribute('d', buildSineWavePath(svg, 2.5, 0.5, phase + b, 0, 500, 250, 0, 125));
+    // sum
+    let d = '';
+    const ampScale = 60;
+    for (let x = 0; x <= 500; x += 2) {
+      const tx = x / 500 * 4 * Math.PI;
+      const val = (0.5 * ampScale * Math.sin(1.5 * tx + phase + r) + 
+                   0.5 * ampScale * Math.sin(2.0 * tx + phase + g) + 
+                   0.5 * ampScale * Math.sin(2.5 * tx + phase + b)) / 3;
+      const y = 125 - val;
+      d += (d === '' ? 'M' : ' L') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    document.querySelector('[data-path="light-sum"]').setAttribute('d', d);
+  }
+  else if (appName === 'pendulum') {
+    const L = getAppValue('pendulum', 'len');
+    const theta0 = getAppValue('pendulum', 'ang') * Math.PI / 180;
+    setAppOut('pendulum', 'len', L.toFixed(1));
+    setAppOut('pendulum', 'ang', Math.round(getAppValue('pendulum', 'ang')) + '°');
+    // Period T = 2π√(L/g), g=9.8
+    const T = 2 * Math.PI * Math.sqrt(L / 9.8);
+    const omega = 2 * Math.PI / T;
+    const theta = theta0 * Math.cos(omega * t);
+    // Bob position
+    const pivotX = 250, pivotY = 20;
+    const lengthPx = 40 + L * 30; // scale to px
+    const bobX = pivotX + lengthPx * Math.sin(theta);
+    const bobY = pivotY + lengthPx * Math.cos(theta);
+    document.querySelector('[data-bob="pendulum"]').setAttribute('cx', bobX);
+    document.querySelector('[data-bob="pendulum"]').setAttribute('cy', bobY);
+    document.querySelector('[data-line="pendulum-rod"]').setAttribute('x2', bobX);
+    document.querySelector('[data-line="pendulum-rod"]').setAttribute('y2', bobY);
+    // Trail arc
+    const arcR = lengthPx;
+    const startA = Math.PI/2 - theta0;
+    const endA = Math.PI/2 + theta0;
+    const sx = pivotX + arcR * Math.cos(startA);
+    const sy = pivotY + arcR * Math.sin(startA);
+    const ex = pivotX + arcR * Math.cos(endA);
+    const ey = pivotY + arcR * Math.sin(endA);
+    document.querySelector('[data-trail="pendulum"]').setAttribute('d', `M ${sx} ${sy} A ${arcR} ${arcR} 0 0 1 ${ex} ${ey}`);
+  }
+  else if (appName === 'ac') {
+    const freq = getAppValue('ac', 'freq');
+    const volt = getAppValue('ac', 'volt');
+    const peak = Math.round(volt * Math.sqrt(2));
+    setAppOut('ac', 'freq', freq);
+    setAppOut('ac', 'volt', volt);
+    const peakEl = document.querySelector('[data-out="peak"]');
+    if (peakEl) peakEl.textContent = peak;
+    const cycles = freq / 30; // visual scaling
+    const amp = volt / 500;
+    const path = buildSineWavePath(svg, cycles, amp, t * 5, 0, 500, 200, 0, 100);
+    document.querySelector('[data-path="ac"]').setAttribute('d', path);
+  }
+  else if (appName === 'orbit') {
+    const spd = getAppValue('orbit', 'spd');
+    const ecc = getAppValue('orbit', 'ecc');
+    setAppOut('orbit', 'spd', spd.toFixed(1));
+    setAppOut('orbit', 'ecc', ecc.toFixed(2));
+    const a = 180; // semi-major axis
+    const b = a * Math.sqrt(Math.max(0.01, 1 - ecc * ecc));
+    const c = a * ecc;
+    const cx = 250 - c; // ellipse center (sun at right focus)
+    const cy = 140;
+    const angle = t * spd;
+    const planetX = cx + a * Math.cos(angle);
+    const planetY = cy + b * Math.sin(angle);
+    const planet = document.querySelector('[data-planet="orbit"]');
+    planet.setAttribute('cx', planetX.toFixed(1));
+    planet.setAttribute('cy', planetY.toFixed(1));
+    // Update orbit ellipse
+    const orbit = document.querySelector('[data-orbit="ellipse"]');
+    orbit.setAttribute('cx', cx);
+    orbit.setAttribute('cy', cy);
+    orbit.setAttribute('rx', a);
+    orbit.setAttribute('ry', b);
+    // Update connecting line (from sun at (250, 140) to planet)
+    const line = document.querySelector('[data-line="orbit-line"]');
+    line.setAttribute('x1', '250');
+    line.setAttribute('y1', '140');
+    line.setAttribute('x2', planetX.toFixed(1));
+    line.setAttribute('y2', planetY.toFixed(1));
+    // Label
+    const lbl = document.querySelector('[data-label="orbit-planet"]');
+    lbl.setAttribute('x', planetX + 12);
+    lbl.setAttribute('y', planetY - 8);
+  }
+  else if (appName === 'rotate') {
+    const ang = getAppValue('rotate', 'ang');
+    setAppOut('rotate', 'ang', Math.round(ang) + '°');
+    const rad = ang * Math.PI / 180;
+    const cx = 250, cy = 140;
+    const pts = [[200,90], [300,90], [300,190], [200,190]];
+    const rotated = pts.map(([x,y]) => {
+      const dx = x - cx, dy = y - cy;
+      return [
+        cx + dx * Math.cos(rad) - dy * Math.sin(rad),
+        cy + dx * Math.sin(rad) + dy * Math.cos(rad)
+      ].map(v => v.toFixed(1)).join(',');
+    }).join(' ');
+    document.querySelector('[data-rotated="square"]').setAttribute('points', rotated);
+  }
+}
+
+// Initialize all app sliders
+document.querySelectorAll('input[data-app]').forEach(slider => {
+  const appName = slider.getAttribute('data-app');
+  slider.addEventListener('input', () => updateApp(appName));
+});
+
+// Auto-start all real-life app animations when their card scrolls into view
+document.querySelectorAll('.app-demo').forEach(demo => {
+  const appName = demo.getAttribute('data-app');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        startApp(appName);
+      } else {
+        if (appAnimations[appName]) {
+          cancelAnimationFrame(appAnimations[appName]);
+          appAnimations[appName] = null;
+        }
+      }
+    });
+  }, { threshold: 0.2 });
+  obs.observe(demo);
+});
+
+// ===================== Animated Graph Drawing =====================
+function makePointsForCurve(start, end, fn, xScale, yScale, cx, cy) {
+  let d = '';
+  for (let x = start; x <= end; x += 0.05) {
+    const px = cx + x * xScale;
+    const py = cy - fn(x) * yScale;
+    d += (d === '' ? 'M' : ' L') + px.toFixed(1) + ',' + py.toFixed(1);
+  }
+  return d;
+}
+
+let animFrame = null;
+function animatePath(pathId, pointId, fullD, duration) {
+  const path = document.getElementById(pathId);
+  const point = document.getElementById(pointId);
+  if (!path) return;
+  
+  if (animFrame) cancelAnimationFrame(animFrame);
+  
+  path.setAttribute('d', 'M 50 120');
+  const fullLength = path.getTotalLength ? 0 : 0; // dummy
+  
+  // Parse the full D and animate point by point
+  // Use stroke-dasharray trick
+  const totalLen = 800; // approximate path length
+  path.style.strokeDasharray = totalLen;
+  path.style.strokeDashoffset = totalLen;
+  path.setAttribute('d', fullD);
+  
+  // Show the point and animate
+  point.style.opacity = 1;
+  
+  let start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    path.style.strokeDashoffset = totalLen * (1 - progress);
+    
+    if (progress < 1) {
+      animFrame = requestAnimationFrame(step);
+    } else {
+      animFrame = null;
+    }
+  }
+  animFrame = requestAnimationFrame(step);
+}
+
+function animateSin() {
+  // Build full path from x=-π to x=π
+  // In SVG: x range 50-450 maps to angle -π to π, so xScale = 400/(2π) ≈ 63.66
+  // y range 120 (axis) - sin(x) * 80 (amplitude, since y=1 maps to y=40 in SVG)
+  let d = 'M 50 120';
+  const xStart = -Math.PI, xEnd = Math.PI;
+  const xScale = 400 / (2 * Math.PI);
+  const yScale = 80;
+  const cx = 250, cy = 120;
+  for (let x = xStart; x <= xEnd + 0.01; x += 0.02) {
+    const px = 50 + (x - xStart) * xScale;
+    const py = cy - Math.sin(x) * yScale;
+    d += ' L ' + px.toFixed(1) + ',' + py.toFixed(1);
+  }
+  animatePath('sinPath', 'sinPoint', d, 2500);
+}
+
+function animateCos() {
+  let d = 'M 50 40';
+  const xStart = -Math.PI, xEnd = Math.PI;
+  const xScale = 400 / (2 * Math.PI);
+  const yScale = 80;
+  const cx = 250, cy = 120;
+  for (let x = xStart; x <= xEnd + 0.01; x += 0.02) {
+    const px = 50 + (x - xStart) * xScale;
+    const py = cy - Math.cos(x) * yScale;
+    d += ' L ' + px.toFixed(1) + ',' + py.toFixed(1);
+  }
+  animatePath('cosPath', 'cosPoint', d, 2500);
+}
+
+// ===================== Auto-animate graphs on scroll into view =====================
+const sinObserver = new IntersectionObserver((entries, obs) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateSin();
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+const sinSvg = document.getElementById('sinSvg');
+if (sinSvg) sinObserver.observe(sinSvg);
+
+const cosObserver = new IntersectionObserver((entries, obs) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCos();
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+const cosSvg = document.getElementById('cosSvg');
+if (cosSvg) cosObserver.observe(cosSvg);
+
+</script>
+
+</body>
+</html>
